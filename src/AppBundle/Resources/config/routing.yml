@@ -1,0 +1,23 @@
+app_homepage:
+    path:     /
+    defaults: { _controller: AppBundle:Default:index }
+
+agenda_routing:
+    resource: "@AppBundle/Resources/config/agenda_routing.yml"
+    prefix: "/agenda"
+
+paciente_routing:
+    resource: "@AppBundle/Resources/config/paciente_routing.yml"
+    prefix: "/paciente"
+
+adminusuarios_routing:
+    resource: "@AppBundle/Resources/config/adminusuarios_routing.yml"
+    prefix: "/administracion/usuarios"
+
+usuarios_routing:
+    resource: "@AppBundle/Resources/config/usuario_routing.yml"
+    prefix: "/usuario"
+
+historiageneral_routing:
+    resource: "@AppBundle/Resources/config/historiageneral_routing.yml"
+    prefix: "/paciente"

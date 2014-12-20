@@ -1,0 +1,21 @@
+{
+  "name": "podonet",
+  "version": "0.0.0",
+  "authors": [
+    "Ismael Ors <ismikin@gmail.com>",
+    "Alberto Puche <our.remains@gmail.com>"
+  ],
+  "description": "Podonet - Academic final project for podologic healthcare center",
+  "keywords": [
+    "podonet"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

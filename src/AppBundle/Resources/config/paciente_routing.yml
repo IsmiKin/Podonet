@@ -1,0 +1,42 @@
+dashboard_paciente:
+    path:     /{id}
+    defaults: { _controller: AppBundle:Paciente:dashboardPaciente }
+
+busqueda_paciente:
+    path:     /busqueda
+    defaults: { _controller: AppBundle:Paciente:busquedaPaciente }
+
+crear_paciente:
+    path:     /crear/
+    defaults: { _controller: AppBundle:Paciente:crearPaciente }
+
+consultar_historia_complementaria:
+    path:     /historia/complementaria/{idPaciente}
+    defaults: { _controller: AppBundle:Paciente:consultarHistoriaComplementaria }
+
+crear_historia_complementaria:
+    path:     /historia/complementaria/
+    defaults: { _controller: AppBundle:Paciente:crearHistoriaComplementaria }
+    methods : [POST]
+
+editar_historia_complementaria:
+    path:     /historia/complementaria/
+    defaults: { _controller: AppBundle:Paciente:editarHistoriaComplementaria }
+    methods : [PUT]
+
+eliminar_historia_complementaria:
+    path:     /historia/complementaria/
+    defaults: { _controller: AppBundle:Paciente:eliminarHistoriaComplementaria }
+    methods: [DELETE]
+
+consultar_diagnostico:
+    path:     /diagnostico/{idPaciente}
+    defaults: { _controller: AppBundle:Paciente:consultarDiagnostico }
+
+crear_diagnostico:
+    path:     /diagnostico/crear
+    defaults: { _controller: AppBundle:Paciente:crearDiagnostico }
+
+editar_diagnostico:
+    path:     /diagnostico/editar
+    defaults: { _controller: AppBundle:Paciente:editarDiagnostico }

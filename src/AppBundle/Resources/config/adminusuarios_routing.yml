@@ -1,0 +1,24 @@
+
+administrar_usuarios:
+    path:     /
+    defaults: { _controller: AppBundle:AdminUsuario:administrarUsuarios }
+
+consultar_usuario:
+    path:     /{idUsuario}
+    defaults: { _controller: AppBundle:AdminUsuario:consultarUsuario }
+
+crear_usuario:
+    path:     /crear
+    defaults: { _controller: AppBundle:AdminUsuario:crearUsuario }
+
+editar_usuario:
+    path:     /editar
+    defaults: { _controller: AppBundle:AdminUsuario:editarUsuario }
+
+habilitar_usuario:
+    path:     /habilitar
+    defaults: { _controller: AppBundle:AdminUsuario:habilitarUsuario }
+
+administrar_logs:
+    path:     /logs
+    defaults: { _controller: AppBundle:AdminUsuario:administrarLogs }

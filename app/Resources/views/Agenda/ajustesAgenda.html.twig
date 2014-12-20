@@ -1,0 +1,44 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Agenda:ajustesAgenda{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Agenda:ajustesAgenda page</h1>
+
+
+<table class="adminr-table table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
+    <thead>
+        <th>Codigo</th>
+        <th>Localizacion</th>
+        <th>Tipo</th>
+        <th>Acciones</th>
+    </thead>
+    <tbody>
+
+    {% for elemento in gabinetes %}
+        <tr
+                {% if elemento.Estado =="Activo" %}
+                    class="success"
+                {% elseif elemento.Estado =="Inactivo" %}
+                    class="danger"
+                {% elseif elemento.Estado == "Suspendido" %}
+                    class ="warning"
+                {% endif %}
+        >
+            <td class="tdcodigo">{{ elemento.Codigo}}</td>
+            <td class="tdlocalizacion">{{ elemento.Localizacion}}</td>
+            <td class="tdtipo">{{ elemento.Tipo}}</td>
+            <td class="tdacciones">
+                <button class="btn btn-warning editarGabineteTabla" ><span class="glyphicon glyphicon-edit"></span></button>
+                <button class="btn btn-danger eliminarGabineteTabla" ><span class="glyphicon glyphicon-remove"></span></button>
+
+                <button class="btn btn-success habilitarGabineteTabla" {% if elemento.Estado =="Activo" %} hidden {% endif %}><span class="glyphicon glyphicon-edit"></span></button>
+                <button class="btn btn-warning deshabilitarGabineteTabla" {% if elemento.Estado =="Inactivo" %} hidden {% endif %}><span class="glyphicon glyphicon-edit"></span></button>
+
+            </td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+{% endblock %}

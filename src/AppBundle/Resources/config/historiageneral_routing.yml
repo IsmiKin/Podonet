@@ -1,0 +1,27 @@
+consultar_historia_general:
+    path:     /historia/general/{idPaciente}
+    defaults: { _controller: AppBundle:HistoriaGeneral:consultarHistoriaGeneral }
+
+editar_datos_semipermanentes:
+    path:     /semipermanentes/editar
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosSemipermanentes }
+
+crear_datos_semipermanentes:
+    path:     /semipermanentes/crear
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosSemipermanentes }
+
+crear_anamnesis:
+    path:     /anamnesis/crear
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearAnamnesis }
+
+editar_anamnesis:
+    path:     /anamnesis/editar
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarAnamnesis }
+
+editar_datos_personales:
+    path:     /personales/editar
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosPersonales }
+
+crear_datos_personales:
+    path:     /personales/crear
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosPersonales }

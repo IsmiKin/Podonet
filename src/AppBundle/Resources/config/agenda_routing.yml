@@ -1,0 +1,35 @@
+agenda_principal:
+    path:     /
+    defaults: { _controller: AppBundle:Agenda:agendaPrincipal }
+
+consultar_cita:
+    path:     /cita/{id}
+    defaults: { _controller: AppBundle:Agenda:consultarCita }
+
+nueva_cita:
+    path:     /cita/nueva/
+    defaults: { _controller: AppBundle:Agenda:nuevaCita }
+
+editar_cita:
+    path:     /cita/editar/
+    defaults: { _controller: AppBundle:Agenda:editarCita }
+
+eliminar_cita:
+    path:     /cita/eliminar/
+    defaults: { _controller: AppBundle:Agenda:eliminarCita }
+
+ajustes_agenda:
+    path:     /ajustes/
+    defaults: { _controller: AppBundle:Agenda:ajustesAgenda }
+
+crear_gabinete:
+    path:     /ajustes/gabinete/
+    defaults: { _controller: AppBundle:Agenda:crearGabinete }
+
+editar_gabinete:
+    path:     /ajustes/gabinete/editar/
+    defaults: { _controller: AppBundle:Agenda:editarGabinete }
+
+habilitar_gabinete:
+    path:     /ajustes/gabinete/habilitar/
+    defaults: { _controller: AppBundle:Agenda:habilitarGabinete }

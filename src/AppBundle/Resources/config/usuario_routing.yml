@@ -1,0 +1,15 @@
+perfil_usuario:
+    path:     /perfil
+    defaults: { _controller: AppBundle:Usuario:perfilUsuario }
+
+editar_perfil:
+    path:     /perfil/editar
+    defaults: { _controller: AppBundle:Usuario:editarPerfil }
+
+contacto_administrador:
+    path:     /perfil/contacto
+    defaults: { _controller: AppBundle:Usuario:contactoAdministrador }
+
+ayuda_usuario:
+    path:     /perfil/ayuda
+    defaults: { _controller: AppBundle:Usuario:ayudaUsuario }
