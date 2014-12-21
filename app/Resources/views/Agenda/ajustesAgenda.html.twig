@@ -1,12 +1,12 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Agenda:ajustesAgenda{% endblock %}
+{% block title %}PodoNet - Ajustes Agenda{% endblock %}
 
+{% block iconoBanner %}calendar{% endblock %}
+{% block tituloBanner %}Ajustes de Agenda{% endblock %}
 {% block body %}
-<h1>Welcome to the Agenda:ajustesAgenda page</h1>
 
-
-<table class="adminr-table table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
+<table class="admin-table table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
     <thead>
         <th>Codigo</th>
         <th>Localizacion</th>
@@ -40,5 +40,6 @@
     {% endfor %}
 
     </tbody>
+</table>
 
 {% endblock %}
