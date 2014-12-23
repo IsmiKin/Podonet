@@ -6,7 +6,20 @@
 {% block tituloBanner %}Ajustes de Agenda{% endblock %}
 {% block body %}
 
-<table class="admin-table table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
+
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <form method="POST" {{ form_enctype(form) }} >
+
+        {{ form_row(form.codigo) }}
+        {{ form_row(form.localizacion) }}
+        {{ form_row(form.tipo) }}
+        {{ form_row(form.estado) }}
+        <input type="submit" value="Crear" class="btn btn-success"/>
+    </form>
+
+
+
+<table class="gabinetes-table table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
     <thead>
         <th>Codigo</th>
         <th>Localizacion</th>

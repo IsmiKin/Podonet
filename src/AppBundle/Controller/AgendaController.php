@@ -2,10 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\GabineteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializerBuilder as Serializer;
+use AppBundle\Entity\Gabinete;
+use Symfony\Component\HttpFoundation\Request;
 
 class AgendaController extends Controller
 {
@@ -36,7 +39,7 @@ class AgendaController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Cita');
 
-        $cita= $repository->findAll(1);
+        $cita= $repository->findAll();
         $serializer = Serializer::create()->build();
         $data = $serializer ->serialize($cita, 'json');
 
@@ -57,16 +60,34 @@ class AgendaController extends Controller
                 // ...
             ));    }
 
-    public function ajustesAgendaAction()
+    public function ajustesAgendaAction(Request $request)
     {
+
+        $gabinete = new Gabinete();
+        $form = $this->createForm(new GabineteType(),$gabinete);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($gabinete);
+            $em->flush();
+        }
+
+        if ($request->isMethod('POST')) {
+
+        }
+
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Gabinete');
 
         $gabinetes= $repository->findAll();
 
         return $this->render('Agenda/ajustesAgenda.html.twig', array(
-                'gabinetes' => $gabinetes
-            ));    }
+                'gabinetes' => $gabinetes , 'form' => $form->createView()
+            ));
+
+    }
 
     public function crearGabineteAction()
     {
