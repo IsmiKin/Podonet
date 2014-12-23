@@ -65,10 +65,11 @@ class AgendaController extends Controller
 
         $gabinete = new Gabinete();
         $form = $this->createForm(new GabineteType(),$gabinete);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $gabinete->setUsuarioCreador($this->getUser());
+            $gabinete->setFechaUltimaModificacion(new \DateTime('now'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($gabinete);
             $em->flush();
@@ -89,11 +90,32 @@ class AgendaController extends Controller
 
     }
 
-    public function crearGabineteAction()
+    public function crearGabineteAction(Request $request)
     {
-        return $this->render('Agenda/crearGabinete.html.twig', array(
-                // ...
-            ));    }
+        $mensaje ="";
+        $gabinete = new Gabinete();
+        $form = $this->createForm(new GabineteType(),$gabinete);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $gabinete->setUsuarioCreador($this->getUser());
+            $gabinete->setFechaUltimaModificacion(new \DateTime('now'));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($gabinete);
+            $em->flush();
+            $mensaje = "Se ha insertado correctamente";
+            $codigo_error = 0;
+        }else{
+            $mensaje = "Ha ocurrido un error al validar el formulario";
+            $codigo_error = 1;
+        }
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
+        $response = new JsonResponse($datosRespuesta);
+
+        return $response;
+
+    }
 
     public function editarGabineteAction()
     {

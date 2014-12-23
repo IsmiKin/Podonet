@@ -23,7 +23,7 @@ ajustes_agenda:
     defaults: { _controller: AppBundle:Agenda:ajustesAgenda }
 
 crear_gabinete:
-    path:     /ajustes/gabinete/
+    path:     /ajustes/gabinete/crear/
     defaults: { _controller: AppBundle:Agenda:crearGabinete }
 
 editar_gabinete:

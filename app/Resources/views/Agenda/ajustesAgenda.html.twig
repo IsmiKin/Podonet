@@ -8,8 +8,8 @@
 
 
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <form method="POST" {{ form_enctype(form) }} >
-
+    <form method="POST" {{ form_enctype(form) }} action="{{ path('crear_gabinete') }}" class="form-gabinete" >
+        {{ form_errors(form) }}
         {{ form_row(form.codigo) }}
         {{ form_row(form.localizacion) }}
         {{ form_row(form.tipo) }}
@@ -56,3 +56,12 @@
 </table>
 
 {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('js/agenda/ajustes_agenda.js') }}"></script>
+{% endblock %}
+

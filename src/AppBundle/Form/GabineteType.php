@@ -17,9 +17,9 @@ class GabineteType extends AbstractType
         $builder
             ->add('codigo')
             ->add('localizacion')
-            ->add('tipo')
+            ->add('tipo','choice',array('choices'=>array('Consulta'=>'Consulta', 'Quirofano' => 'Quirofano')))
             ->add('fechaSuspension')
-            ->add('estado')
+            ->add('estado', 'choice',array('choices'=>array('Activo'=>'Activo', 'Inactivo' => 'Inactivo')))
             ->add('fechaUltimaModificacion')
             ->add('usuarioCreador')
             ->add('usuarioModificacion')
@@ -32,7 +32,10 @@ class GabineteType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Gabinete'
+            'data_class' => 'AppBundle\Entity\Gabinete',
+            'csrf_protection' => false,
+            'csrf_field_name' => '_token',
+            'intention'       => 'task_item'
         ));
     }
 
