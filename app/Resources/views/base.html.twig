@@ -159,7 +159,18 @@
         "js/general/plantillamaestra.js"
             output='js/main.js'
         %}
-        <script src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    {% endblock %}
+
+    {% block templates %}
+        {% javascripts
+            "assets/vendor/handlebars/handlebars.runtime.js"
+            "templates/general/handlebars_helpers.js"
+            output='js/handlebars_general.js'
+        %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     {% endblock %}

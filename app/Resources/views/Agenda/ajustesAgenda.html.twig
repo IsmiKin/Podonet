@@ -2,24 +2,38 @@
 
 {% block title %}PodoNet - Ajustes Agenda{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="{{ asset('css/agenda/ajustes_agenda.css') }}"></link>
+{% endblock %}
+
 {% block iconoBanner %}calendar{% endblock %}
 {% block tituloBanner %}Ajustes de Agenda{% endblock %}
 {% block body %}
 
 
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <form method="POST" {{ form_enctype(form) }} action="{{ path('crear_gabinete') }}" class="form-gabinete" >
-        {{ form_errors(form) }}
-        {{ form_row(form.codigo) }}
-        {{ form_row(form.localizacion) }}
-        {{ form_row(form.tipo) }}
-        {{ form_row(form.estado) }}
-        <input type="submit" value="Crear" class="btn btn-success"/>
-    </form>
+
+
+    <!-- Formulario para resoluciones pequeñas -->
+    <div class="form-smallres">
+        <button type="button" class="btn btn-primary nuevoGabineteButton" value="Nuevo" ><i class="fa fa-plus-circle"></i>  Nuevo Gabinete</button>
+
+        <form method="POST" {{ form_enctype(form) }} action="{{ path('crear_gabinete') }}" class="form-gabinete" hidden="hidden" >
+            {{ form_errors(form) }}
+            {{ form_row(form.codigo) }}
+            {{ form_row(form.localizacion) }}
+            {{ form_row(form.tipo) }}
+            {{ form_row(form.estado) }}
+            <button type="submit" value="Crear" class="btn btn-success"><i class="fa fa-check"></i>  Crear Gabinete</button>
+            <button type="button" value="Cancelar" class="btn btn-default cancelarGabineteForm"><i class="fa fa-undo"></i>  Cancelar</button>
+        </form>
+    </div>
 
 
 
-<table class="gabinetes-table table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
+
+<table class="table-gabinetes table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
     <thead>
         <th>Codigo</th>
         <th>Localizacion</th>
@@ -42,11 +56,15 @@
             <td class="tdlocalizacion">{{ elemento.Localizacion}}</td>
             <td class="tdtipo">{{ elemento.Tipo}}</td>
             <td class="tdacciones">
-                <button class="btn btn-warning editarGabineteTabla" ><span class="glyphicon glyphicon-edit"></span></button>
-                <button class="btn btn-danger eliminarGabineteTabla" ><span class="glyphicon glyphicon-remove"></span></button>
+                <button class="btn btn-warning editarGabineteTabla" ><i class="fa fa-edit"></i></button>
 
-                <button class="btn btn-success habilitarGabineteTabla" {% if elemento.Estado =="Activo" %} hidden {% endif %}><span class="glyphicon glyphicon-edit"></span></button>
-                <button class="btn btn-warning deshabilitarGabineteTabla" {% if elemento.Estado =="Inactivo" %} hidden {% endif %}><span class="glyphicon glyphicon-edit"></span></button>
+                <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
+                    <button class="btn btn-success habilitarGabineteTabla" ><i class="fa fa-check"></i></button>
+                </span>
+                <span {% if elemento.Estado =="Inactivo" %} hidden="hidden" {% endif %}>
+                    <button class="btn btn-danger deshabilitarGabineteTabla" ><i class="fa fa-minus-circle"></i></button>
+                </span>
+
 
             </td>
         </tr>
@@ -65,3 +83,7 @@
     <script src="{{ asset('js/agenda/ajustes_agenda.js') }}"></script>
 {% endblock %}
 
+{% block templates %}
+    {{ parent() }}
+    <script src="{{ asset('templates/agenda/compiled_agenda.js') }}"></script>
+{% endblock %}

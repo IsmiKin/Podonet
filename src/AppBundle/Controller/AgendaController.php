@@ -110,7 +110,10 @@ class AgendaController extends Controller
             $codigo_error = 1;
         }
 
-        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($gabinete, 'json');
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "gabinete"=>$data);
         $response = new JsonResponse($datosRespuesta);
 
         return $response;

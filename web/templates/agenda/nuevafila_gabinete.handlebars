@@ -1,0 +1,29 @@
+<tr
+        {{#ifCond estado '==' 'Activo'}}
+            class="success"
+        {{/ifCond}}
+
+        {{#ifCond estado '==' 'Inactivo'}}
+            class="danger"
+        {{/ifCond}}
+
+        {{#ifCond estado '==' 'Inactivo'}}
+            class="danger"
+        {{/ifCond}}
+>
+<td class="tdcodigo">{{ codigo}}</td>
+<td class="tdlocalizacion">{{ localizacion}}</td>
+<td class="tdtipo">{{ tipo}}</td>
+<td class="tdacciones">
+    <button class="btn btn-warning editarGabineteTabla" ><i class="fa fa-edit"></i></button>
+
+                <span {{#ifCond estado '==' 'Activo'}} hidden="hidden" {{/ifCond}}>
+                    <button class="btn btn-success habilitarGabineteTabla" ><i class="fa fa-check"></i></button>
+                </span>
+                <span {{#ifCond estado '==' 'Inactivo'}} hidden="hidden" {{/ifCond}}>
+                    <button class="btn btn-danger deshabilitarGabineteTabla" ><i class="fa fa-minus-circle"></i></button>
+                </span>
+
+</td>
+
+</tr>
