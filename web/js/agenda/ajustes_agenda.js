@@ -7,6 +7,7 @@ $(document).ready(function(){
     $(".form-gabinete").submit(submitFormGabinete);
     $(".nuevoGabineteButton").click(showFormGabinete);
     $(".cancelarGabineteForm").click(hideFormGabinete);
+    $(".habilitarGabineteButton").click(habilitarGabinete);
 });
 
 function submitFormGabinete(e){
@@ -20,6 +21,7 @@ function submitFormGabinete(e){
                 var gabinete = $.parseJSON(data.gabinete);
                 var htmlNuevaFila = Handlebars.templates.nuevafila_gabinete(gabinete);
                 $(".table-gabinetes tr:last").after(htmlNuevaFila);
+                $(".habilitarGabineteButton").click(habilitarGabinete);
             }else
                 console.log("error!");
 
@@ -32,20 +34,33 @@ function submitFormGabinete(e){
 
 function showFormGabinete(){
     $(".form-gabinete").fadeIn("slow");
-    var context = {
-        title: "My First Blog Post!",
-        author: {
-            id: 47,
-            name: "Yehuda Katz"
-        },
-        body: "My first post. Wheeeee!"
-    };
-    //alert(Handlebars.templates.nuevafila_gabinete(context));
-    var nuevafila = Handlebars.templates.nuevafila_gabinete(context);
-
 }
 
 function hideFormGabinete(){
     $(".form-gabinete").fadeOut("slow");
     $(".form-gabinete")[0].reset();
+}
+
+function habilitarGabinete(){
+    var boton = $(this);
+    var accion = $(this).data("habilitar");
+    var row = $(this).parent().parent().parent();
+    var nuevoColor = (accion) ? "success" : "danger";
+    var antiguoColor = (accion) ? "danger" : "success";
+
+    $.ajax({
+        type: "PUT",
+        url: Routing.generate('habilitar_gabinete'),
+        data: {idGabinete:row.data("idgabinete"), habilitar:accion},
+        success: function(data) {
+            if(data.codigo_error==0){
+                row.find(".habilitarGabineteButton:hidden").parent().show();
+                boton.parent().hide();
+                row.removeClass(antiguoColor).addClass(nuevoColor);
+            }else
+                console.log("error!");
+
+        }
+    });
+
 }

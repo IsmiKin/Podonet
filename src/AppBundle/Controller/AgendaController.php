@@ -114,9 +114,7 @@ class AgendaController extends Controller
         $data = $serializer ->serialize($gabinete, 'json');
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "gabinete"=>$data);
-        $response = new JsonResponse($datosRespuesta);
-
-        return $response;
+        return new JsonResponse($datosRespuesta);
 
     }
 
@@ -128,8 +126,30 @@ class AgendaController extends Controller
 
     public function habilitarGabineteAction()
     {
-        return $this->render('Agenda/habilitarGabinete.html.twig', array(
-                // ...
-            ));    }
+
+        $request = $this->get('request');
+
+        $id = $request->get('idGabinete');
+        $habilitar = $request->get('habilitar');
+
+        if($habilitar=="true")  $nuevoEstado = "Activo";
+        else                    $nuevoEstado ="Inactivo";
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $gabinete = $em->getRepository('AppBundle:Gabinete')->find($id);
+
+        if (!$gabinete) {
+            throw $this->createNotFoundException('No product found for id '.$id);
+        }
+
+        $gabinete->setEstado($nuevoEstado);
+        $em->flush();
+
+        $mensaje = "Se ha insertado correctamente";
+        $codigo_error = 0;
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
+        return new JsonResponse($datosRespuesta);
+    }
 
 }

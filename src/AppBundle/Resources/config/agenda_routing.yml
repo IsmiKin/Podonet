@@ -33,3 +33,6 @@ editar_gabinete:
 habilitar_gabinete:
     path:     /ajustes/gabinete/habilitar/
     defaults: { _controller: AppBundle:Agenda:habilitarGabinete }
+    methods: [PUT]
+    options:
+        expose: true

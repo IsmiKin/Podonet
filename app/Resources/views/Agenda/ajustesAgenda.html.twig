@@ -51,6 +51,7 @@
                 {% elseif elemento.Estado == "Suspendido" %}
                     class ="warning"
                 {% endif %}
+            data-idGabinete="{{ elemento.idGabinete }}"
         >
             <td class="tdcodigo">{{ elemento.Codigo}}</td>
             <td class="tdlocalizacion">{{ elemento.Localizacion}}</td>
@@ -59,10 +60,10 @@
                 <button class="btn btn-warning editarGabineteTabla" ><i class="fa fa-edit"></i></button>
 
                 <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
-                    <button class="btn btn-success habilitarGabineteTabla" ><i class="fa fa-check"></i></button>
+                    <button class="btn btn-success habilitarGabineteButton" data-habilitar="true"><i class="fa fa-check"></i></button>
                 </span>
                 <span {% if elemento.Estado =="Inactivo" %} hidden="hidden" {% endif %}>
-                    <button class="btn btn-danger deshabilitarGabineteTabla" ><i class="fa fa-minus-circle"></i></button>
+                    <button class="btn btn-danger habilitarGabineteButton" data-habilitar="false" ><i class="fa fa-minus-circle"></i></button>
                 </span>
 
 
