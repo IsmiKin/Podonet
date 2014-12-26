@@ -4,9 +4,8 @@
 
 $(document).ready(function(){
 
-    $(".form-gabinete").submit(submitFormGabinete);
-    $(".nuevoGabineteButton").click(showFormGabinete);
-    $(".cancelarGabineteForm").click(hideFormGabinete);
+    $(".form-gabinete").submit(submitFormGabinete); // Para la creacion
+    $(".submitEditarGabinete").click(submitEditarFormGabinete);
     $(".habilitarGabineteButton").click(habilitarGabinete);
 });
 
@@ -22,22 +21,17 @@ function submitFormGabinete(e){
                 var htmlNuevaFila = Handlebars.templates.nuevafila_gabinete(gabinete);
                 $(".table-gabinetes tr:last").after(htmlNuevaFila);
                 $(".habilitarGabineteButton").click(habilitarGabinete);
+                resetearForm();
+                $(".cancelarGabineteForm").click();
             }else
                 console.log("error!");
 
         }
     });
 
-    return false;
-
 }
 
-function showFormGabinete(){
-    $(".form-gabinete").fadeIn("slow");
-}
-
-function hideFormGabinete(){
-    $(".form-gabinete").fadeOut("slow");
+function resetearForm(){
     $(".form-gabinete")[0].reset();
 }
 
@@ -57,6 +51,28 @@ function habilitarGabinete(){
                 row.find(".habilitarGabineteButton:hidden").parent().show();
                 boton.parent().hide();
                 row.removeClass(antiguoColor).addClass(nuevoColor);
+            }else
+                console.log("error!");
+
+        }
+    });
+
+}
+
+function submitEditarFormGabinete(e){
+    e.preventDefault();
+    $.ajax({
+        type: $(this).data('method'),
+        url: $(this).data('action'),
+        data: $(".form-gabinete").serialize(),
+        success: function(data) {
+            if(data.codigo_error==0){
+                var gabinete = $.parseJSON(data.gabinete);
+                var htmlNuevaFila = Handlebars.templates.nuevafila_gabinete(gabinete);
+                $(".table-gabinetes tr:last").after(htmlNuevaFila);
+                $(".habilitarGabineteButton").click(habilitarGabinete);
+                resetearForm();
+                $(".cancelarGabineteForm").click();
             }else
                 console.log("error!");
 

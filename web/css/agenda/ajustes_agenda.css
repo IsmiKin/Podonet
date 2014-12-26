@@ -3,3 +3,16 @@
     padding-bottom: 5%;
     padding-top: 5%;
 }
+
+
+@media(max-width:768px) {
+    .form-highres{
+        display: none !important;
+    }
+}
+
+@media(min-width:768px) {
+    .form-smallres{
+        display: none !important;
+    }
+}
