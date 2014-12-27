@@ -2,14 +2,25 @@
 
 namespace AppBundle\Controller;
 
+use Proxies\__CG__\AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdminUsuarioController extends Controller
 {
     public function administrarUsuariosAction()
     {
+
+        $usuario = new Usuario();
+
+
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Usuario');
+
+        $usuarios= $repository->findAll();
+
+
         return $this->render('AdminUsuario/administrarUsuarios.html.twig', array(
-                // ...
+                'usuarios' => $usuarios
             ));    }
 
     public function consultarUsuarioAction($idUsuario)
