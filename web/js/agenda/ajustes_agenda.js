@@ -72,10 +72,10 @@ function submitEditarFormGabinete(e){
             }else
                 console.log("error!");
 
+            finProgressBar();
         }
     });
 
-    console.log("webe");
 }
 
 

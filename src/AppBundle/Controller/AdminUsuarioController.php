@@ -62,9 +62,33 @@ class AdminUsuarioController extends Controller
 
     public function administrarLogsAction()
     {
+        $request = $this->get("request");
+        $fechaInicio = $request->get("fechaInicio");
+        $fechaFin = $request->get("fechaFin");
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Log');
+
+        $query = $repository->createQueryBuilder('l')
+            ->where('l.fecha >= :inicio AND l.fecha <= :fin')
+            ->setParameter('inicio', $fechaInicio)
+            ->setParameter('fin', $fechaFin)
+            ->orderBy('l.fecha', 'ASC')
+            ->getQuery();
+
+        $logs= $query->getResult();
+
         return $this->render('AdminUsuario/administrarLogs.html.twig', array(
-                // ...
-            ));    }
+                'logs' => $logs
+            ));
+    }
+
+
+    public function preAdministrarLogsAction(){
+        return $this->render('AdminUsuario/preAdministracionLogs.html.twig', array(
+            // ...
+        ));
+    }
+
 
     public function consultarLogAction($idLog){
         return null;

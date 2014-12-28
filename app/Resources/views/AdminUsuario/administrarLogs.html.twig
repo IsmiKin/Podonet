@@ -1,7 +1,83 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:AdminUsuario:administrarLogs{% endblock %}
+{% block title %}Podonet - Administracion Logs{% endblock %}
+
+{% block tituloBanner %}Administracion Logs{% endblock %}
+{% block iconoBanner %}book{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/administracion/logs/administracion_logs.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/footable/css/footable.core.min.css') }}"/>
+{% endblock %}
 
 {% block body %}
-<h1>Welcome to the AdminUsuario:administrarLogs page</h1>
+
+<div class="row">
+    <!-- Filtro low res -->
+
+    <!-- Fin filtro Low res -->
+
+    <!-- Tabla -->
+    <div class="col-lg-8">
+
+        <table class="table-gabinetes table table-condensed footable" data-filter="#filtro" data-page-size="20" >
+            <thead>
+            <th></th>
+            <th>Fecha</th>
+            <th>Categoria</th>
+            <th>Subcategoria</th>
+            <th>Descripcion</th>
+            </thead>
+            <tbody>
+            {% for elemento in logs %}
+                <tr data-idlog="{{ elemento.idLog }}">
+                    <td class="tdacciones">
+                        <button class="btn btn-primary consultarLogBoton" ><i class="fa fa-binoculars"></i></button>
+                    </td>
+                    <td class="tdfecha" data-fecha="{{ elemento.Fecha |date("d/m/Y")}}">{{ elemento.Fecha |date("d/m/Y")}}</td>
+                    <td class="tdcategoria" data-categoria="{{ elemento.Categoria}}">{{ elemento.Categoria}}</td>
+                    <td class="tdsubcategoria" data-subcategoria="{{ elemento.Subcategoria}}">{{ elemento.Subcategoria}}</td>
+                    <td class="tddescripcion" >{{ elemento.Descripcion | truncate(40)}}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div><!-- Fin tabla -->
+
+
+    <!-- Filtro high res -->
+    <div class="col-lg-4" id="panel-filtros">
+        <div class="row">
+
+        </div>
+    </div><!-- Fin filtro high res -->
+</div>
+
+
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('js/administracion/logs/administracion_logs.js') }}"></script>
+    <script src="{{ asset('assets/vendor/footable/dist/footable.min.js') }}"></script>
+    <!--<script src="{{ asset('assets/vendor/footable/dist/footable.sort.min.js') }}"></script>-->
+    <script src="{{ asset('assets/vendor/footable/dist/footable.filter.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/footable/dist/footable.paginate.min.js') }}"></script>
+{% endblock %}
+
+{% block templates %}
+    {{ parent() }}
+    <script src="{{ asset('templates/administracion/logs/compiled_logs.js') }}"></script>
+{% endblock %}
+
