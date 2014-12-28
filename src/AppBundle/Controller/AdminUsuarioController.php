@@ -25,8 +25,14 @@ class AdminUsuarioController extends Controller
 
     public function consultarUsuarioAction($idUsuario)
     {
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Usuario');
+
+        $usuario = $repository->findOneBy(array(
+            'id' => $idUsuario));
+
         return $this->render('AdminUsuario/consultarUsuario.html.twig', array(
-                // ...
+                'usuario' => $usuario
             ));    }
 
     public function crearUsuarioAction()
@@ -35,11 +41,17 @@ class AdminUsuarioController extends Controller
                 // ...
             ));    }
 
-    public function editarUsuarioAction()
+    public function editarUsuarioAction($idUsuario)
     {
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Usuario');
+
+        $usuario = $repository->findOneBy(array(
+            'id' => $idUsuario));
+
         return $this->render('AdminUsuario/editarUsuario.html.twig', array(
-                // ...
-            ));    }
+            'usuario' => $usuario
+        ));    }
 
     public function habilitarUsuarioAction()
     {

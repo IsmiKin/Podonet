@@ -8,10 +8,10 @@
 {% block tituloBanner %}Administración de Usuarios{% endblock %}
 
 {% block body %}
-<h1>TABLA USUARIOS</h1>
 
     <table class="table-usuarios table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
         <thead>
+        <th>idUsuario</th>
         <th>username</th>
         <th>email</th>
         <th>Nombre</th>
@@ -31,13 +31,13 @@
                     {% endif %}
                     data-idUsuario="{{ elemento.id }}"
                     >
-                <td class="tdcodigo">{{ elemento.username}}</td>
-                <td class="tdlocalizacion">{{ elemento.email}}</td>
-                <td class="tdtipo">{{ elemento.Nombre}}</td>
-                <td class="tdtipo">{{ elemento.Apellidos}}</td>
+                <td class="tdidUser">{{ elemento.id}}</td>
+                <td class="tdusername">{{ elemento.username}}</td>
+                <td class="tdemail">{{ elemento.email}}</td>
+                <td class="tdNombre">{{ elemento.Nombre}}</td>
+                <td class="tdApellidos">{{ elemento.Apellidos}}</td>
                 <td class="tdacciones">
-                    <button class="btn btn-warning editarUsuarioTabla" ><i class="fa fa-edit"></i></button>
-
+                    <a class="btn btn-warning editarUsuarioTabla" href="/administracion/usuarios/{{ elemento.id}}"><i class="fa fa-edit"></i></a>
                 <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
                     <button class="btn btn-success habilitarUsuarioButton" data-habilitar="true"><i class="fa fa-check"></i></button>
                 </span>
@@ -45,13 +45,12 @@
                     <button class="btn btn-danger habilitarUsuarioButton" data-habilitar="false" ><i class="fa fa-minus-circle"></i></button>
                 </span>
                 <span>
-                    <button class="btn btn-info detalleUsuarioButton" ><i class="fa fa-search"></i></button>
+                    <a class="btn btn-info detalleUsuarioButton" href="/administracion/usuarios/{{ elemento.id}}"><i class="fa fa-search"></i></a>
                 </span>
 
                 </td>
             </tr>
         {% endfor %}
-xzxzzx
         </tbody>
     </table>
 
