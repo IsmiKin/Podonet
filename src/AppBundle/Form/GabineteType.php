@@ -33,9 +33,7 @@ class GabineteType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Gabinete',
-            'csrf_protection' => false,
-            'csrf_field_name' => '_token',
-            'intention'       => 'task_item'
+            'csrf_protection' => false
         ));
     }
 

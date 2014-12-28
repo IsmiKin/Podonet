@@ -11,20 +11,21 @@
             class="danger"
         {{/ifCond}}
 
-        data-idGabinete="{{ id_gabinete }}"
+        data-idgabinete="{{ id_gabinete }}"
+        data-estado="{{ estado }}"
 >
-<td class="tdcodigo">{{ codigo}}</td>
-<td class="tdlocalizacion">{{ localizacion}}</td>
-<td class="tdtipo">{{ tipo}}</td>
+<td class="tdcodigo" data-codigo="{{ codigo}}">{{ codigo}}</td>
+<td class="tdlocalizacion" data-localizacion="{{ localizacion}}">{{ localizacion}}</td>
+<td class="tdtipo" data-tipo="{{ tipo}}">{{ tipo}}</td>
 <td class="tdacciones">
-    <button class="btn btn-warning editarGabineteTabla" ><i class="fa fa-edit"></i></button>
+    <button class="btn btn-warning editarGabineteTabla" data-toggle="modal" data-target="#modalForm"><i class="fa fa-edit"></i></button>
 
-                <span {{#ifCond estado '==' 'Activo'}} hidden="hidden" {{/ifCond}}>
-                    <button class="btn btn-success habilitarGabineteButton" data-habilitar="true" ><i class="fa fa-check"></i></button>
-                </span>
-                <span {{#ifCond estado '==' 'Inactivo'}} hidden="hidden" {{/ifCond}}>
-                    <button class="btn btn-danger habilitarGabineteButton" data-habilitar="false"><i class="fa fa-minus-circle"></i></button>
-                </span>
+    <span {{#ifCond estado '==' 'Activo'}} hidden="hidden" {{/ifCond}}>
+        <button class="btn btn-success habilitarGabineteButton" data-habilitar="true" ><i class="fa fa-check"></i></button>
+    </span>
+    <span {{#ifCond estado '==' 'Inactivo'}} hidden="hidden" {{/ifCond}}>
+        <button class="btn btn-danger habilitarGabineteButton" data-habilitar="false"><i class="fa fa-minus-circle"></i></button>
+    </span>
 
 </td>
 

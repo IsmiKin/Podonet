@@ -60,24 +60,12 @@ class AgendaController extends Controller
                 // ...
             ));    }
 
-    public function ajustesAgendaAction(Request $request)
+    public function ajustesAgendaAction()
     {
 
         $gabinete = new Gabinete();
         $form = $this->createForm(new GabineteType(),$gabinete);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $gabinete->setUsuarioCreador($this->getUser());
-            $gabinete->setFechaUltimaModificacion(new \DateTime('now'));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($gabinete);
-            $em->flush();
-        }
-
-        if ($request->isMethod('POST')) {
-
-        }
+        $formEditar = $this->createForm(new GabineteType(),$gabinete);
 
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Gabinete');
@@ -85,17 +73,18 @@ class AgendaController extends Controller
         $gabinetes= $repository->findAll();
 
         return $this->render('Agenda/ajustesAgenda.html.twig', array(
-                'gabinetes' => $gabinetes , 'form' => $form->createView()
+                'gabinetes' => $gabinetes , 'form' => $form->createView(),
+                'formEditar' => $formEditar->createView()
             ));
 
     }
 
     public function crearGabineteAction(Request $request)
     {
-        $mensaje ="";
         $gabinete = new Gabinete();
         $form = $this->createForm(new GabineteType(),$gabinete);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $gabinete->setUsuarioCreador($this->getUser());
@@ -118,11 +107,36 @@ class AgendaController extends Controller
 
     }
 
-    public function editarGabineteAction()
+    public function editarGabineteAction(Request $request)
     {
-        return $this->render('Agenda/editarGabinete.html.twig', array(
-                // ...
-            ));    }
+
+        $idGabinete = $request->get("idGabinete");
+        $em = $this->getDoctrine()->getManager();
+        $gabinete = $em->getRepository('AppBundle:Gabinete')->find($idGabinete);
+        if (!$gabinete) {
+            throw $this->createNotFoundException('No news found for id ' . $idGabinete);
+        }
+
+        // Recogemos los datos a mano.. (odio esto)
+
+        $gabinete->setTipo($request->get("tipo"));
+        $gabinete->setCodigo($request->get("appbundle_gabinete[codigo]"));
+        $gabinete->setEstado($request->get("appbundle_gabinete[estado]"));
+        $gabinete->setLocalizacion($request->get("appbundle_gabinete[localizacion]"));
+        $gabinete->setFechaUltimaModificacion(new \DateTime('now'));
+        
+        $em->flush();
+
+        $mensaje = "Se ha actualizado correctamente";
+        $codigo_error = 0;
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($gabinete, 'json');
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "gabinete"=>$data, "errors" => $form->getErrors() ) ;
+        return new JsonResponse($datosRespuesta);
+
+    }
 
     public function habilitarGabineteAction()
     {

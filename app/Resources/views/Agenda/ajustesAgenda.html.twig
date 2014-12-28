@@ -2,11 +2,6 @@
 
 {% block title %}PodoNet - Ajustes Agenda{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet"  href="{{ asset('css/agenda/ajustes_agenda.css') }}"/>
-{% endblock %}
-
 {% block iconoBanner %}calendar{% endblock %}
 {% block tituloBanner %}Ajustes de Agenda{% endblock %}
 {% block body %}
@@ -14,13 +9,11 @@
 
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
+    <button type="button" class="btn btn-primary crearModalButton" value="Nuevo" data-toggle="modal" data-target="#modalForm">
+        <i class="fa fa-plus-circle"></i>  Nuevo Gabinete
+    </button>
 
-        <button type="button" class="btn btn-primary" value="Nuevo" data-toggle="modal" data-target="#modalForm">
-            <i class="fa fa-plus-circle"></i>  Nuevo Gabinete</button>
-
-
-
-<table class="table-gabinetes table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
+<table class="table-gabinetes table table-condensed " data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
     <thead>
         <th>Codigo</th>
         <th>Localizacion</th>
@@ -38,13 +31,14 @@
                 {% elseif elemento.Estado == "Suspendido" %}
                     class ="warning"
                 {% endif %}
-            data-idGabinete="{{ elemento.idGabinete }}"
+            data-idgabinete="{{ elemento.idGabinete }}"
+            data-estado="{{ elemento.estado }}"
         >
-            <td class="tdcodigo">{{ elemento.Codigo}}</td>
-            <td class="tdlocalizacion">{{ elemento.Localizacion}}</td>
-            <td class="tdtipo">{{ elemento.Tipo}}</td>
+            <td class="tdcodigo" data-codigo="{{ elemento.Codigo}}">{{ elemento.Codigo}}</td>
+            <td class="tdlocalizacion" data-localizacion="{{ elemento.Localizacion}}">{{ elemento.Localizacion}}</td>
+            <td class="tdtipo" data-tipo="{{ elemento.Tipo}}">{{ elemento.Tipo}}</td>
             <td class="tdacciones">
-                <button class="btn btn-warning editarGabineteTabla" ><i class="fa fa-edit"></i></button>
+                <button class="btn btn-warning editarGabineteTabla" data-toggle="modal" data-target="#modalEditarForm"><i class="fa fa-edit"></i></button>
 
                 <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
                     <button class="btn btn-success habilitarGabineteButton" data-habilitar="true"><i class="fa fa-check"></i></button>
@@ -53,7 +47,6 @@
                     <button class="btn btn-danger habilitarGabineteButton" data-habilitar="false" ><i class="fa fa-minus-circle"></i></button>
                 </span>
 
-
             </td>
         </tr>
     {% endfor %}
@@ -61,7 +54,7 @@
     </tbody>
 </table>
 
-    <!-- Modal window -->
+    <!-- Modal window Crear-->
 
     <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalForm" aria-hidden="true">
         <div class="modal-dialog">
@@ -72,17 +65,19 @@
                 </div>
                 <div class="modal-body">
 
-                    <form method="POST" {{ form_enctype(form) }} action="{{ path('crear_gabinete') }}" class="form-gabinete" >
-                        {{ form_errors(form) }}
-                        {{ form_row(form.codigo) }}
-                        {{ form_row(form.localizacion) }}
-                        {{ form_row(form.tipo) }}
-                        {{ form_row(form.estado) }}
+
+                    <!-- El input hidden solo se usa para editar, no se bindea con el formulario, sino que se coge a mano en el controlador-->
+                    <!--<input type="hidden" name="manual_idgabinete" id="manual_idGabinete" />-->
+                <form class="form-gabinete" >
+                        {{ form_errors(formEditar) }}
+                        {{ form_row(formEditar.codigo) }}
+                        {{ form_row(formEditar.localizacion) }}
+                        {{ form_row(formEditar.tipo) }}
+                        {{ form_row(formEditar.estado) }}
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit"  class="btn btn-success submitCrearGabinete"><i class="fa fa-check"></i>  Crear Gabinete</button>
-                    <button type="submit"  class="btn btn-success submitEditarGabinete" hidden="hidden" data-method="PUT" data-action="{{ path('editar_gabinete') }}"><i class="fa fa-edit"></i>  Editar Gabinete</button>
+                    <button type="submit"  class="btn btn-success submitCrearGabinete" data-method="POST" data-action="{{ path('crear_gabinete') }}"><i class="fa fa-check"></i>  Crear Gabinete</button>
                     <button type="button" value="Cancelar" class="btn btn-default cancelarGabineteForm" data-dismiss="modal"><i class="fa fa-undo"></i>  Cancelar</button>
                 </form>
                 </div>
@@ -92,16 +87,42 @@
 
     <!-- End modal window-->
 
+    <!-- Modal window Crear-->
 
+    <div class="modal fade" id="modalEditarForm" tabindex="-1" role="dialog" aria-labelledby="modalForm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Gestion de gabinetes</h4>
+                </div>
+                <div class="modal-body">
 
+                    <!--<input type="hidden" name="manual_idgabinete" id="manual_idGabinete" />-->
+                    <form class="form-editar-gabinete" >
+                        {{ form_errors(form) }}
+                        {{ form_row(form.codigo) }}
+                        {{ form_row(form.localizacion) }}
+                        {{ form_row(form.tipo) }}
+                        {{ form_row(form.estado) }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-warning submitEditarGabinete" hidden="hidden" data-method="PUT" data-action="{{ path('editar_gabinete') }}"><i class="fa fa-edit"></i>  Editar Gabinete</button>
+                    <button type="button" value="Cancelar" class="btn btn-default cancelarGabineteForm" data-dismiss="modal"><i class="fa fa-undo"></i>  Cancelar</button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- End modal window-->
 
 {% endblock %}
 
 
 {% block javascripts %}
-
     {{ parent() }}
-
     <!-- no se porque no puedo usar Assetic otra vez.. -->
     <script src="{{ asset('js/agenda/ajustes_agenda.js') }}"></script>
 {% endblock %}
