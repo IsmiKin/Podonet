@@ -22,3 +22,8 @@ habilitar_usuario:
 administrar_logs:
     path:     /logs
     defaults: { _controller: AppBundle:AdminUsuario:administrarLogs }
+
+consultar_log:
+    path:     /logs/{idLog}
+    defaults: { _controller: AppBundle:AdminUsuario:consultarLog }
+

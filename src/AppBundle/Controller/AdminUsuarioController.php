@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Proxies\__CG__\AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Log;
 
 class AdminUsuarioController extends Controller
 {
@@ -64,5 +65,10 @@ class AdminUsuarioController extends Controller
         return $this->render('AdminUsuario/administrarLogs.html.twig', array(
                 // ...
             ));    }
+
+    public function consultarLogAction($idLog){
+        return null;
+    }
+
 
 }

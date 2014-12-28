@@ -18,7 +18,7 @@
 <td class="tdlocalizacion" data-localizacion="{{ localizacion}}">{{ localizacion}}</td>
 <td class="tdtipo" data-tipo="{{ tipo}}">{{ tipo}}</td>
 <td class="tdacciones">
-    <button class="btn btn-warning editarGabineteTabla" data-toggle="modal" data-target="#modalForm"><i class="fa fa-edit"></i></button>
+    <button class="btn btn-warning editarGabineteTabla" data-toggle="modal" data-target="#modalEditarForm"><i class="fa fa-edit"></i></button>
 
     <span {{#ifCond estado '==' 'Activo'}} hidden="hidden" {{/ifCond}}>
         <button class="btn btn-success habilitarGabineteButton" data-habilitar="true" ><i class="fa fa-check"></i></button>

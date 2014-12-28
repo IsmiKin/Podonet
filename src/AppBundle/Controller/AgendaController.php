@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use AppBundle\Entity\Gabinete;
+use AppBundle\Entity\Log;
 use Symfony\Component\HttpFoundation\Request;
 
 class AgendaController extends Controller
@@ -92,12 +93,15 @@ class AgendaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($gabinete);
             $em->flush();
-            $mensaje = "Se ha insertado correctamente";
+            $mensaje = "Se ha insertado el gabinete ".$gabinete->getCodigo();
             $codigo_error = 0;
         }else{
-            $mensaje = "Ha ocurrido un error al validar el formulario";
+            $mensaje = "Ha ocurrido un error al validar el formulario del gabinete";
             $codigo_error = 1;
         }
+
+        // Creamos el log
+        $this->procesarLog("Gabinete",$mensaje,null);
 
         $serializer = Serializer::create()->build();
         $data = $serializer ->serialize($gabinete, 'json');
@@ -109,31 +113,35 @@ class AgendaController extends Controller
 
     public function editarGabineteAction(Request $request)
     {
+        $request = $this->get("request");
+        $idGabinete = $request->get("idgabinete");
 
-        $idGabinete = $request->get("idGabinete");
         $em = $this->getDoctrine()->getManager();
         $gabinete = $em->getRepository('AppBundle:Gabinete')->find($idGabinete);
         if (!$gabinete) {
             throw $this->createNotFoundException('No news found for id ' . $idGabinete);
         }
 
-        // Recogemos los datos a mano.. (odio esto)
-
+        // Recogemos los datos a mano.. (odio esto, me quema)
+        // Habria que hacer una validacion...
         $gabinete->setTipo($request->get("tipo"));
-        $gabinete->setCodigo($request->get("appbundle_gabinete[codigo]"));
-        $gabinete->setEstado($request->get("appbundle_gabinete[estado]"));
-        $gabinete->setLocalizacion($request->get("appbundle_gabinete[localizacion]"));
+        $gabinete->setCodigo($request->get("codigo"));
+        $gabinete->setEstado($request->get("estado"));
+        $gabinete->setLocalizacion($request->get("localizacion"));
         $gabinete->setFechaUltimaModificacion(new \DateTime('now'));
-        
         $em->flush();
 
-        $mensaje = "Se ha actualizado correctamente";
+        $mensaje = "Se ha actualizado el gabinete con id ".$gabinete->getIdGabinete()." correctamente";
         $codigo_error = 0;
+
+        // Creamos el log
+        $this->procesarLog("Gabinete",$mensaje,null);
+
 
         $serializer = Serializer::create()->build();
         $data = $serializer ->serialize($gabinete, 'json');
 
-        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "gabinete"=>$data, "errors" => $form->getErrors() ) ;
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "gabinete"=>$data) ;
         return new JsonResponse($datosRespuesta);
 
     }
@@ -146,8 +154,8 @@ class AgendaController extends Controller
         $id = $request->get('idGabinete');
         $habilitar = $request->get('habilitar');
 
-        if($habilitar=="true")  $nuevoEstado = "Activo";
-        else                    $nuevoEstado ="Inactivo";
+        if($habilitar=="true"){  $nuevoEstado = "Activo";  $mensajeaccion="habilitado";}
+        else                  {  $nuevoEstado ="Inactivo"; $mensajeaccion="deshabilitado";}
 
         $em = $this->getDoctrine()->getEntityManager();
         $gabinete = $em->getRepository('AppBundle:Gabinete')->find($id);
@@ -159,11 +167,35 @@ class AgendaController extends Controller
         $gabinete->setEstado($nuevoEstado);
         $em->flush();
 
-        $mensaje = "Se ha insertado correctamente";
+        // Habria que controlar errores..
+
+        $mensaje = "Se ha $mensajeaccion el gabinete $id correctamente";
         $codigo_error = 0;
+
+        // Creamos el log
+        $this->procesarLog("Gabinete",$mensaje,null);
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
         return new JsonResponse($datosRespuesta);
     }
+
+    private function procesarLog( $Subcategoria, $Descripcion, $Paciente){
+        $log = new Log();
+
+        $log->setCategoria("Agenda")
+            ->setSubcategoria($Subcategoria)
+            ->setDescripcion($Descripcion)
+            ->setUsuario($this->getUser())
+            ->setFecha(new \DateTime('now'));
+        if($Paciente!=null){
+            $log->setPaciente($Paciente);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($log);
+        $em->flush();
+
+    }
+
 
 }

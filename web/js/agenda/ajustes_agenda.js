@@ -11,12 +11,9 @@ $(document).ready(function(){
 
     $(".form-gabinete").submit(submitFormGabinete); // Para la creacion
     $(".form-editar-gabinete").submit(submitEditarFormGabinete)
-    //$(".submitEditarGabinete").click(submitEditarFormGabinete);
     $(".habilitarGabineteButton").click(habilitarGabinete);
     $(".crearModalButton").click(showCreateModal);
     $(".editarGabineteTabla").click(showEditModal);
-
-    // Version alternativa
 
 });
 
@@ -24,33 +21,19 @@ function submitFormGabinete(e){
     e.preventDefault();
     var form = $(".form-gabinete");
     var botonCrear = $(".submitCrearGabinete");
-    var botonEditar = $(".submitEditarGabinete");
-    var idGabinete = null;
-    var opcion = null;
-
-    if(rowEditando!=undefined)
-        idGabinete = rowEditando.data("idgabinete");
 
     var values = {};
     $.each( form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
-    console.log(form.serializeArray());
-
-    if(botonCrear.is(":visible")){
-        opcion = botonCrear;
-    }else{
-        opcion = botonEditar;
-    }
 
     $.ajax({
-        type: opcion.data("method"), url: opcion.data("action"),
+        type: botonCrear.data("method"), url: botonCrear.data("action"),
         data: values,
         success: function(data) {
             if(data.codigo_error==0){
                 var gabinete = $.parseJSON(data.gabinete);
                 insertarNuevaRow(gabinete);
-
                 resetearForm();
                 $(".cancelarGabineteForm").click();
             }else
@@ -65,35 +48,25 @@ function submitEditarFormGabinete(e){
     e.preventDefault();
     console.log("yija");
     var form = $(".form-editar-gabinete");
-    var botonCrear = $(".submitCrearGabinete");
     var botonEditar = $(".submitEditarGabinete");
     var idGabinete = null;
-    var opcion = null;
 
     if(rowEditando!=undefined)
         idGabinete = rowEditando.data("idgabinete");
 
     var values = {};
     $.each( form.serializeArray(), function(i, field) {
-        values[field.name] = field.value;
+        values[field.name.split("[")[1].split("]")[0]] = field.value;
     });
-    console.log(form.serializeArray());
-
-    if(botonCrear.is(":visible")){
-        opcion = botonCrear;
-    }else{
-        opcion = botonEditar;
-        values["idGabinete"] = idGabinete;
-    }
+    values["idgabinete"] = idGabinete;
 
     $.ajax({
-        type: opcion.data("method"), url: opcion.data("action"),
-        data: values,
+        type: botonEditar.data("method"), url: botonEditar.data("action"),
+        data: $.param(values),
         success: function(data) {
             if(data.codigo_error==0){
                 var gabinete = $.parseJSON(data.gabinete);
-                insertarNuevaRow(gabinete);
-
+                actualizarRow(gabinete);
                 resetearForm();
                 $(".cancelarGabineteForm").click();
             }else
@@ -118,14 +91,19 @@ function insertarNuevaRow(gabinete){
 }
 
 function actualizarRow(gabinete){
-    console.log(gabinete);
     $.each(camposEnColumnas,function(index,value){
-       row.find(".td"+value).data();
-
+        columna = rowEditando.find(".td"+value);
+        columna.data(value,gabinete[value]);
+        columna.text(gabinete[value]);
     });
     $.each(camposEnFilas,function(index,value){
-        formulario.find('[name*='+value+']').val(row.data(value));
+        rowEditando.data(value,gabinete[value]);
     });
+
+    var nuevoColor = (gabinete.estado=="Activo") ? "success" : "danger";
+    var antiguoColor = (gabinete.estado=="Activo") ? "danger" : "success";
+    rowEditando.removeClass(antiguoColor).addClass(nuevoColor);
+
 }
 
 function habilitarGabinete(){
@@ -146,12 +124,9 @@ function habilitarGabinete(){
                 row.removeClass(antiguoColor).addClass(nuevoColor);
             }else
                 console.log("error!");
-
         }
     });
-
 }
-
 
 function showCreateModal(e){
     resetearForm();

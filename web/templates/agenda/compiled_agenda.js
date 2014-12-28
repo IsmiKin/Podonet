@@ -32,7 +32,7 @@ templates['nuevafila_gabinete'] = template({"1":function(depth0,helpers,partials
     + escapeExpression(((helper = (helper = helpers.tipo || (depth0 != null ? depth0.tipo : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"tipo","hash":{},"data":data}) : helper)))
     + "\">"
     + escapeExpression(((helper = (helper = helpers.tipo || (depth0 != null ? depth0.tipo : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"tipo","hash":{},"data":data}) : helper)))
-    + "</td>\n<td class=\"tdacciones\">\n    <button class=\"btn btn-warning editarGabineteTabla\" data-toggle=\"modal\" data-target=\"#modalForm\"><i class=\"fa fa-edit\"></i></button>\n\n    <span ";
+    + "</td>\n<td class=\"tdacciones\">\n    <button class=\"btn btn-warning editarGabineteTabla\" data-toggle=\"modal\" data-target=\"#modalEditarForm\"><i class=\"fa fa-edit\"></i></button>\n\n    <span ";
   stack1 = ((helpers.ifCond || (depth0 && depth0.ifCond) || helperMissing).call(depth0, (depth0 != null ? depth0.estado : depth0), "==", "Activo", {"name":"ifCond","hash":{},"fn":this.program(5, data),"inverse":this.noop,"data":data}));
   if (stack1 != null) { buffer += stack1; }
   buffer += ">\n        <button class=\"btn btn-success habilitarGabineteButton\" data-habilitar=\"true\" ><i class=\"fa fa-check\"></i></button>\n    </span>\n    <span ";
