@@ -25,10 +25,12 @@ ajustes_agenda:
 crear_gabinete:
     path:     /ajustes/gabinete/crear/
     defaults: { _controller: AppBundle:Agenda:crearGabinete }
+    methods: [POST]
 
 editar_gabinete:
     path:     /ajustes/gabinete/editar/
     defaults: { _controller: AppBundle:Agenda:editarGabinete }
+    methods: [PUT]
 
 habilitar_gabinete:
     path:     /ajustes/gabinete/habilitar/
