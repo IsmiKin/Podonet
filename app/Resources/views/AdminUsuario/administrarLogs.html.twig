@@ -21,6 +21,11 @@
     <!-- Tabla -->
     <div class="col-lg-8">
 
+        <div class="input-group input-sm col-md-8">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" id="filtro" class="form-control" placeholder="Filtro">
+        </div>
+
         <table class="table-gabinetes table table-condensed footable" data-filter="#filtro" data-page-size="20" >
             <thead>
             <th></th>
@@ -32,7 +37,7 @@
             <tbody>
             {% for elemento in logs %}
                 <tr data-idlog="{{ elemento.idLog }}">
-                    <td class="tdacciones">
+                    <td class="tdacciones" >
                         <button class="btn btn-primary consultarLogBoton" ><i class="fa fa-binoculars"></i></button>
                     </td>
                     <td class="tdfecha" data-fecha="{{ elemento.Fecha |date("d/m/Y")}}">{{ elemento.Fecha |date("d/m/Y")}}</td>

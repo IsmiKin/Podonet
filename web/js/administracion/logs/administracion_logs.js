@@ -21,11 +21,15 @@ $(document).ready(function(){
     inicializarPanelFiltroHigh();
     $('.footable').footable();
     $(".pagination").children("ul").addClass("pagination");
-    /*$(".footable-sort-indicator").click(function(){
-        //setTimeout(borrarSegundo,1000 );
-    });*/
+    $(".footable-sort-indicator").click(function(){
+        setTimeout(borrarSegundo,1000 );
+    });
 
 });
+
+function borrarSegundo(){
+    $("div.pagination > li").remove();
+}
 
 function inicializarPanelFiltroHigh(){
     var htmlPanel = Handlebars.templates.filtros_highres(categorias);
@@ -57,4 +61,5 @@ function filtrarSubcategoria(e){
 function filtrarTabla(filtro){
     var footableFilter = $(".footable").data('footable-filter');
     footableFilter.filter(filtro);
+    borrarSegundo();
 }
