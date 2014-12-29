@@ -12,8 +12,9 @@ crear_usuario:
     defaults: { _controller: AppBundle:AdminUsuario:crearUsuario }
 
 editar_usuario:
-    path:     /usuarios/editar
+    path:     /{idUsuario}
     defaults: { _controller: AppBundle:AdminUsuario:editarUsuario }
+    methods: [PUT]
 
 habilitar_usuario:
     path:     /usuarios/habilitar
