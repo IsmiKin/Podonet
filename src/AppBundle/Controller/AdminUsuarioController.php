@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UsuarioType;
 use Proxies\__CG__\AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Log;
+use Symfony\Component\Form\Form;
 
 class AdminUsuarioController extends Controller
 {
@@ -44,6 +46,11 @@ class AdminUsuarioController extends Controller
 
     public function editarUsuarioAction($idUsuario)
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
+        $formEditar = $this->createForm(new UsuarioType(),$usuario);
+
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Usuario');
 
@@ -51,7 +58,8 @@ class AdminUsuarioController extends Controller
             'id' => $idUsuario));
 
         return $this->render('AdminUsuario/editarUsuario.html.twig', array(
-            'usuario' => $usuario
+            'usuario' => $usuario,
+            'formEditar' => $formEditar->createView()
         ));    }
 
     public function habilitarUsuarioAction()

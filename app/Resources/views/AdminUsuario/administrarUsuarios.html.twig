@@ -37,7 +37,7 @@
                 <td class="tdNombre">{{ elemento.Nombre}}</td>
                 <td class="tdApellidos">{{ elemento.Apellidos}}</td>
                 <td class="tdacciones">
-                    <a class="btn btn-warning editarUsuarioTabla" href="/administracion/usuarios/{{ elemento.id}}"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-warning editarUsuarioTabla" href="/administracion/{{ elemento.id}}"><i class="fa fa-edit"></i></a>
                 <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
                     <button class="btn btn-success habilitarUsuarioButton" data-habilitar="true"><i class="fa fa-check"></i></button>
                 </span>

@@ -7,4 +7,17 @@
 
 {% block body %}
 <h1>Welcome to the AdminUsuario:editarUsuario page</h1>
+
+    <form class="form-usuario" >
+        {{ form_errors(formEditar) }}
+        {{ form_row(formEditar.nombre) }}
+        {{ form_row(formEditar.apellidos) }}
+        {{ form_row(formEditar.estado) }}
+        {{ form_row(formEditar.telefono) }}
+
+        <div class="">
+            <button type="submit"  class="btn btn-success submitEditarUsuario" data-method="POST" data-action=""><i class="fa fa-check"></i> Editar Usuario</button>
+            <button type="button" value="Cancelar" class="btn btn-default cancelarUsuarioForm" data-dismiss="modal"><i class="fa fa-undo"></i>  Cancelar</button>
+        </div>
+    </form>
 {% endblock %}
