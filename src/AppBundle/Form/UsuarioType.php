@@ -19,6 +19,8 @@ class UsuarioType extends AbstractType
             ->add('apellidos')
             ->add('estado')
             ->add('telefono')
+	    ->add('estado', 'choice',array('choices'=>array('Activo'=>'Activo', 'Inactivo' => 'Inactivo', 'Inhabilitado' => 'Inhabilitado')))
+
         ;
     }
     
