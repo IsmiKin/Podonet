@@ -16,6 +16,7 @@
         <th>email</th>
         <th>Nombre</th>
         <th>Apellidos</th>
+        <th>Estado</th>
         <th>Acciones</th>
         </thead>
         <tbody>
@@ -26,7 +27,7 @@
                         class="success"
                     {% elseif elemento.Estado =="Inactivo" %}
                         class="danger"
-                    {% elseif elemento.Estado == "Suspendido" %}
+                    {% elseif elemento.Estado == "Inhabilitado" %}
                         class ="warning"
                     {% endif %}
                     data-idUsuario="{{ elemento.id }}"
@@ -36,13 +37,19 @@
                 <td class="tdemail">{{ elemento.email}}</td>
                 <td class="tdNombre">{{ elemento.Nombre}}</td>
                 <td class="tdApellidos">{{ elemento.Apellidos}}</td>
+                <td class="tdEstado">{{ elemento.Estado}}</td>
                 <td class="tdacciones">
-                    <a class="btn btn-warning editarUsuarioTabla" href="/administracion/{{ elemento.id}}"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-warning editarUsuarioTabla" href="{{ path('editar_usuario', {'idUsuario': elemento.id }) }}"><i class="fa fa-edit"></i></a>
                 <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
-                    <button class="btn btn-success habilitarUsuarioButton" data-habilitar="true"><i class="fa fa-check"></i></button>
+                    <button class="btn btn-success habilitarUsuarioButton" data-estado="{{ elemento.Estado}}"><i class="fa fa-check"></i></button>
                 </span>
                 <span {% if elemento.Estado =="Inactivo" %} hidden="hidden" {% endif %}>
-                    <button class="btn btn-danger habilitarUsuarioButton" data-habilitar="false" ><i class="fa fa-minus-circle"></i></button>
+                    <button class="btn btn-danger habilitarUsuarioButton"
+                            data-action="{{ path('habilitar_usuario') }}"
+                            data-estado="{{ elemento.Estado}}"
+                            data-idusuario="{{ elemento.id}}" >
+                        <i class="fa fa-minus-circle"></i>
+                    </button>
                 </span>
                 <span>
                     <a class="btn btn-info detalleUsuarioButton" href="/administracion/usuarios/{{ elemento.id}}"><i class="fa fa-search"></i></a>
@@ -54,4 +61,15 @@
         </tbody>
     </table>
 
-{% endblock %}
+    <div class="">
+        <a class="btn btn-success" href="{{ path('crear_usuario') }}">
+            <i class="fa fa-plus"></i>  Nuevo Usuario</a>
+    </div>
+
+
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/administracion/admon_usuarios.js') }}"></script>
+    {% endblock %}

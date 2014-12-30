@@ -7,6 +7,7 @@ use Proxies\__CG__\AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Log;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminUsuarioController extends Controller
 {
@@ -38,35 +39,112 @@ class AdminUsuarioController extends Controller
                 'usuario' => $usuario
             ));    }
 
-    public function crearUsuarioAction()
+    public function crearUsuarioAction(Request $request)
     {
+        $usuario = new Usuario();
+        $formCrear = $this->createForm(new UsuarioType());
+        $formCrear->handleRequest($request);
+
+        if ($request->isMethod('PUT')) {
+            if ($formCrear->isSubmitted() && $formCrear->isValid()) {
+                $usuario->setNombre($request->get("nombre"));
+                $usuario->setApellidos($request->get("apellidos"));
+                $usuario->setTelefono($request->get("telefono"));
+                $usuario->setEstado($request->get("estado"));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($usuario);
+                $em->flush();
+                $mensaje = "Se ha insertado el usuario ".$usuario->getNombre();
+            }else{
+                $mensaje = "Ha ocurrido un error al validar el formulario del usuario";
+            }
+//            $formCrear->bind($request);
+
+            return $this->administrarUsuariosAction();
+        }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
-                // ...
+            'formCrear' => $formCrear->createView(),
             ));    }
 
-    public function editarUsuarioAction($idUsuario)
+    public function editarUsuarioAction($idUsuario, Request $request)
     {
+        $request = $this->get("request");
+        $mensaje = "";
+        if (in_array($request->getMethod(), array('PUT'))) {
+//            Id($request);
+            $idUsuario = $this->get('idusuario'); //Guardo el id en data, en el form de edit no envio id en URL
 
-        $em = $this->getDoctrine()->getManager();
-        $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
-        $formEditar = $this->createForm(new UsuarioType(),$usuario);
+            $em = $this->getDoctrine()->getManager();
+            $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
+            if (!$idUsuario) {
+                throw $this->createNotFoundException('No news found for id ' . $idUsuario);
+            }
+            // Recogemos datos
+            $usuario->setNombre($request->get("nombre"));
+            $usuario->setApellidos($request->get("apellidos"));
+            $usuario->setTelefono($request->get("telefono"));
+            $usuario->setEstado($request->get("estado"));
 
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Usuario');
+            $em->persist($usuario);
+            $em->flush();
 
-        $usuario = $repository->findOneBy(array(
-            'id' => $idUsuario));
+            $mensaje = "Se ha actualizado el perfil del usuario con id ".$idUsuario." correctamente";
+
+            // Creamos el log
+            $this->procesarLog("Usuario",$mensaje,null);
+        }
+        else{
+            $em = $this->getDoctrine()->getManager();
+            $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
+            $formEditar = $this->createForm(new UsuarioType(),$usuario);
+
+            $repository = $this->getDoctrine()
+                ->getRepository('AppBundle:Usuario');
+
+            $usuario = $repository->findOneBy(array(
+                'id' => $idUsuario));
+        }
+
+
 
         return $this->render('AdminUsuario/editarUsuario.html.twig', array(
             'usuario' => $usuario,
-            'formEditar' => $formEditar->createView()
+            'formEditar' => $formEditar->createView(),
+            'mensajeReturn' => $mensaje
         ));    }
 
     public function habilitarUsuarioAction()
     {
-        return $this->render('AdminUsuario/habilitarUsuario.html.twig', array(
-                // ...
-            ));    }
+        $request = $this->get('request');
+
+        $idUsuario = $request->get('idUsuario');
+        $estado = $request->get('estado');
+
+        if($estado=="Inactivo"){  $nuevoEstado = "Activo";  $mensajeaccion="habilitado";}
+        else                  {  $nuevoEstado ="Inactivo"; $mensajeaccion="deshabilitado";}
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
+
+        if (!$usuario) {
+            throw $this->createNotFoundException('No product found for id '.$idUsuario);
+        }
+
+        $usuario->setEstado($nuevoEstado);
+        $em->flush();
+
+        // Mensaje Log
+        $mensaje = "Se ha $mensajeaccion el usuario $idUsuario correctamente";
+
+        // Creamos el log
+        $this->procesarLog("Usuario",$mensaje,null);
+
+        return $this->administrarUsuariosAction();
+
+//        return $this->render('AdminUsuario/habilitarUsuario.html.twig', array(
+//                // ...
+//            ));
+    }
 
     public function administrarLogsAction()
     {
@@ -105,6 +183,24 @@ class AdminUsuarioController extends Controller
         return $this->render('AdminUsuario/consultarLog.html.twig', array(
             'log' => $log
         ));
+
+    }
+
+    private function procesarLog( $Subcategoria, $Descripcion, $Paciente){
+        $log = new Log();
+
+        $log->setCategoria("Administracion")
+            ->setSubcategoria($Subcategoria)
+            ->setDescripcion($Descripcion)
+            ->setUsuario($this->getUser())
+            ->setFecha(new \DateTime('now'));
+        if($Paciente!=null){
+            $log->setPaciente($Paciente);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($log);
+        $em->flush();
 
     }
 

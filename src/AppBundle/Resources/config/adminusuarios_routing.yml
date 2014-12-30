@@ -8,7 +8,7 @@ consultar_usuario:
     defaults: { _controller: AppBundle:AdminUsuario:consultarUsuario }
 
 crear_usuario:
-    path:     /usuarios/crear
+    path:     /usuarios/crear/
     defaults: { _controller: AppBundle:AdminUsuario:crearUsuario }
 
 editar_usuario:

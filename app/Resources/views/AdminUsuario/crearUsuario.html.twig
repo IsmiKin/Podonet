@@ -2,6 +2,31 @@
 
 {% block title %}AppBundle:AdminUsuario:crearUsuario{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="{{ asset('css/administracion/consultarUsuario.css') }}"/>
+{% endblock %}
+
+
+{% block iconoBanner %}users{% endblock %}
+{% block tituloBanner %}Administración de Usuarios{% endblock %}
+
+
 {% block body %}
-<h1>Welcome to the AdminUsuario:crearUsuario page</h1>
+
+    <form class="form-usuario">
+        {{ form_errors(formCrear) }}
+        {{ form_row(formCrear.nombre) }}
+        {{ form_row(formCrear.apellidos) }}
+        {{ form_row(formCrear.estado) }}
+        {{ form_row(formCrear.telefono) }}
+
+        <div class="">
+            <button type="submit" class="btn btn-success submitCrearUsuario" data-method="PUT" data-action="{{ path('crear_usuario') }}">
+                <i class="fa fa-plus"></i> Añadir</button>
+            <a class="btn btn-default" href="{{ path('administrar_usuarios') }}">
+                <i class="fa fa-undo"></i>  Cancelar</a>
+        </div>
+    </form>
+
 {% endblock %}
