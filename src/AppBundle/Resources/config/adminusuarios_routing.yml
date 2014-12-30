@@ -21,13 +21,12 @@ habilitar_usuario:
     defaults: { _controller: AppBundle:AdminUsuario:habilitarUsuario }
 
 pre_administrar_logs:
-    path:     /logs
+    path:     /logs/
     defaults: { _controller: AppBundle:AdminUsuario:preAdministrarLogs }
 
 administrar_logs:
-    path:     /logs/administrar
+    path:     /logs/administrar/
     defaults: { _controller: AppBundle:AdminUsuario:administrarLogs }
-    methods: [POST]
 
 consultar_log:
     path:     /logs/{idLog}

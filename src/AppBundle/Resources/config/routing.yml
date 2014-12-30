@@ -12,7 +12,7 @@ paciente_routing:
 
 adminusuarios_routing:
     resource: "@AppBundle/Resources/config/adminusuarios_routing.yml"
-    prefix: "/administracion/"
+    prefix: "/administracion"
 
 usuarios_routing:
     resource: "@AppBundle/Resources/config/usuario_routing.yml"

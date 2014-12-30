@@ -38,7 +38,7 @@
             {% for elemento in logs %}
                 <tr data-idlog="{{ elemento.idLog }}">
                     <td class="tdacciones" >
-                        <button class="btn btn-primary consultarLogBoton" ><i class="fa fa-binoculars"></i></button>
+                        <a href="{{ path('consultar_log', {'idLog': elemento.idLog }) }}" class="btn btn-primary consultarLogBoton" ><i class="fa fa-binoculars"></i></a>
                     </td>
                     <td class="tdfecha" data-fecha="{{ elemento.Fecha |date("d/m/Y")}}">{{ elemento.Fecha |date("d/m/Y")}}</td>
                     <td class="tdcategoria" data-categoria="{{ elemento.Categoria}}">{{ elemento.Categoria}}</td>

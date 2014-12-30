@@ -1,0 +1,94 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Podonet - Administracion Logs{% endblock %}
+
+{% block tituloBanner %}Administracion Logs{% endblock %}
+{% block iconoBanner %}book{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/administracion/logs/administracion_logs.css') }}"/>
+
+{% endblock %}
+
+{% block body %}
+
+    <!-- Datos del log -->
+    <div class="row">
+        <a href="{{ path('administrar_logs') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
+    </div>
+
+
+    <br/>
+    <div class="row">
+        <div class="list-group ">
+            <a href="#" class="list-group-item active">
+                <i class="fa fa-book fa-2x" ></i>  <span class="tituloPanel">Datos de Log</span>
+            </a>
+
+            <a href="#" class="list-group-item"  >
+                <strong>Fecha :</strong> {{ log.Fecha|date("d/m/Y") }}
+            </a>
+            <a href="#" class="list-group-item"  >
+                <strong>Categoria :</strong> {{ log.Categoria }}
+            </a>
+            <a href="#" class="list-group-item"  >
+                <strong>Subcategoria :</strong> {{ log.Subcategoria }}
+            </a>
+            <a href="#" class="list-group-item"  >
+                <strong>Descripcion:</strong> <br/>
+                {{ log.Descripcion}}
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Datos del Usuario -->
+
+    <div class="row">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-danger active">
+                <i class="fa fa-user fa-2x" ></i>  <span class="tituloPanel">Datos de Usuario</span>
+            </a>
+
+            <a href="#" class="list-group-item"  >
+                <strong>Nombre Completo :</strong> {{ log.Usuario.Nombre }} {{ log.Usuario.Apellidos }}
+            </a>
+            <a href="#" class="list-group-item"  >
+                <strong>Rol :</strong> <em>¡Por implementar!</em>
+            </a>
+
+            <a href="#" class="list-group-item"  >
+                <strong>Estado:</strong> {{ log.Usuario.Estado }}
+            </a>
+            <a href="#" class="list-group-item"  >
+                <strong>Username :</strong> {{ log.Usuario.username }}
+            </a>
+            <a href="#" class="list-group-item"  >
+                <strong>Email:</strong> {{ log.Usuario.email }}<br/>
+                <strong>Telefono:</strong> {{ log.Usuario.Telefono }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Datos del Paciente (si tiene) -->
+
+    {% if log.Paciente is not null%}
+        <div class="row">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-success active">
+                    <i class="fa fa-stethoscope fa-2x" ></i>  <span class="tituloPanel">Datos de Paciente</span>
+                </a>
+
+                <a href="#" class="list-group-item"  >
+                    <strong>Nombre Completo :</strong> {{ log.Paciente.Nombre }} {{ log.Paciente.Apellidos }}
+                </a>
+                <a href="#" class="list-group-item"  >
+                    <strong>Codigo :</strong> {{ log.Paciente.Codigo }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JMS\Serializer\SerializerBuilder as Serializer;
+use Symfony\Component\HttpFoundation\Response;
 
 class PacienteController extends Controller
 {
@@ -16,7 +18,8 @@ class PacienteController extends Controller
     {
         return $this->render('Paciente/busquedaPaciente.html.twig', array(
                 // ...
-            ));    }
+            ));
+    }
 
     public function crearPacienteAction()
     {
@@ -65,5 +68,25 @@ class PacienteController extends Controller
         return $this->render('Paciente/editarDiagnostico.html.twig', array(
                 // ...
             ));    }
+
+    public function todosPacientesAction(){
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Paciente');
+
+        $pacientes= $repository->findAll();
+
+        $salida = array();
+
+        foreach($pacientes as  $paciente){
+            array_push($salida,array("value"=>$paciente->getNombre() ));
+        }
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($salida, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type:','application/json');
+        return $response;
+    }
 
 }

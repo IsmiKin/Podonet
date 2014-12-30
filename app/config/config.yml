@@ -84,3 +84,6 @@ services:
      class: Twig_Extensions_Extension_Text
      tags:
          - { name: twig.extension }
+
+fos_js_routing:
+    routes_to_expose: [ route_1, route_2, ... ]

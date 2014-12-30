@@ -1,7 +1,26 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Paciente:busquedaPaciente{% endblock %}
+{% block title %}Podonet - Busqueda Paciente{% endblock %}
+
+{% block tituloBanner %}Gestion de Pacientes{% endblock %}
+{% block iconoBanner %}stethoscope{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Paciente:busquedaPaciente page</h1>
+
+<div id="scrollable-dropdown-menu">
+    <input id="my-input" class="typeahead" type="text" placeholder="Nombre del paciente">
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('js/paciente/busqueda_paciente.js') }}"></script>
 {% endblock %}

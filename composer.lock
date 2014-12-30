@@ -778,12 +778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "2c378af30f06fe6fdd9cedd136714696536ab30e"
+                "reference": "4ceecb62f8bfbee56a5ec83f5ab6124710cf89d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/2c378af30f06fe6fdd9cedd136714696536ab30e",
-                "reference": "2c378af30f06fe6fdd9cedd136714696536ab30e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4ceecb62f8bfbee56a5ec83f5ab6124710cf89d1",
+                "reference": "4ceecb62f8bfbee56a5ec83f5ab6124710cf89d1",
                 "shasum": ""
             },
             "require": {
@@ -837,7 +837,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2014-12-17 16:18:07"
+            "time": "2014-12-29 10:27:58"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1174,16 +1174,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa"
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
                 "shasum": ""
             },
             "require": {
@@ -1197,7 +1197,7 @@
                 "aws/aws-sdk-php": "~2.4, >2.4.8",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
-                "phpunit/phpunit": "~3.7.0",
+                "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
                 "videlalvaro/php-amqplib": "~2.4"
@@ -1216,7 +1216,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.12.x-dev"
                 }
             },
             "autoload": {
@@ -1242,7 +1242,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-09-30 13:30:58"
+            "time": "2014-12-29 21:29:35"
         },
         {
             "name": "phing/phing",
@@ -2223,12 +2223,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "445a0815f991fba86dfbdb065726706ed6f01d64"
+                "reference": "90378ab90078165796670a79dbbf5a3f5ff76bf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/445a0815f991fba86dfbdb065726706ed6f01d64",
-                "reference": "445a0815f991fba86dfbdb065726706ed6f01d64",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/90378ab90078165796670a79dbbf5a3f5ff76bf0",
+                "reference": "90378ab90078165796670a79dbbf5a3f5ff76bf0",
                 "shasum": ""
             },
             "require": {
@@ -2331,7 +2331,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-12-26 10:31:05"
+            "time": "2014-12-29 11:27:57"
         },
         {
             "name": "twig/extensions",
@@ -2583,6 +2583,7 @@
         "raulfraile/ladybug-bundle": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },

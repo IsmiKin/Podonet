@@ -99,7 +99,13 @@ class AdminUsuarioController extends Controller
 
 
     public function consultarLogAction($idLog){
-        return null;
+        $em = $this->getDoctrine()->getManager();
+        $log = $em->getRepository('AppBundle:Log')->find($idLog);
+
+        return $this->render('AdminUsuario/consultarLog.html.twig', array(
+            'log' => $log
+        ));
+
     }
 
 
