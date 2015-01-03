@@ -7,8 +7,8 @@
 
 {% block body %}
 <h1>Welcome to the AdminUsuario:editarUsuario page</h1>
-
-    <form class="form-usuario" data-idusuario="{{ usuario.id }}">
+<h2>{{ mensajeReturn }}</h2>
+    <form class="form-usuario" data-idusuario="{{ usuario.id }}" method="PUT">
         {{ form_errors(formEditar) }}
         {{ form_row(formEditar.nombre) }}
         {{ form_row(formEditar.apellidos) }}
@@ -16,7 +16,7 @@
         {{ form_row(formEditar.telefono) }}
 
         <div class="">
-            <button type="submit" class="btn btn-success submitEditarUsuario" data-method="PUT" data-action="{{ path('editar_usuario', {'idUsuario': usuario.id }) }}">
+            <button type="submit" class="btn btn-success submitEditarUsuario" data-action="{{ path('editar_usuario', {'idUsuario': usuario.id }) }}">
                 <i class="fa fa-check"></i> Editar Usuario</button>
             <a class="btn btn-default" href="{{ path('administrar_usuarios') }}">
                 <i class="fa fa-undo"></i>  Cancelar</a>

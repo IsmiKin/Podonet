@@ -41,7 +41,11 @@
                 <td class="tdacciones">
                     <a class="btn btn-warning editarUsuarioTabla" href="{{ path('editar_usuario', {'idUsuario': elemento.id }) }}"><i class="fa fa-edit"></i></a>
                 <span {% if elemento.Estado =="Activo" %} hidden="hidden" {% endif %}>
-                    <button class="btn btn-success habilitarUsuarioButton" data-estado="{{ elemento.Estado}}"><i class="fa fa-check"></i></button>
+                    <button class="btn btn-success habilitarUsuarioButton"
+                            data-action="{{ path('habilitar_usuario') }}"
+                            data-estado="{{ elemento.Estado}}"
+                            data-idusuario="{{ elemento.id}}" >
+                        <i class="fa fa-check"></i></button>
                 </span>
                 <span {% if elemento.Estado =="Inactivo" %} hidden="hidden" {% endif %}>
                     <button class="btn btn-danger habilitarUsuarioButton"

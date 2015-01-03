@@ -19,6 +19,8 @@ editar_usuario:
 habilitar_usuario:
     path:     /usuarios/habilitar
     defaults: { _controller: AppBundle:AdminUsuario:habilitarUsuario }
+    options:
+             expose: true
 
 pre_administrar_logs:
     path:     /logs/

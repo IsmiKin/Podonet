@@ -14,7 +14,7 @@
 
 {% block body %}
 
-    <form class="form-usuario">
+    <form class="form-usuario" method="post">
         {{ form_errors(formCrear) }}
         {{ form_row(formCrear.nombre) }}
         {{ form_row(formCrear.apellidos) }}
@@ -22,7 +22,7 @@
         {{ form_row(formCrear.telefono) }}
 
         <div class="">
-            <button type="submit" class="btn btn-success submitCrearUsuario" data-method="PUT" data-action="{{ path('crear_usuario') }}">
+            <button type="submit" class="btn btn-success submitCrearUsuario" data-action="{{ path('crear_usuario') }}">
                 <i class="fa fa-plus"></i> Añadir</button>
             <a class="btn btn-default" href="{{ path('administrar_usuarios') }}">
                 <i class="fa fa-undo"></i>  Cancelar</a>
