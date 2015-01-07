@@ -1,0 +1,70 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PodoNet - Mi perfil{% endblock %}
+
+{% block iconoBanner %}user{% endblock %}
+{% block tituloBanner %}Ajustes de Agenda{% endblock %}
+{% block body %}
+
+
+
+<!-- Menu small res -->
+<div class="row">
+
+</div>
+<!-- Fin menu small res -->
+
+<div class="row">
+
+    <!-- Menu High res -->
+    <div class="col-sm-4">
+        <div class="list-group" >
+            <a href="#" class="list-group-item list-group-item-info ">
+                <i class="fa fa-user fa-2x" ></i>    <span class="tituloPanel">Mi Perfil</span>
+            </a>
+            <a href="{{ path("perfil_usuario") }}" class="list-group-item">
+                Consultar / Editar Perfil
+            </a>
+            <a href="#" class="list-group-item">
+                Cambiar contraseña
+            </a>
+
+        </div>
+
+        <div class="list-group " >
+            <a href="#" class="list-group-item list-group-item-warning ">
+                <i class="fa fa-life-saver fa-2x" ></i>  Ayuda</span>
+            </a>
+            <a href="{{ path("ayuda_usuario") }}" class="list-group-item">
+                Manual de ayuda
+            </a>
+            <a href="{{ path("contacto_administrador") }}" class="list-group-item">
+                Contacto con el administrador
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Fin menu high res -->
+
+    <!-- Contenido -->
+    <div class="col-lg-8">
+        {% block  contenidoPerfil %}{% endblock %}
+    </div>
+    <!-- Fin Contenido -->
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <!--<script src="{{ asset('js/agenda/ajustes_agenda.js') }}"></script>-->
+{% endblock %}
+
+{% block templates %}
+    {{ parent() }}
+    <!--<script src="{{ asset('templates/agenda/compiled_agenda.js') }}"></script>-->
+{% endblock %}
+

@@ -1,7 +1,47 @@
-{% extends "::base.html.twig" %}
+{% extends "Usuario/plantillaPerfil.html.twig" %}
 
-{% block title %}AppBundle:Usuario:contactoAdministrador{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/usuario/perfil/contacto.css') }}"/>
+{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Usuario:contactoAdministrador page</h1>
+{% block contenidoPerfil %}
+
+<div class="row">
+
+    <form action="{{ path("contacto_administrador") }}" method="POST">
+
+        <div class="form-group">
+            <label class="control-label" for="asunto">Asunto</label>
+            <!-- Habria que crear estas opciones desde un archivo de config o BBDD-->
+            <select id="asunto" name="asunto" class="form-control">
+                <option value="acceso">Tengo problemas al acceder</option>
+                <option value="agenda">Tengo problemas al hacer uso de la Agenda</option>
+                <option value="paciente">Tengo problemas al hacer uso del modulo de Pacientes</option>
+                <option value="perfil">Tengo problemas con mi perfil</option>
+                <option value="otros">Otros</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="cuerpo">Mensaje</label>
+            <!-- Hay que hacer el textarea fijo, que no se pueda hacr resize -->
+            <textarea id="cuerpo" name="cuerpo" class="form-control" rows="5" draggable="false"  required="required" maxlength="500" >
+                </textarea>
+        </div>
+        <span class="containerBotonEnviar">
+            <button type="submit" class="btn btn-lg btn-success botonEnviar"><i class="fa fa-send"></i> Enviar</button>
+        </span>
+
+    </form>
+
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('js/usuario/perfil/contacto(.js') }}"></script>
 {% endblock %}
