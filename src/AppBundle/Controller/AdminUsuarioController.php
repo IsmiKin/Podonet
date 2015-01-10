@@ -3,10 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\UsuarioType;
-use Proxies\__CG__\AppBundle\Entity\Usuario;
+use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Log;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminUsuarioController extends Controller
@@ -39,29 +38,36 @@ class AdminUsuarioController extends Controller
                 'usuario' => $usuario
             ));    }
 
-    public function crearUsuarioAction(Request $request)
+    public function crearUsuarioAction()
     {
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 
         $usuario = new Usuario();
+        $request = $this->get("request");
         $formCrear = $this->createForm(new UsuarioType(), $usuario);
-        $formCrear->handleRequest($request);
-
+//        ld($request);
         if ($request->isMethod('POST')) {
-            if ($formCrear->isSubmitted() && $formCrear->isValid()) {
 
+
+            if ($formCrear->isSubmitted() && $formCrear->isValid()) {
+                $formCrear->handleRequest($request);
                 //User de FOS
-                $userManager = $this->get('fos_user.user_manager');
-                $user = $userManager->createUser();
-                $user->setsetEnabled(true);
-                $user->setNombre($request->get("nombre"));
+//                $userManager = $this->get('fos_user.user_manager');
+//                $user = $userManager->createUser();
+                $user = new Usuario();
+                $user->setEnabled(true);
+                ld($request->get("nombre"));
+                ld($user->getNombre());
+                /*$user->setNombre($request->get("nombre"));
                 $user->setApellidos($request->get("apellidos"));
                 $user->setTelefono($request->get("telefono"));
-                $user->setEstado($request->get("estado"));
+                $user->setEstado($request->get("estado"));*/
                 $user->setPassword(md5("1234"));
                 $user->setPlainPassword("1234");
-                $userManager->updateUser($user);
-
+//                $userManager->updateUser($user);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
                 $mensaje = "Se ha insertado el usuario ".$usuario->getNombre();
             }else{
                 $mensaje = "Ha ocurrido un error al validar el formulario del usuario";
@@ -69,22 +75,24 @@ class AdminUsuarioController extends Controller
             // Creamos el log
             $this->procesarLog("Usuario",$mensaje,null);
 
-            return $this->redirect($this->generateUrl('administrar_usuarios'));
+            //return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
             'formCrear' => $formCrear->createView(),
             ));    }
 
-    public function editarUsuarioAction($idUsuario, Request $request)
+    public function editarUsuarioAction($idUsuario)
     {
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
-        $formEditar = $this->createForm(new UsuarioType(),$usuario);
-        $formEditar->handleRequest($request);
 
-        $mensaje = "NADA";
-        if ($request->isMethod('PUT')) {
-            $mensaje = "PUT";
+        $formEditar = $this->createForm(new UsuarioType(),$usuario);
+        $request = $this->get('request');
+        $mensaje = "TESTING";
+        if ($request->isMethod('POST')) {
+            $mensaje = "POST";
+
+            $formEditar->handleRequest($request);
             if($formEditar->isValid() && $formEditar->isSubmitted())
             {
                 $em->persist($usuario);

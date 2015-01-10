@@ -8,7 +8,7 @@
 {% block body %}
 <h1>Welcome to the AdminUsuario:editarUsuario page</h1>
 <h2>{{ mensajeReturn }}</h2>
-    <form class="form-usuario" data-idusuario="{{ usuario.id }}" method="PUT">
+    <form class="form-usuario" data-idusuario="{{ usuario.id }}" method="POST">
         {{ form_errors(formEditar) }}
         {{ form_row(formEditar.nombre) }}
         {{ form_row(formEditar.apellidos) }}

@@ -14,7 +14,7 @@ crear_usuario:
 editar_usuario:
     path:     /{idUsuario}
     defaults: { _controller: AppBundle:AdminUsuario:editarUsuario }
-    methods: [GET,PUT]
+    methods: [GET,POST]
 
 habilitar_usuario:
     path:     /usuarios/habilitar
