@@ -43,7 +43,7 @@
                     </button>
                 </span>
                 <span class="containerBotonAplicarCambiosDatosPersonales">
-                    <button class="btn btn-default botonTitle ApplyFormEditar" form="formDatosPersonales" data-informacion="DatosPersonales">
+                    <button type="submit" class="btn btn-default botonTitle ApplyFormEditar" form="formDatosPersonales">
                         <i class="fa fa-pencil"></i> Aplicar
                     </button>
                 </span>
@@ -66,15 +66,15 @@
                 </a>
             </span>
             <span id="formularioDatosPersonales" hidden="hidden">
-                <form id="formDatosPersonales">
+                <form id="formDatosPersonales" method="POST">
                     <a class="list-group-item"  >
-                        <strong>Nombre:</strong>  <input value="{{ app.user.Nombre}}">
+                        {{ form_row(formEditarDP.nombre) }}
                     </a>
                     <a class="list-group-item"  >
-                        <strong>Apellidos :</strong> <input value="{{ app.user.Apellidos}}">
+                        {{ form_row(formEditarDP.apellidos) }}
                     </a>
                     <a class="list-group-item"  >
-                        <strong>Telefono :</strong>  <input value="{{ app.user.Telefono }}">
+                        {{ form_row(formEditarDP.telefono) }}
                     </a>
                 </form>
             </span>
