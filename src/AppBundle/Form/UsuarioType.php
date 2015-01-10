@@ -19,8 +19,7 @@ class UsuarioType extends AbstractType
             ->add('apellidos')
             ->add('estado')
             ->add('telefono')
-            ->add('username')
-	    ->add('estado', 'choice',array('choices'=>array('Activo'=>'Activo', 'Inactivo' => 'Inactivo', 'Inhabilitado' => 'Inhabilitado')))
+	        ->add('estado', 'choice',array('choices'=>array('Activo'=>'Activo', 'Inactivo' => 'Inactivo', 'Inhabilitado' => 'Inhabilitado')))
 
         ;
     }
@@ -32,7 +31,7 @@ class UsuarioType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Usuario',
-	    'csrf_protection' => false
+            'csrf_protection' => false
         ));
     }
 

@@ -76,9 +76,10 @@ class PacienteController extends Controller
         $pacientes= $repository->findAll();
 
         $salida = array();
-
+        $salida["query"] = "Unit";
+        $salida["suggestions"] = array();
         foreach($pacientes as  $paciente){
-            array_push($salida,array("value"=>$paciente->getNombre() ));
+            array_push($salida["suggestions"],array("value"=>$paciente->getNombre(), "data" => $paciente->getIdPaciente() ));
         }
 
         $serializer = Serializer::create()->build();

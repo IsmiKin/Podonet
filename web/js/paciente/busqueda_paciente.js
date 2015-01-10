@@ -1,10 +1,13 @@
-/**
- * Created by root on 30/12/14.
- */
-
-
-
 
 $(document).ready(function(){
+
+    var formulario = $("#formBusqueda");
+    $('#autocomplete').autocomplete({
+        serviceUrl: Routing.generate('consultar_pacientes_todos'),
+        onSelect: function (suggestion) {
+            formulario.submit();
+            alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        }
+    });
 
 });

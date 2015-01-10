@@ -78,8 +78,9 @@ class AdminUsuarioController extends Controller
             //return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
-            'formCrear' => $formCrear->createView(),
-            ));    }
+            'formCrear' => $formCrear->createView()
+            ));
+    }
 
     public function editarUsuarioAction($idUsuario)
     {

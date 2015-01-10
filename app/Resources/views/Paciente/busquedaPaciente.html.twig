@@ -7,14 +7,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    
+    <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
 {% endblock %}
 
 {% block body %}
 
-<div id="scrollable-dropdown-menu">
-    <input id="my-input" class="typeahead" type="text" placeholder="Nombre del paciente">
-</div>
+    <form action="{{ path('dashboard_paciente') }}" id="formBusqueda">
+        <input type="text" name="paciente" id="autocomplete"/>
+    </form>
 
 {% endblock %}
 
@@ -22,5 +22,6 @@
 {% block javascripts %}
     {{ parent() }}
     <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
     <script src="{{ asset('js/paciente/busqueda_paciente.js') }}"></script>
 {% endblock %}

@@ -41,6 +41,8 @@ editar_diagnostico:
     path:     /diagnostico/editar
     defaults: { _controller: AppBundle:Paciente:editarDiagnostico }
 
-consultar_todos:
+consultar_pacientes_todos:
     path:       /todos/
     defaults: { _controller: AppBundle:Paciente:todosPacientes }
+    options:
+        expose: true
