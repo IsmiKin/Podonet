@@ -4,7 +4,7 @@ administrar_usuarios:
     defaults: { _controller: AppBundle:AdminUsuario:administrarUsuarios }
 
 consultar_usuario:
-    path:     /usuarios/{idUsuario}
+    path:     /usuarios/consultar/{idUsuario}
     defaults: { _controller: AppBundle:AdminUsuario:consultarUsuario }
 
 crear_usuario:
@@ -20,7 +20,7 @@ habilitar_usuario:
     path:     /usuarios/habilitar
     defaults: { _controller: AppBundle:AdminUsuario:habilitarUsuario }
     options:
-             expose: true
+        expose: true
 
 pre_administrar_logs:
     path:     /logs/

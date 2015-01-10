@@ -6,6 +6,8 @@ use AppBundle\Form\UsuarioType;
 use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Log;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminUsuarioController extends Controller
 {
@@ -114,16 +116,14 @@ class AdminUsuarioController extends Controller
             'mensajeReturn' => $mensaje
         ));    }
 
-    public function habilitarUsuarioAction()
+    public function habilitarUsuarioAction(Request $request)
     {
-        $request = $this->get('request');
 
-        $idUsuario = $request->get('idUsuario');
+        $idUsuario = $request->get('idusuario');
         $estado = $request->get('estado');
 
         //Test Zone
-        dump($idUsuario);
-        dump($estado);
+
 
         if($estado=="Inactivo"){  $nuevoEstado = "Activo";  $mensajeaccion="habilitado";}
         else                  {  $nuevoEstado ="Inactivo"; $mensajeaccion="deshabilitado";}
@@ -144,7 +144,13 @@ class AdminUsuarioController extends Controller
         // Creamos el log
         $this->procesarLog("Usuario",$mensaje,null);
 
-        return $this->redirect($this->generateUrl('administrar_usuarios'));
+        $codigo_error = "0";
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "nuevoestado"=> $nuevoEstado);
+        return new JsonResponse($datosRespuesta);
+
+        //return $this->redirect($this->generateUrl('administrar_usuarios'));
+
+
 
 //        return $this->render('AdminUsuario/habilitarUsuario.html.twig', array(
 //                // ...
