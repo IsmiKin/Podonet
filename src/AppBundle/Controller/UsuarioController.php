@@ -48,8 +48,8 @@ class UsuarioController extends Controller
                 )
             ;
             $this->get('mailer')->send($message);
-            
-            $mensaje = "Todo ha ido correcto";
+
+            $mensaje = "Todo ha ido correcto!";
             $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
             return new JsonResponse($datosRespuesta);
         }else{
