@@ -9,6 +9,8 @@ editar_perfil:
 contacto_administrador:
     path:     /perfil/contacto
     defaults: { _controller: AppBundle:Usuario:contactoAdministrador }
+    options:
+        expose: true
 
 ayuda_usuario:
     path:     /perfil/ayuda

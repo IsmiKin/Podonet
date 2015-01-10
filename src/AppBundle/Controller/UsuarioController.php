@@ -29,16 +29,27 @@ class UsuarioController extends Controller
     public function contactoAdministradorAction(Request $request)
     {
 
+        if($request->isMethod("POST")){
 
-        if($request->getMethod()=="POST"){
-
-
-
-
-            $serializer = Serializer::create()->build();
-            //$data = $serializer ->serialize($gabinete, 'json');
             $mensaje = "hola";
+
             $codigo_error ="0";
+            $usuario = $this->getUser();
+            $message = \Swift_Message::newInstance()
+                ->setSubject($request->get("asunto"))
+                ->setFrom($usuario->getEmail())
+                ->setTo('podonet.uma@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                        'General/Email/contactoadministrador.txt.twig',
+                        array('fecha' =>new \DateTime('now'),
+                            'solicitante' => $usuario->getNombre(),
+                            'email_solicitante' => $usuario->getEmail(),
+                            'cuerpo' => $request->get("cuerpo"))
+                    )
+                )
+            ;
+            $this->get('mailer')->send($message);
 
             $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
             return new JsonResponse($datosRespuesta);

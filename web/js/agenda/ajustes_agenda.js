@@ -71,8 +71,6 @@ function submitEditarFormGabinete(e){
                 $(".cancelarGabineteForm").click();
             }else
                 console.log("error!");
-
-            finProgressBar();
         }
     });
 
