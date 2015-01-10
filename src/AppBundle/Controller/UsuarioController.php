@@ -31,8 +31,6 @@ class UsuarioController extends Controller
 
         if($request->isMethod("POST")){
 
-            $mensaje = "hola";
-
             $codigo_error ="0";
             $usuario = $this->getUser();
             $message = \Swift_Message::newInstance()
@@ -50,7 +48,8 @@ class UsuarioController extends Controller
                 )
             ;
             $this->get('mailer')->send($message);
-
+            
+            $mensaje = "Todo ha ido correcto";
             $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
             return new JsonResponse($datosRespuesta);
         }else{
