@@ -1,0 +1,14 @@
+
+.contenedorFormConsultarUsuario{
+    align-content: center;
+}
+
+.contenedorFormConsultarUsuario input{
+    max-width: 50%;
+}
+#botoneraPerfil{
+    display: none;
+}
+.form-usuario-perfil input{
+    disabled:"true";
+}

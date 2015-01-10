@@ -6,7 +6,6 @@ use AppBundle\Form\UsuarioType;
 use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Log;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdminUsuarioController extends Controller
 {
@@ -75,7 +74,7 @@ class AdminUsuarioController extends Controller
             // Creamos el log
             $this->procesarLog("Usuario",$mensaje,null);
 
-            //return $this->redirect($this->generateUrl('administrar_usuarios'));
+            return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
             'formCrear' => $formCrear->createView()

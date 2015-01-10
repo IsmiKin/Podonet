@@ -2,15 +2,21 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UsuarioType;
+use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+use AppBundle\Entity\Log;
 
 class UsuarioController extends Controller
 {
     public function perfilUsuarioAction()
     {
+
         return $this->render('Usuario/perfilUsuario.html.twig');
     }
 
@@ -22,6 +28,7 @@ class UsuarioController extends Controller
 
     public function contactoAdministradorAction(Request $request)
     {
+
 
         if($request->getMethod()=="POST"){
 
