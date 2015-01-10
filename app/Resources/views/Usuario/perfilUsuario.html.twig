@@ -42,6 +42,11 @@
                         <i class="fa fa-pencil"></i> Editar
                     </button>
                 </span>
+                <span class="containerBotonAplicarCambiosDatosPersonales">
+                    <button class="btn btn-default botonTitle ApplyFormEditar" form="formDatosPersonales" data-informacion="DatosPersonales">
+                        <i class="fa fa-pencil"></i> Aplicar
+                    </button>
+                </span>
                 <span class="containerBotonCancelarDatosPersonales" hidden="hidden">
                     <button class="btn btn-default botonTitle cancelFormEditar" data-informacion="DatosPersonales" >
                         <i class="fa fa-minus-circle"></i> Cancelar
@@ -61,8 +66,17 @@
                 </a>
             </span>
             <span id="formularioDatosPersonales" hidden="hidden">
-
-
+                <form id="formDatosPersonales">
+                    <a class="list-group-item"  >
+                        <strong>Nombre:</strong>  <input value="{{ app.user.Nombre}}">
+                    </a>
+                    <a class="list-group-item"  >
+                        <strong>Apellidos :</strong> <input value="{{ app.user.Apellidos}}">
+                    </a>
+                    <a class="list-group-item"  >
+                        <strong>Telefono :</strong>  <input value="{{ app.user.Telefono }}">
+                    </a>
+                </form>
             </span>
 
         </div>

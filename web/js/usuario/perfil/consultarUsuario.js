@@ -17,6 +17,7 @@ function mostrarFormulario(){
     $("#informacion"+informacion).hide();
     $("#formulario"+informacion).show();
     $(".containerBotonCancelar"+informacion).show();
+    $(".containerBotonAplicarCambiosDatosPersonales").show("slow");
     papito.hide();
 }
 
