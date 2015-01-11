@@ -124,6 +124,8 @@ class Usuario extends BaseUser{
     public function setEstado($estado)
     {
         $this->estado = $estado;
+        if ($estado == "deshabilitado") parent::setEnabled(false);
+        else parent::setEnabled(true);
 
         return $this;
     }
@@ -159,5 +161,29 @@ class Usuario extends BaseUser{
     public function getTelefono()
     {
         return $this->telefono;
+    }
+
+    //Funciones auxiliares Roles
+    /**
+     * Set roles
+     *
+     * @param string roles
+     * @return Usuario
+     */
+    public function setRolesPodonet($roles)
+    {
+        $this->roles = $roles;
+        parent::setRoles($roles);
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return string
+     */
+    public function getRolesPodonet()
+    {
+        return parent::getRoles();
     }
 }

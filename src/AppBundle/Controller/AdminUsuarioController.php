@@ -56,15 +56,17 @@ class AdminUsuarioController extends Controller
 //                $userManager = $this->get('fos_user.user_manager');
 //                $user = $userManager->createUser();
                 $user = new Usuario();
-                $user->setEnabled(true);
+
+                //Hacemos setEnable dentro de setEstado
+                $user->setEstado("Activo");
+                $roles = array($request->get("rol"));
+                $user->setRolesPodonet($roles);
+
                 ld($request->get("nombre"));
                 ld($user->getNombre());
-                /*$user->setNombre($request->get("nombre"));
-                $user->setApellidos($request->get("apellidos"));
-                $user->setTelefono($request->get("telefono"));
-                $user->setEstado($request->get("estado"));*/
-                $user->setPassword(md5("1234"));
-                $user->setPlainPassword("1234");
+
+//                $user->setPassword(md5('1234')); //He visto que puedes usar solo PlainPassword
+                $user->setPlainPassword('1234');
 //                $userManager->updateUser($user);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
