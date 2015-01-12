@@ -3,7 +3,7 @@ dashboard_paciente:
     defaults: { _controller: AppBundle:Paciente:dashboardPaciente }
 
 busqueda_paciente:
-    path:     /busqueda
+    path:     /busqueda/
     defaults: { _controller: AppBundle:Paciente:busquedaPaciente }
 
 crear_paciente:
@@ -40,3 +40,9 @@ crear_diagnostico:
 editar_diagnostico:
     path:     /diagnostico/editar
     defaults: { _controller: AppBundle:Paciente:editarDiagnostico }
+
+consultar_pacientes_todos:
+    path:       /todos/
+    defaults: { _controller: AppBundle:Paciente:todosPacientes }
+    options:
+        expose: true

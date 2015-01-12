@@ -1,0 +1,10 @@
+
+.botonTitle{
+    float: right;
+}
+
+.containerBotonAplicarCambiosDatosPersonales{
+    display: none;
+    margin-left: 3%;
+    margin-right: 5%;
+}

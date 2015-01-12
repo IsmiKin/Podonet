@@ -21,7 +21,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "willdurand/propel-typehintable-behavior": "~1.0",
-        "jms/serializer": "0.16.*"
+        "jms/serializer": "0.16.*",
+        "friendsofsymfony/jsrouting-bundle": "~1.5",
+        "raulfraile/ladybug-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

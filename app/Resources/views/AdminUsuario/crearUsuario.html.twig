@@ -1,0 +1,54 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:AdminUsuario:crearUsuario{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="{{ asset('css/administracion/consultarUsuario.css') }}"/>
+{% endblock %}
+
+
+{% block iconoBanner %}users{% endblock %}
+{% block tituloBanner %}Administración de Usuarios{% endblock %}
+
+
+{% block body %}
+
+
+    <form class="{{ path('crear_usuario') }}" method="POST"  {{ form_enctype(formCrear) }}>
+
+        {{ form_errors(formCrear) }}
+        {{ form_row(formCrear.nombre) }}
+        {{ form_row(formCrear.apellidos) }}
+        {{ form_row(formCrear.estado) }}
+        <label class="control-label" for="rol">Rol</label>
+        <select id="rol" name="rol" class="form-control">
+            <option selected value="ROLE_ESTUDIANTE">Estudiante</option>
+            <option value="ROLE_PIR">PIR</option>
+            <option value="ROLE_PODOLOGO">Podólogo</option>
+            <option value="ROLE_SECRETARIO">Secretario</option>
+            <option value="ROLE_ADMIN">Administrador</option>
+            <option value="ROLE_SUPER_ADMIN">SUPER Administrador</option>
+        </select><br>
+        {{ form_row(formCrear.telefono) }}
+        {{ form_row(formCrear.username) }}
+        {{ form_row(formCrear.email) }}
+        {{ form_row(formCrear.plainPassword) }}
+
+        <button type="button" class="btn btn-default generarContrasena"><i class="fa fa-key"></i>  Generar Contraseña automatica</button>
+        <br/>
+
+        <div>
+            <button type="submit" class="btn btn-success submitCrearUsuario" data-action="{{ path('crear_usuario') }}">
+                <i class="fa fa-plus"></i> Añadir</button>
+            <a class="btn btn-default" href="{{ path('administrar_usuarios') }}">
+                <i class="fa fa-undo"></i>  Cancelar</a>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/administracion/usuario/crear_usuario.js') }}"></script>
+{% endblock %}

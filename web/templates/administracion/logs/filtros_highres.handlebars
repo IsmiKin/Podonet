@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="list-group filtro-categorias">
+        <a href="#" class="list-group-item active">
+            <i class="fa fa-list-alt fa-2x" ></i>  <span class="tituloPanel">Categorias</span>
+        </a>
+        {{#each categorias }}
+            <a href="#" class="list-group-item item-categoria" data-categoria="{{nombre}}" >
+                <i class="fa fa-{{logo}}"></i>  {{nombre}}
+            </a>
+        {{/each}}
+    </div>
+    <div class="list-group filtro-subcategorias">
+        <a href="#" class="list-group-item list-group-item-info item-subcategoria">
+            <i class="fa fa-th-list fa-2x" ></i>    <span class="tituloPanel">Subcategorias</span>
+        </a>
+        <div class="subcategorias">
+
+        </div>
+    </div>
+</div>

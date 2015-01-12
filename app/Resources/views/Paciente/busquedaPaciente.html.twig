@@ -1,0 +1,25 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Podonet - Busqueda Paciente{% endblock %}
+
+{% block tituloBanner %}Gestion de Pacientes{% endblock %}
+{% block iconoBanner %}stethoscope{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
+{% endblock %}
+
+{% block body %}
+
+    <input type="text" name="paciente" class="" id="autocomplete"/>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
+    <script src="{{ asset('js/paciente/busqueda_paciente.js') }}"></script>
+{% endblock %}

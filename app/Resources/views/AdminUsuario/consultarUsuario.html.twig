@@ -1,0 +1,28 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:AdminUsuario:consultarUsuario{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="{{ asset('css/administracion/consultarUsuario.css') }}"/>
+{% endblock %}
+
+{% block iconoBanner %}users{% endblock %}
+{% block tituloBanner %}Administración de Usuarios{% endblock %}
+
+
+{% block body %}
+<h1>Welcome to the AdminUsuario:consultarUsuario page</h1>
+    <div class="contenedorFormConsultarUsuario">
+        <label>Id</label><br>
+        <input id="inputIdUsuario" value="{{ usuario.id }}" class="form-control"/><br>
+        <label>Nombre</label><br>
+        <input value="{{ usuario.Nombre }}" class="form-control"/><br>
+        <label>Apellidos</label><br>
+        <input value="{{ usuario.Apellidos }}" class="form-control"/><br>
+        <label>Email</label><br>
+        <input value="{{ usuario.email }}" class="form-control"/><br>
+    </div>
+
+    <a class="btn btn-default" href="{{ path('administrar_usuarios') }}">Atrás</a>
+{% endblock %}

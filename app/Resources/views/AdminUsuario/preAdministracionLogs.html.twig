@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PodoNet - Administracion Logs{% endblock %}
+
+{% block iconoBanner %}book{% endblock %}
+{% block tituloBanner %}Administracion Logs{% endblock %}
+{% block body %}
+
+<div class="well well-lg">
+<h4><em>Debido a que los registros de Logs son muy numerosos, para evitar sobrecarga del Sistema
+    y ofrecerle una mejor experiencia de usuario, por favor, elija dos fechas. </em></h4>
+</div>
+
+    <form action="{{ path('administrar_logs') }}" method="POST" >
+        <div class="input-daterange input-group" id="datepicker">
+            <input type="text" class="input-sm form-control" name="fechaInicio" />
+            <span class="input-group-addon">hasta</span>
+            <input type="text" class="input-sm form-control" name="fechaFin" />
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Seleccionar</button>
+    </form>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('js/administracion/logs/pre_administracion_logs.js') }}"></script>
+{% endblock %}

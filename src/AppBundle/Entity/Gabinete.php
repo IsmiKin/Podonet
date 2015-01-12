@@ -76,6 +76,11 @@ class Gabinete
     private $usuarioModificacion;
 
 
+    public function __construct()
+    {
+        $this->setFechaUltimaModificacion(new \DateTime('now'));
+    }
+
     /**
      * Get id
      *
@@ -269,4 +274,7 @@ class Gabinete
     {
         return $this->usuarioModificacion;
     }
+
+
+
 }

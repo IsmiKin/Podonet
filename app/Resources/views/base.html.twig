@@ -6,6 +6,9 @@
         {% block stylesheets %}
             {% stylesheets
                 "assets/vendor/bootstrap/dist/css/bootstrap.min.css"
+                "assets/vendor/fontawesome/css/font-awesome.css"
+                "assets/vendor/bootstrap-datepicker/css/datepicker3.css"
+                "css/general/plantillamaestra.css"
                 filter='cssrewrite' output='css/compiled/all.css'
             %}
                 <link rel="stylesheet" href="{{ asset_url }}"/>
@@ -14,16 +17,170 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
 
-        {% block javascripts %}
-            {% javascripts
-                "assets/vendor/jquery/dist/jquery.min.js"
-                "assets/vendor/dist/js/bootstrap.min.js"
-                output='js/compiled/all.js'
-            %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
+    <!-- Navbar  -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle collapsed" id="botonMenuCollapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="col-lg-12">
+                    <img src="{{ asset('img/podonet_logo.png') }}" class="logo" />
+                    <a class="navbar-brand" href="#page-top">Podonet v.1</a>
+                </div>
+
+
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden active">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <center><i class="fa fa-user-md fa-2x iconoNavBar"></i></center>
+                        <a href="{{ path('busqueda_paciente') }}">Pacientes</a>
+                    </li>
+                    <li class="page-scroll">
+                        <center><i class="fa fa-calendar fa-2x iconoNavBar"></i></center>
+                        <a href="{{ path('agenda_principal') }}">Agenda</a>
+                    </li>
+                    <li class="page-scroll">
+                        <center><i class="fa fa-users fa-2x iconoNavBar"></i></center>
+                        <a href="{{ path('administrar_usuarios') }}">Usuarios</a>
+                    </li>
+                    <!--<li class="page-scroll">
+                        <center><i class="fa fa-gear fa-2x iconoNavBar"></i></center>
+                        <a href="#contact">Administracion</a>
+                    </li>-->
+                    <li class="page-scroll">
+                        <center><i class="fa fa-user fa-2x iconoNavBar"></i></center>
+                        <a href="{{ path('perfil_usuario') }}">Perfil</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- Fin Navbar  -->
+
+    <!-- HEADER -->
+
+
+    <header>
+        <div class="container">
+
+            <div class="row tituloBanner">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <h3 style="float:right">Plataforma de Gestion de Pacientes</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row infoBanner">
+
+                <div class="row infoPaginaBanner">
+                    <div class="col-lg-12">
+                        <i class="fa fa-{% block iconoBanner %}{% endblock %} fa-5x"></i>
+                        <span class="textoPagina">{% block tituloBanner %}{% endblock %}</span>
+                    </div>
+                </div>
+
+                <div class="row infoUsuarioBanner">
+                    <div class="col-lg-12">
+                        <div class="col-md-4">
+                            <em>{{ app.user.username }}</em>
+                            <strong>{{ app.user.apellidos }},{{ app.user.nombre }}</strong>
+                        </div>
+                        <div class="col-md-4">
+                            <img  src="http://institutoperro.com/wp-content/uploads/2014/05/pun-dog-pun-husky-00-1.jpg" alt="Foto de Usuario" class="img-responsive img-rounded fotoUsuario">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </header>
+
+
+    <!-- FIN HEADER -->
+        <main>
+                {% block body %}{% endblock %}
+        </main>
+
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h3>Localizacion</h3>
+                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Contacto</h3>
+                        <ul class="list-inline">
+                            <li>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Mapa de sitio</h3>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright © Universidad de Malaga 2014
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    {% block javascripts %}
+        {% javascripts
+        "assets/vendor/jquery/dist/jquery.min.js"
+        "assets/vendor/bootstrap/dist/js/bootstrap.min.js"
+        "assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"
+        "assets/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"
+        "js/general/plantillamaestra.js"
+        "js/general/herramientas.js"
+        "bundles/fosjsrouting/js/router.js"
+            output='js/main.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    {% endblock %}
+
+    {% block templates %}
+        {% javascripts
+            "assets/vendor/handlebars/handlebars.runtime.js"
+            "templates/general/handlebars_helpers.js"
+            output='js/handlebars_general.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    {% endblock %}
+
+
     </body>
 </html>

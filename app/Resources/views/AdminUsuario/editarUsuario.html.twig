@@ -1,0 +1,37 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:AdminUsuario:editarUsuario{% endblock %}
+
+{% block iconoBanner %}users{% endblock %}
+{% block tituloBanner %}Administración de Usuarios{% endblock %}
+
+{% block body %}
+
+<h2>{{ mensajeReturn }}</h2>
+    <form class="form-usuario" data-idusuario="{{ usuario.id }}" method="POST">
+        {{ form_errors(formEditar) }}
+        {{ form_row(formEditar.nombre) }}
+        {{ form_row(formEditar.apellidos) }}
+        {{ form_row(formEditar.estado) }}
+        {{ form_row(formEditar.telefono) }}
+        <label class="control-label" for="rol">Rol</label>
+        <select id="rol" name="rol" class="form-control">
+            <option selected value="ROLE_ESTUDIANTE">Estudiante</option>
+            <option value="ROLE_PIR">PIR</option>
+            <option value="ROLE_PODOLOGO">Podólogo</option>
+            <option value="ROLE_SECRETARIO">Secretario</option>
+            <option value="ROLE_ADMIN">Administrador</option>
+            <option value="ROLE_SUPER_ADMIN">SUPER Administrador</option>
+        </select><br>
+
+        {{ form_row(formEditar.username) }}
+        {{ form_row(formEditar.email) }}
+
+        <div class="">
+            <button type="submit" class="btn btn-success submitEditarUsuario" data-action="{{ path('editar_usuario', {'idUsuario': usuario.id }) }}">
+                <i class="fa fa-check"></i> Editar Usuario</button>
+            <a class="btn btn-default" href="{{ path('administrar_usuarios') }}">
+                <i class="fa fa-undo"></i>  Cancelar</a>
+        </div>
+    </form>
+{% endblock %}
