@@ -29,18 +29,18 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usuario = $this->get('security.context')->getToken()->getUser();
 //        $usuario = $this->getUser();
-        $usuario = $em->getRepository('AppBundle:Usuario')->find($usuario->getId());
+        //$usuario = $em->getRepository('AppBundle:Usuario')->find($usuario->getId());
 
         $formEditar = $this->createForm(new UsuarioType(),$usuario);
         $request = $this->get('request');
-        $mensaje = "TESTING";
+
         if ($request->isMethod('POST')) {
             $mensaje = "POST";
 
             $formEditar->handleRequest($request);
             if($formEditar->isValid() && $formEditar->isSubmitted())
             {
-                $em->persist($usuario);
+                //$em->persist($usuario);
                 $em->flush();
 
                 $mensaje = "El usuario con id ".$usuario->getId()." ha actualizado su perfil correctamente";
@@ -49,14 +49,18 @@ class UsuarioController extends Controller
                 $this->procesarLog("Usuario",$mensaje,null);
 
                 return $this->redirect($this->generateUrl('perfil_usuario'));
+            }else{
+                $mensaje = "Ha ocurrido un error al validar el formulario del usuario"." errores:".$formEditar->getErrorsAsString();
             }
 
         }
 
+        $datosRespuesta = array("mensaje" =>$mensaje);
+        return new JsonResponse($datosRespuesta);
         //Nunca se debería llegar aquí
-        return $this->render('Usuario/editarPerfil.html.twig', array(
-                // ...
-            ));
+        /*return $this->render('Usuario/editarPerfil.html.twig', array(
+
+            ));*/
     }
 
     public function contactoAdministradorAction(Request $request)

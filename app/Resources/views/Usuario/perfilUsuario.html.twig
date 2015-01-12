@@ -66,7 +66,7 @@
                 </a>
             </span>
             <span id="formularioDatosPersonales" hidden="hidden">
-                <form id="formDatosPersonales" method="POST">
+                <form id="formDatosPersonales" method="POST" action="{{ path('editar_perfil') }}"> <!-- HIJO DE PUTA PUCHE -->
                     <a class="list-group-item"  >
                         {{ form_row(formEditarDP.nombre) }}
                     </a>
@@ -76,6 +76,10 @@
                     <a class="list-group-item"  >
                         {{ form_row(formEditarDP.telefono) }}
                     </a>
+                    <div hidden="hidden" >
+                        {{ form_row(formEditarDP.username, { 'attr': {'class': 'hide'} }) }}
+                        {{ form_row(formEditarDP.email, { 'attr': {'class': 'hide'} }) }}
+                    </div>
                 </form>
             </span>
 
