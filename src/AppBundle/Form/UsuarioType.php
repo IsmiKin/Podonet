@@ -17,10 +17,11 @@ class UsuarioType extends AbstractType
         $builder
             ->add('nombre')
             ->add('apellidos')
-            ->add('estado')
             ->add('telefono')
 	        ->add('estado', 'choice',array('choices'=>array('Activo'=>'Activo', 'Inactivo' => 'Inactivo', 'Inhabilitado' => 'Inhabilitado')))
-
+            ->add('username','text',['label'=>'Nombre de usuario'])
+            ->add('email','email')
+            ->add('plainPassword','text',['label'=>'Contraseña'])
         ;
     }
     

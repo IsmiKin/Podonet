@@ -41,39 +41,28 @@ class AdminUsuarioController extends Controller
 
     public function crearUsuarioAction()
     {
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-
+        $mensaje = "Administrando usuarios";
         $usuario = new Usuario();
         $request = $this->get("request");
         $formCrear = $this->createForm(new UsuarioType(), $usuario);
-//        ld($request);
-        if ($request->isMethod('POST')) {
 
+        if ($request->isMethod('POST')) {
+            $formCrear->handleRequest($request); // Maldito seas Puche!
 
             if ($formCrear->isSubmitted() && $formCrear->isValid()) {
-                $formCrear->handleRequest($request);
-                //User de FOS
-//                $userManager = $this->get('fos_user.user_manager');
-//                $user = $userManager->createUser();
-                $user = new Usuario();
 
-                //Hacemos setEnable dentro de setEstado
-                $user->setEstado("Activo");
-                $roles = array($request->get("rol"));
-                $user->setRolesPodonet($roles);
+                $usuario->setEstado("Activo");
+                $usuario->setEnabled(true);
 
-                ld($request->get("nombre"));
-                ld($user->getNombre());
+                $rol = $request->get("rol");
+                $usuario->addRole($rol);
 
-//                $user->setPassword(md5('1234')); //He visto que puedes usar solo PlainPassword
-                $user->setPlainPassword('1234');
-//                $userManager->updateUser($user);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
+                $em->persist($usuario);
                 $em->flush();
                 $mensaje = "Se ha insertado el usuario ".$usuario->getNombre();
             }else{
-                $mensaje = "Ha ocurrido un error al validar el formulario del usuario";
+                $mensaje = "Ha ocurrido un error al validar el formulario del usuario"." errores:".$formCrear->getErrorsAsString();
             }
             // Creamos el log
             $this->procesarLog("Usuario",$mensaje,null);
@@ -81,7 +70,7 @@ class AdminUsuarioController extends Controller
             return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
-            'formCrear' => $formCrear->createView()
+            'formCrear' => $formCrear->createView(), 'mensaje' => $mensaje
             ));
     }
 
@@ -99,6 +88,8 @@ class AdminUsuarioController extends Controller
             $formEditar->handleRequest($request);
             if($formEditar->isValid() && $formEditar->isSubmitted())
             {
+                $rol = $request->get("rol");
+                $usuario->addRole($rol);
                 $em->persist($usuario);
                 $em->flush();
 
@@ -124,11 +115,8 @@ class AdminUsuarioController extends Controller
         $idUsuario = $request->get('idusuario');
         $estado = $request->get('estado');
 
-        //Test Zone
-
-
-        if($estado=="Inactivo"){  $nuevoEstado = "Activo";  $mensajeaccion="habilitado";}
-        else                  {  $nuevoEstado ="Inactivo"; $mensajeaccion="deshabilitado";}
+        if($estado=="Inactivo"){  $nuevoEstado = "Activo";  $mensajeaccion="habilitado"; $nuevoenabled=true;}
+        else                  {  $nuevoEstado ="Inactivo"; $mensajeaccion="deshabilitado";  $nuevoenabled=false;}
 
         $em = $this->getDoctrine()->getEntityManager();
         $usuario = $em->getRepository('AppBundle:Usuario')->find($idUsuario);
@@ -137,6 +125,8 @@ class AdminUsuarioController extends Controller
             throw $this->createNotFoundException('No user found for id '.$idUsuario);
         }
 
+
+        $usuario->setEnabled($nuevoenabled);
         $usuario->setEstado($nuevoEstado);
         $em->flush();
 

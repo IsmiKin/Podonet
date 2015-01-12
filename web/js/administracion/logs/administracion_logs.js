@@ -27,10 +27,6 @@ $(document).ready(function(){
 
 });
 
-function borrarSegundo(){
-    $("div.pagination > li").remove();
-}
-
 function inicializarPanelFiltroHigh(){
     var htmlPanel = Handlebars.templates.filtros_highres(categorias);
     $("#panel-filtros > .row").after(htmlPanel);

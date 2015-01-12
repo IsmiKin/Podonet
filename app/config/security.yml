@@ -24,3 +24,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/agenda/, role: [ROLE_SECRETARIO, ROLE_ADMIN, ROLE_SUPER_ADMIN]}
+        - { path: ^/paciente/, role: [ROLE_PODOLOGO, ROLE_ESTUDIANTE, ROLE_PIR,ROLE_ADMIN, ROLE_SUPER_ADMIN]}
+        - { path: ^/administracion/, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN]}

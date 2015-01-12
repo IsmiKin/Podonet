@@ -9,10 +9,17 @@
 
 {% block body %}
 
+
     <div class="">
         <a class="btn btn-success" href="{{ path('crear_usuario') }}">
             <i class="fa fa-plus"></i>  Nuevo Usuario</a>
     </div>
+
+    <div class="input-group input-sm col-md-8">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input type="text" id="filtro" class="form-control" placeholder="Filtro">
+    </div>
+
 
     <table class="table-usuarios table table-condensed  footable" data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
         <thead>
@@ -75,5 +82,9 @@
 
     {% block javascripts %}
         {{ parent() }}
+        <script src="{{ asset('assets/vendor/footable/dist/footable.min.js') }}"></script>
+        <!--<script src="{{ asset('assets/vendor/footable/dist/footable.sort.min.js') }}"></script>-->
+        <script src="{{ asset('assets/vendor/footable/dist/footable.filter.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/footable/dist/footable.paginate.min.js') }}"></script>
         <script src="{{ asset('js/administracion/admon_usuarios.js') }}"></script>
     {% endblock %}
