@@ -1,7 +1,47 @@
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/paciente/diagnostico.css') }}"/>
+{% endblock %}
+
 {% block title %}AppBundle:Paciente:consultarDiagnostico{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Paciente:consultarDiagnostico page</h1>
+    <div class="list-group bloqueDiagnosico">
+        <a class="list-group-item active  ">
+            <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Diagnóstico</span>
+        </a>
+
+        <div class="well containerFormularioDiagnostico">
+            <button type="button" class="btn btn-default" aria-label="Left Align">Añadir Patología</button>
+            <input type="text" class="form-control" placeholder="El paciente ..." aria-describedby="basic-addon1">
+        </div>
+    </div>
+
+    <div class="list-group bloqueTratamiento">
+        <a class="list-group-item active  ">
+            <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Tratamiento</span>
+        </a>
+
+        <div class="well containerFormularioTratamiento">
+            <input type="text" class="form-control" placeholder="Debe tomar ..." aria-describedby="basic-addon1">
+        </div>
+    </div>
+
+    <div class="list-group bloqueEvolucion">
+        <a class="list-group-item active">
+            <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Evolución</span>
+        </a>
+
+        <div class="well containerFormularioEvolucion">
+            <input type="text" class="form-control" placeholder="La inflamación ..." aria-describedby="basic-addon1">
+        </div>
+    </div>
+
+    <div class="botoneraFormulario">
+        <button type="button" class="btn btn-success" aria-label="Left Align">Guardar</button>
+        <button type="button" class="btn btn-default" aria-label="Left Align">Limpiar</button>
+        <button type="button" class="btn btn-danger" aria-label="Left Align">Borrar</button>
+    </div>
 {% endblock %}

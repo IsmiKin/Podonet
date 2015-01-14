@@ -1,0 +1,38 @@
+
+.containerFormularioDiagnostico{
+    height: 150px;
+}
+.containerFormularioTratamiento{
+    height: 150px;
+}
+.containerFormularioEvolucion{
+    height: 150px;
+}
+
+
+.bloqueDiagnosico{
+    height: 80%;
+}
+
+.containerFormularioDiagnostico input{
+    height: 100%;
+    width: 80%;
+    display: inline;
+    margin-left: 1%;
+}
+.containerFormularioDiagnostico button{
+    width: 15%;
+    display: inline;
+}
+
+.containerFormularioTratamiento input{
+    height: 100%;
+}
+
+.containerFormularioEvolucion input{
+    height: 100%;
+}
+
+.botoneraFormulario{
+    margin: 0 auto;
+}
