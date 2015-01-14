@@ -21,7 +21,7 @@ class AdminUsuarioController extends Controller
             ->getRepository('AppBundle:Usuario');
 
         $usuarios= $repository->findAll();
-
+//        $usuarios = $usuario->findAllButLD();
 
         return $this->render('AdminUsuario/administrarUsuarios.html.twig', array(
                 'usuarios' => $usuarios
