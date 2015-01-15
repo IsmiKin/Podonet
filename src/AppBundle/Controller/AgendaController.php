@@ -85,12 +85,12 @@ class AgendaController extends Controller
         $gabinete = new Gabinete();
         $form = $this->createForm(new GabineteType(),$gabinete);
         $form->handleRequest($request);
-
+        $em = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $gabinete->setUsuarioCreador($this->getUser());
             $gabinete->setFechaUltimaModificacion(new \DateTime('now'));
-            $em = $this->getDoctrine()->getManager();
+
             $em->persist($gabinete);
             $em->flush();
             $mensaje = "Se ha insertado el gabinete ".$gabinete->getCodigo();
@@ -101,7 +101,7 @@ class AgendaController extends Controller
         }
 
         // Creamos el log
-        $this->procesarLog("Gabinete",$mensaje,null);
+        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Gabinete",$mensaje,null,$this->getUser());
 
         $serializer = Serializer::create()->build();
         $data = $serializer ->serialize($gabinete, 'json');
@@ -135,8 +135,7 @@ class AgendaController extends Controller
         $codigo_error = 0;
 
         // Creamos el log
-        $this->procesarLog("Gabinete",$mensaje,null);
-
+        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Gabinete",$mensaje,null,$this->getUser());
 
         $serializer = Serializer::create()->build();
         $data = $serializer ->serialize($gabinete, 'json');
@@ -173,29 +172,12 @@ class AgendaController extends Controller
         $codigo_error = 0;
 
         // Creamos el log
-        $this->procesarLog("Gabinete",$mensaje,null);
+        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Gabinete",$mensaje,null,$this->getUser());
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
         return new JsonResponse($datosRespuesta);
     }
 
-    private function procesarLog( $Subcategoria, $Descripcion, $Paciente){
-        $log = new Log();
-
-        $log->setCategoria("Agenda")
-            ->setSubcategoria($Subcategoria)
-            ->setDescripcion($Descripcion)
-            ->setUsuario($this->getUser())
-            ->setFecha(new \DateTime('now'));
-        if($Paciente!=null){
-            $log->setPaciente($Paciente);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($log);
-        $em->flush();
-
-    }
 
 
 }

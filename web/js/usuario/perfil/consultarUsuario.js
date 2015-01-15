@@ -28,6 +28,7 @@ function cancelFormEditar(){
     $("#informacion"+informacion).show();
     $("#formulario"+informacion).hide();
     $(".containerBotonEditar"+informacion).show();
+    $(".containerBotonAplicarCambiosDatosPersonales").hide("slow");
     papito.hide();
 }
 

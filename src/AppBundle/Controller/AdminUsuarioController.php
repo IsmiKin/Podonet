@@ -14,14 +14,9 @@ class AdminUsuarioController extends Controller
     public function administrarUsuariosAction()
     {
 
-        $usuario = new Usuario();
-
-
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Usuario');
-
-        $usuarios= $repository->findAll();
-//        $usuarios = $usuario->findAllButLD();
+        $em = $this->getDoctrine()->getManager();
+        $usuarios = $em->getRepository('AppBundle:Usuario')
+            ->findAllButLD();
 
         return $this->render('AdminUsuario/administrarUsuarios.html.twig', array(
                 'usuarios' => $usuarios
