@@ -1,0 +1,75 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ismikin
+ * Date: 17/01/15
+ * Time: 11:46
+ */
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\FotoPerfilRepository")
+ */
+class FotoPerfil extends Document{
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="Usuario_idUsuario", referencedColumnName="id",nullable=false)
+     **/
+    private $usuario;
+
+    /**
+     * @return mixed
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @param mixed $usuario
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+    }
+
+
+
+    protected function getUploadDir()
+    {
+
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/documents/'.$this->usuario;
+    }
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // aquí usa el nombre de archivo original pero lo debes
+        // sanear al menos para evitar cualquier problema de seguridad
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->setPath($this->usuario);
+
+        // limpia la propiedad «file» ya que no la necesitas más
+        $this->setFile(null);
+    }
+
+}

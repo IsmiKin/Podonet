@@ -101,7 +101,12 @@
                             <strong>{{ app.user.apellidos }},{{ app.user.nombre }}</strong>
                         </div>
                         <div class="col-md-4">
-                            <img  src="http://institutoperro.com/wp-content/uploads/2014/05/pun-dog-pun-husky-00-1.jpg" alt="Foto de Usuario" class="img-responsive img-rounded fotoUsuario">
+                            {% image output="images/fotousuario.png"
+                                    "uploads/documents/usuarios/fotoperfil/{{ app.user.username }}.jpg"
+                            %}
+                                <img  src="{{ asset_url }}" alt="Foto de Usuario" class="img-responsive img-rounded fotoUsuario">
+                            {% endimage %}
+
                         </div>
                     </div>
                 </div>

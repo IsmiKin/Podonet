@@ -76,7 +76,7 @@ class AdminUsuarioController extends Controller
 
         $formEditar = $this->createForm(new UsuarioType(),$usuario);
         $request = $this->get('request');
-        $mensaje = "TESTING";
+
         if ($request->isMethod('POST')) {
             $mensaje = "POST";
 
@@ -85,6 +85,7 @@ class AdminUsuarioController extends Controller
             {
                 $rol = $request->get("rol");
                 $usuario->addRole($rol);
+                if($usuario->get)
                 $em->persist($usuario);
                 $em->flush();
 

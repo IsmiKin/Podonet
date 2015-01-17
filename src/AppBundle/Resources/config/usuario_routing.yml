@@ -15,3 +15,7 @@ contacto_administrador:
 ayuda_usuario:
     path:     /perfil/ayuda
     defaults: { _controller: AppBundle:Usuario:ayudaUsuario }
+
+mi_foto:
+    path:     /perfil/mifoto
+    defaults: { _controller: AppBundle:Usuario:miFoto }

@@ -26,4 +26,6 @@ class UsuarioRepository extends EntityRepository
 
         return $q->getResult();
     }
+
+
 }

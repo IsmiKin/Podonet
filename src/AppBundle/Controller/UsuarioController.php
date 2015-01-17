@@ -2,13 +2,17 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\FotoPerfil;
 use AppBundle\Form\UsuarioType;
 use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Document;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Common\Util\Debug as Doct;
+
 
 use AppBundle\Entity\Log;
 
@@ -28,25 +32,21 @@ class UsuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $usuario = $this->get('security.context')->getToken()->getUser();
-//        $usuario = $this->getUser();
-        //$usuario = $em->getRepository('AppBundle:Usuario')->find($usuario->getId());
 
         $formEditar = $this->createForm(new UsuarioType(),$usuario);
         $request = $this->get('request');
 
         if ($request->isMethod('POST')) {
-            $mensaje = "POST";
 
             $formEditar->handleRequest($request);
             if($formEditar->isValid() && $formEditar->isSubmitted())
             {
-                //$em->persist($usuario);
                 $em->flush();
 
                 $mensaje = "El usuario con id ".$usuario->getId()." ha actualizado su perfil correctamente";
 
                 // Creamos el log
-                $this->procesarLog("Usuario",$mensaje,null);
+                $em->getRepository('AppBundle:Log')->procesarLogAdminUsuarios($mensaje,null,$usuario);
 
                 return $this->redirect($this->generateUrl('perfil_usuario'));
             }else{
@@ -102,5 +102,49 @@ class UsuarioController extends Controller
         return $this->render('Usuario/ayudaUsuario.html.twig', array(
                 // ...
             ));    }
+
+    public function miFotoAction(Request $request ){
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:FotoPerfil');
+
+        //$fotoPerfil = $repo->getFotoPerfil($this->getUser()->getId()); // No se poque
+        $fotoPerfil = $repo->findOneBy(array('usuario'=>$this->getUser()));
+
+        $persistir = false;
+        if ($fotoPerfil==null) {
+            $document = new FotoPerfil();
+            $persistir = true;
+        }else{
+            $document = $fotoPerfil;
+        }
+
+
+        $form = $this->createFormBuilder($document)
+            ->add('file','file', ['label'=>' '])
+            ->getForm();
+
+        $mensaje ="kk";
+        $form->handleRequest($request);
+        $document->setUsuario($this->getUser());
+
+        if ($form->isValid() && $request->isMethod('POST')) {
+
+            $document->upload();
+            if($persistir)
+                $em->persist($document);
+
+            $em->flush();
+
+        }else{
+            $mensaje = $request->get("file").$request->get("name");
+        }
+
+        $documentos = $repo->findAll();
+
+        return $this->render('Usuario/miFoto.html.twig', array(
+            'form' => $form->createView(), 'documentos' => $documentos, 'codigo'=>$mensaje
+        ));
+    }
 
 }
