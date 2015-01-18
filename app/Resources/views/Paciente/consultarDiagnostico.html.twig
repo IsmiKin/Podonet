@@ -9,16 +9,18 @@
 {% block title %}AppBundle:Paciente:consultarDiagnostico{% endblock %}
 
 {% block body %}
+
+    Buscador patologías
+    <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/><br>
     <div class="list-group bloqueDiagnosico">
-        Buscador patologías
-        <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/><br>
+
         <a class="list-group-item active  ">
             <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Diagnóstico</span>
         </a>
 
         <div class="well containerFormularioDiagnostico">
             <button type="button" class="btn btn-default" aria-label="Left Align">Añadir Patología</button>
-            <input type="text" class="form-control" placeholder="El paciente ..." aria-describedby="basic-addon1">
+            <input type="text" class="form-control" value="{{ diagnostico.Diagnostico }}" placeholder="El paciente ..." aria-describedby="basic-addon1">
         </div>
     </div>
 
@@ -28,7 +30,7 @@
         </a>
 
         <div class="well containerFormularioTratamiento">
-            <input type="text" class="form-control" placeholder="Debe tomar ..." aria-describedby="basic-addon1">
+            <input type="text" class="form-control" value="{{ diagnostico.Tratamiento }}" placeholder="Debe tomar ..." aria-describedby="basic-addon1">
         </div>
     </div>
 
@@ -38,7 +40,7 @@
         </a>
 
         <div class="well containerFormularioEvolucion">
-            <input type="text" class="form-control" placeholder="La inflamación ..." aria-describedby="basic-addon1">
+            <input type="text" class="form-control" value="{{ diagnostico.Evolucion }}" placeholder="La inflamación ..." aria-describedby="basic-addon1">
         </div>
     </div>
 

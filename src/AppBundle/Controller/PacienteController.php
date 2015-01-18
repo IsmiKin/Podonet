@@ -53,8 +53,20 @@ class PacienteController extends Controller
 
     public function consultarDiagnosticoAction($idPaciente)
     {
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Paciente');
+
+        $paciente= $repository->find($idPaciente);
+
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Diagnostico');
+
+        $diagnostico= $repository->findOneBy(array('paciente' => $idPaciente));
+
+
         return $this->render('Paciente/consultarDiagnostico.html.twig', array(
-                // ...
+            'paciente' => $paciente,
+            'diagnostico' => $diagnostico
             ));    }
 
     public function crearDiagnosticoAction()
