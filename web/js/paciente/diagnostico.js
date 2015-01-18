@@ -14,6 +14,8 @@ $(document).ready(function(){
         }
     });
 
+    $(".form-editar-diagnostico").submit(submitEditarDiagnostico)
+
 });
 
 function agregarBadge()
@@ -22,3 +24,33 @@ function agregarBadge()
 }
 
 
+function submitEditarDiagnostico(e){
+    e.preventDefault();
+
+    console.log("Llego?!");
+
+    var form = $(".form-editar-diagnostico");
+    var botonEditar = $(".submitEditarDiagnostico");
+    var idPaciente = form.data("paciente");
+    var idDiagnostico = form.data("diagnostico");
+
+    var values = {};
+    $.each( form.serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+
+    values["idpaciente"] = idPaciente;
+    values["iddiagnostico"] = idDiagnostico;
+
+    $.ajax({
+        type: 'POST', url: form.data("action"),
+        data: $.param(values),
+        success: function(data) {
+            if(data.codigo_error==0){
+                alert("Success");
+            }else
+                console.log("error!");
+        }
+    });
+
+}

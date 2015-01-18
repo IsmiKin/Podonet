@@ -61,8 +61,17 @@ class PacienteController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Diagnostico');
 
-        $diagnostico= $repository->findOneBy(array('paciente' => $idPaciente));
+        $diagnostico= $repository->findOneBy(
+            array('paciente' => $idPaciente),
+            array('fecha' => 'ASC')
+        );
 
+        if($paciente==null)
+        {
+            //Deberia ir a un 404
+            return $this->render('Paciente/editarDiagnostico.html.twig', array(
+            ));
+        }
 
         return $this->render('Paciente/consultarDiagnostico.html.twig', array(
             'paciente' => $paciente,
@@ -77,9 +86,36 @@ class PacienteController extends Controller
 
     public function editarDiagnosticoAction()
     {
-        return $this->render('Paciente/editarDiagnostico.html.twig', array(
-                // ...
-            ));    }
+        $request = $this->get("request");
+        $idPaciente = $request->get("idpaciente");
+        $idDiagnostico = $request->get("iddiagnostico");
+
+        $em = $this->getDoctrine()->getManager();
+        $paciente = $em->getRepository('AppBundle:Paciente')->find($idPaciente);
+        $diagnostico = $em->getRepository('AppBundle:Diagnostico')->find($idDiagnostico);
+        if (!$paciente || !$diagnostico) {
+            throw $this->createNotFoundException('No news found for id ' . $idPaciente);
+        }
+
+        $diagnostico->setTratamiento($request->get("tratamiento"));
+        $diagnostico->setDiagnostico($request->get("diagnostico"));
+        $diagnostico->setEvolucion($request->get("evolucion"));
+        $diagnostico->setFecha(new \DateTime('now'));
+        $em->flush();
+
+        $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";
+        $codigo_error = 0;
+
+        // Creamos el log
+        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Diagnostico",$mensaje,null,$this->getUser());
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($diagnostico, 'json');
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "diagnostico"=>$data) ;
+        return new JsonResponse($datosRespuesta);
+
+    }
 
     public function todosPacientesAction(){
         $repository = $this->getDoctrine()

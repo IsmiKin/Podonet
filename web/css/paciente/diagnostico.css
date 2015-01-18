@@ -1,12 +1,15 @@
 
 .containerFormularioDiagnostico{
     height: 150px;
+    padding-bottom: 4%;
 }
 .containerFormularioTratamiento{
     height: 150px;
+    padding-bottom: 4%
 }
 .containerFormularioEvolucion{
     height: 150px;
+    padding-bottom: 4%
 }
 
 
@@ -19,6 +22,7 @@
     width: 80%;
     display: inline;
     margin-left: 1%;
+    margin-bottom: 1%;
 }
 .containerFormularioDiagnostico button{
     width: 15%;

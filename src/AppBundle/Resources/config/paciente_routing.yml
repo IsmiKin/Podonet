@@ -38,8 +38,11 @@ crear_diagnostico:
     defaults: { _controller: AppBundle:Paciente:crearDiagnostico }
 
 editar_diagnostico:
-    path:     /diagnostico/editar
+    path:     /diagnostico/editar/
     defaults: { _controller: AppBundle:Paciente:editarDiagnostico }
+    methods: [POST]
+    options:
+            expose: true
 
 consultar_pacientes_todos:
     path:       /todos/

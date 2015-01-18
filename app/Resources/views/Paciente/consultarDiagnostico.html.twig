@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/paciente/diagnostico.css') }}"
+    <link rel="stylesheet" href="{{ asset('css/paciente/diagnostico.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"/>
 {% endblock %}
 
@@ -12,43 +12,64 @@
 
     Buscador patologías
     <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/><br>
-    <div class="list-group bloqueDiagnosico">
 
-        <a class="list-group-item active  ">
-            <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Diagnóstico</span>
-        </a>
+    <form method="post" class="form-editar-diagnostico"
+          data-paciente="{{ paciente.idPaciente }}"
+          data-diagnostico="{{ diagnostico.idDiagnostico }}"
+          action="{{ path('editar_diagnostico') }}">
+        <div class="list-group bloqueDiagnosico">
 
-        <div class="well containerFormularioDiagnostico">
-            <button type="button" class="btn btn-default" aria-label="Left Align">Añadir Patología</button>
-            <input type="text" class="form-control" value="{{ diagnostico.Diagnostico }}" placeholder="El paciente ..." aria-describedby="basic-addon1">
+            <a class="list-group-item active  ">
+                <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Diagnóstico</span>
+            </a>
+
+            <div class="well containerFormularioDiagnostico">
+                <button type="button" class="btn btn-default" aria-label="Left Align">Añadir Patología</button>
+                <input type="text"
+                       name="diagnostico"
+                       class="form-control"
+                       value="{{ diagnostico.Diagnostico }}"
+                       placeholder="El paciente ..."
+                       aria-describedby="basic-addon1">
+            </div>
         </div>
-    </div>
 
-    <div class="list-group bloqueTratamiento">
-        <a class="list-group-item active  ">
-            <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Tratamiento</span>
-        </a>
+        <div class="list-group bloqueTratamiento">
+            <a class="list-group-item active  ">
+                <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Tratamiento</span>
+            </a>
 
-        <div class="well containerFormularioTratamiento">
-            <input type="text" class="form-control" value="{{ diagnostico.Tratamiento }}" placeholder="Debe tomar ..." aria-describedby="basic-addon1">
+            <div class="well containerFormularioTratamiento">
+                <input type="text"
+                       class="form-control"
+                       name="tratamiento"
+                       value="{{ diagnostico.Tratamiento }}"
+                       placeholder="Debe tomar ..."
+                       aria-describedby="basic-addon1">
+            </div>
         </div>
-    </div>
 
-    <div class="list-group bloqueEvolucion">
-        <a class="list-group-item active">
-            <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Evolución</span>
-        </a>
+        <div class="list-group bloqueEvolucion">
+            <a class="list-group-item active">
+                <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Evolución</span>
+            </a>
 
-        <div class="well containerFormularioEvolucion">
-            <input type="text" class="form-control" value="{{ diagnostico.Evolucion }}" placeholder="La inflamación ..." aria-describedby="basic-addon1">
+            <div class="well containerFormularioEvolucion">
+                <input type="text"
+                       class="form-control"
+                       name="evolucion"
+                       value="{{ diagnostico.Evolucion }}"
+                       placeholder="La inflamación ..."
+                       aria-describedby="basic-addon1">
+            </div>
         </div>
-    </div>
 
-    <div class="botoneraFormulario">
-        <button type="button" class="btn btn-success" aria-label="Left Align">Guardar</button>
-        <button type="button" class="btn btn-default" aria-label="Left Align">Limpiar</button>
-        <button type="button" class="btn btn-danger" aria-label="Left Align">Borrar</button>
-    </div>
+        <div class="botoneraFormulario">
+            <button type="submit" class="btn btn-success" aria-label="Left Align">Guardar</button>
+            <button type="button" class="btn btn-default" aria-label="Left Align">Limpiar</button>
+            <button type="button" class="btn btn-danger" aria-label="Left Align">Borrar</button>
+        </div>
+    </form>
 {% endblock %}
 
 {% block javascripts %}
