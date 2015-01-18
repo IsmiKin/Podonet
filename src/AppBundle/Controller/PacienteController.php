@@ -90,4 +90,29 @@ class PacienteController extends Controller
         return $response;
     }
 
+    //Devuelve todas las patologías
+    public function todasPatologiasAction(){
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Patologia');
+
+        $patologias= $repository->findAll();
+
+        $salida = array();
+        $salida["query"] = "Unit";
+        $salida["suggestions"] = array();
+        foreach($patologias as  $patologia){
+            array_push($salida["suggestions"],array(
+                "value"=>$patologia->getNombre(),
+                "dataID" => $patologia->getIdPatologia(),
+                "dataUsuario" => $patologia->getUsuario()));
+        }
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($salida, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type:','application/json');
+        return $response;
+    }
+
 }

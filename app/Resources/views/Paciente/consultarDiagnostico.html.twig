@@ -2,13 +2,16 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/paciente/diagnostico.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/paciente/diagnostico.css') }}"
+    <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"/>
 {% endblock %}
 
 {% block title %}AppBundle:Paciente:consultarDiagnostico{% endblock %}
 
 {% block body %}
     <div class="list-group bloqueDiagnosico">
+        Buscador patologías
+        <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/><br>
         <a class="list-group-item active  ">
             <i class="fa fa-lock fa-2x" ></i>  <span class="tituloPanel">Diagnóstico</span>
         </a>
@@ -44,4 +47,10 @@
         <button type="button" class="btn btn-default" aria-label="Left Align">Limpiar</button>
         <button type="button" class="btn btn-danger" aria-label="Left Align">Borrar</button>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
+    <script src="{{ asset('js/paciente/diagnostico.js') }}"></script>
 {% endblock %}
