@@ -80,9 +80,37 @@ class PacienteController extends Controller
 
     public function crearDiagnosticoAction()
     {
-        return $this->render('Paciente/crearDiagnostico.html.twig', array(
-                // ...
-            ));    }
+        $request = $this->get("request");
+        $idPaciente = $request->get("idpaciente");
+
+        $em = $this->getDoctrine()->getManager();
+        $paciente = $em->getRepository('AppBundle:Paciente')->find($idPaciente);
+        $diagnostico = new Diagnostico();
+        if (!$paciente || !$diagnostico) {
+            throw $this->createNotFoundException('No news found for id ' . $idPaciente);
+        }
+
+        $diagnostico->setTratamiento($request->get("tratamiento"));
+        $diagnostico->setDiagnostico($request->get("diagnostico"));
+        $diagnostico->setEvolucion($request->get("evolucion"));
+        $diagnostico->setPaciente($paciente);
+        $diagnostico->setUsuario($this->getUser());
+        $diagnostico->setFecha(new \DateTime('now'));
+        $em->flush();
+
+        $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";
+        $codigo_error = 0;
+
+        // Creamos el log
+        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Diagnostico",$mensaje,null,$this->getUser());
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($diagnostico, 'json');
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "diagnostico"=>$data) ;
+        return new JsonResponse($datosRespuesta);
+
+    }
 
     public function editarDiagnosticoAction()
     {
