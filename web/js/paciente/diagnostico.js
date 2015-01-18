@@ -14,7 +14,8 @@ $(document).ready(function(){
         }
     });
 
-    $(".form-editar-diagnostico").submit(submitEditarDiagnostico)
+    $(".form-editar-diagnostico").submit(submitEditarDiagnostico);
+    $("#botonClearForm").click(limpiarFormulario);
 
 });
 
@@ -23,6 +24,15 @@ function agregarBadge()
     document.write("<span class='badge'>{suggestion.dataNombre}</span>");
 }
 
+function limpiarFormulario()
+{
+    var frm_elements = this.form.elements;
+
+    for(var i=0; i<frm_elements.length; i++)
+    {
+        frm_elements[i].value = "";
+    }
+}
 
 function submitEditarDiagnostico(e){
     e.preventDefault();
