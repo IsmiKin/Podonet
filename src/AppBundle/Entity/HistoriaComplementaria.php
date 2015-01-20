@@ -7,19 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * HistoriaComplementaria
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table(name="HistoriaComplementaria")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\HistoriaComplementariaRepository")
  */
-class HistoriaComplementaria
+class HistoriaComplementaria extends Document
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idHistoriaComplementaria", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $idHistoriaComplementaria;
+
 
     /**
      * @var string
@@ -28,12 +21,6 @@ class HistoriaComplementaria
      */
     private $formato;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Contenido", type="binary", length=255)
-     */
-    private $contenido;
 
     /**
      * @var string
@@ -62,15 +49,6 @@ class HistoriaComplementaria
     private $usuario;
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getIdHistoriaComplementaria()
-    {
-        return $this->idHistoriaComplementaria;
-    }
 
     /**
      * Set formato

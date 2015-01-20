@@ -101,12 +101,7 @@
                             <strong>{{ app.user.apellidos }},{{ app.user.nombre }}</strong>
                         </div>
                         <div class="col-md-4">
-                            {% image output="images/fotousuario.png"
-                                    "uploads/documents/usuarios/fotoperfil/{{ app.user.username }}.jpg"
-                            %}
-                                <img  src="{{ asset_url }}" alt="Foto de Usuario" class="img-responsive img-rounded fotoUsuario">
-                            {% endimage %}
-
+                                <img  src="{{ asset('uploads/documents/usuarios/fotoperfil/'~app.user.username~'/'~app.user.username~'.jpg') }}" alt="Foto de Usuario" class="img-responsive img-rounded fotoUsuario">
                         </div>
                     </div>
                 </div>
