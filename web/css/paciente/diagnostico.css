@@ -1,6 +1,6 @@
 
 .containerFormularioDiagnostico{
-    height: 150px;
+    height: 280px;
     padding-bottom: 4%;
 }
 .containerFormularioTratamiento{
@@ -17,16 +17,25 @@
     height: 80%;
 }
 
-.containerFormularioDiagnostico input{
-    height: 100%;
-    width: 80%;
-    display: inline;
-    margin-left: 1%;
-    margin-bottom: 1%;
-}
+/*.containerFormularioDiagnostico input{*/
+    /*height: 100%;*/
+    /*width: 80%;*/
+    /*display: inline;*/
+    /*margin-left: 1%;*/
+    /*margin-bottom: 1%;*/
+/*}*/
+
+/*#patologiaBusqueda {*/
+    /*width: 30%;*/
+/*}*/
+
 .containerFormularioDiagnostico button{
     width: 15%;
     display: inline;
+}
+
+.containerFormularioDiagnostico input{
+    height: 50%;
 }
 
 .containerFormularioTratamiento input{

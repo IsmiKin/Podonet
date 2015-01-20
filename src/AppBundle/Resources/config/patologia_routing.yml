@@ -1,0 +1,19 @@
+admin_patologia:
+    path:     /patologia/
+    defaults: { _controller: AppBundle:Patologia:admin_patologias }
+
+crear_patologia:
+    path:     /patologia/crear
+    defaults: { _controller: AppBundle:Patologia:create }
+
+editar_patologia:
+    path:     /patologia/editar
+    defaults: { _controller: AppBundle:Patologia:update }
+
+eliminar_patologia:
+    path:     /patologia/elimminar
+    defaults: { _controller: AppBundle:Patologia:delete }
+
+consultar_patologia:
+    path:     /patologia/consultar/{idPatologia}
+    defaults: { _controller: AppBundle:Patologia:show }

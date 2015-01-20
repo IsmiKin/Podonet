@@ -8,24 +8,43 @@ $(document).ready(function(){
     $('#patologiaBusqueda').autocomplete({
         serviceUrl: Routing.generate('consultar_patologias_todos'),
         onSelect: function (suggestion) {
-            //window.location.replace(Routing.generate('dashboard_paciente',{id:suggestion.data}));
+            //window.location.replace(Routing.generate('dashboard_paciente',{id:suggestion.data}));7
 
             agregarBadge(suggestion.value);
         }
     });
 
+    $(".form-editar-diagnostico input").prop( "disabled", true );
+    $("#botonSubmitForm").hide();
+
     $(".form-editar-diagnostico").submit(submitEditarDiagnostico);
+
     $("#botonClearForm").click(limpiarFormulario);
+    $(".habilitarFormularioDiagnostico").click(habilitarFormulario);
+
 
 });
+
+function habilitarFormulario(){
+    $(".form-editar-diagnostico input").prop( "disabled", false );
+    $(".habilitarFormularioDiagnostico").hide("slow");
+    $("#botonSubmitForm").show("slow");
+}
 
 function agregarBadge(valor)
 {
     // TO-DO: CONTROLAR QUE NO SE META LA MISMA BADGE DOS VECES
     var badgeNuevo = $("<span/>", {class:"badge"}).append(valor);
-    $(".containerBadgesPatologia").append(badgeNuevo);
-    badgeNuevo.click(autoDestroyBadge);
 
+    //var badgesActuales= $.map($(".containerBadgesPatologia  > span"), function(  elem ) {
+    //    return  $(elem).text();
+    //});
+    var badgesActuales = getBadgesDiagnostico;
+
+    if($.inArray(valor,badgesActuales)==-1)
+        $(".containerBadgesPatologia").append(badgeNuevo);
+
+    badgeNuevo.click(autoDestroyBadge);
 }
 
 function autoDestroyBadge(){
@@ -34,12 +53,15 @@ function autoDestroyBadge(){
 
 function limpiarFormulario()
 {
-    var frm_elements = this.form.elements;
+    $(".form-editar-diagnostico")[0].reset();
+}
 
-    for(var i=0; i<frm_elements.length; i++)
-    {
-        frm_elements[i].value = "";
-    }
+function getBadgesDiagnostico(){
+    var spans = $.map($(".containerBadgesPatologia  > span"), function(  elem ) {
+        return  $(elem).text();
+    });
+
+    return spans;
 }
 
 function submitEditarDiagnostico(e){
@@ -54,7 +76,9 @@ function submitEditarDiagnostico(e){
     $.each( form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
+    var badgesActuales = getBadgesDiagnostico;
 
+    values["patologia"] = badgesActuales;
     values["idpaciente"] = idPaciente;
     values["iddiagnostico"] = idDiagnostico;
 
@@ -63,7 +87,6 @@ function submitEditarDiagnostico(e){
         data: $.param(values),
         success: function(data) {
             if(data.codigo_error==0){
-                alert("Success");
             }else
                 console.log("error!");
         }
