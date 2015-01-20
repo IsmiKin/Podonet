@@ -34,8 +34,10 @@ consultar_diagnostico:
     defaults: { _controller: AppBundle:Paciente:consultarDiagnostico }
 
 crear_diagnostico:
-    path:     /diagnostico/crear
+    path:     /diagnostico/crear/
     defaults: { _controller: AppBundle:Paciente:crearDiagnostico }
+    options:
+        expose: true
 
 editar_diagnostico:
     path:     /diagnostico/editar/

@@ -9,8 +9,8 @@ $(document).ready(function(){
         serviceUrl: Routing.generate('consultar_patologias_todos'),
         onSelect: function (suggestion) {
             //window.location.replace(Routing.generate('dashboard_paciente',{id:suggestion.data}));
-            document.write("<span class='badge'>suggestion.value</span>");
-            //agregarBadge();
+
+            agregarBadge(suggestion.value);
         }
     });
 
@@ -19,9 +19,17 @@ $(document).ready(function(){
 
 });
 
-function agregarBadge()
+function agregarBadge(valor)
 {
-    document.write("<span class='badge'>{suggestion.dataNombre}</span>");
+    // TO-DO: CONTROLAR QUE NO SE META LA MISMA BADGE DOS VECES
+    var badgeNuevo = $("<span/>", {class:"badge"}).append(valor);
+    $(".containerBadgesPatologia").append(badgeNuevo);
+    badgeNuevo.click(autoDestroyBadge);
+
+}
+
+function autoDestroyBadge(){
+    $(this).remove();
 }
 
 function limpiarFormulario()
@@ -36,8 +44,6 @@ function limpiarFormulario()
 
 function submitEditarDiagnostico(e){
     e.preventDefault();
-
-    console.log("Llego?!");
 
     var form = $(".form-editar-diagnostico");
     var botonEditar = $(".submitEditarDiagnostico");

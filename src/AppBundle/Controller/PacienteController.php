@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Diagnostico;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PacienteController extends Controller
 {
@@ -96,6 +98,7 @@ class PacienteController extends Controller
         $diagnostico->setPaciente($paciente);
         $diagnostico->setUsuario($this->getUser());
         $diagnostico->setFecha(new \DateTime('now'));
+        $em->persist($diagnostico);
         $em->flush();
 
         $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";
@@ -129,6 +132,7 @@ class PacienteController extends Controller
         $diagnostico->setDiagnostico($request->get("diagnostico"));
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setFecha(new \DateTime('now'));
+        $em->persist($diagnostico);
         $em->flush();
 
         $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";
@@ -179,8 +183,9 @@ class PacienteController extends Controller
         foreach($patologias as  $patologia){
             array_push($salida["suggestions"],array(
                 "value"=>$patologia->getNombre(),
-                "dataID" => $patologia->getIdPatologia(),
-                "dataUsuario" => $patologia->getUsuario()));
+                "data" => $patologia->getIdPatologia()
+            //, "dataUsuario" => $patologia->getUsuario()
+            ));
         }
 
         $serializer = Serializer::create()->build();

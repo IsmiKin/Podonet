@@ -11,12 +11,12 @@
 {% block body %}
 
     Buscador patologías
-    <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/><br>
+
 
     <form method="post" class="form-editar-diagnostico"
           data-paciente="{{ paciente.idPaciente }}"
           data-diagnostico="{{ diagnostico.idDiagnostico }}"
-          action="{{ path('editar_diagnostico') }}">
+          data-action="{{ path('editar_diagnostico') }}">
         <div class="list-group bloqueDiagnosico">
 
             <a class="list-group-item active  ">
@@ -24,14 +24,25 @@
             </a>
 
             <div class="well containerFormularioDiagnostico">
-                <button type="button" class="btn btn-default" aria-label="Left Align">Añadir Patología</button>
-                <input type="text"
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="containerBadgesPatologia col-lg-12">
+
+                    </div>
+                </div>
+
+                <!--<input type="text"
                        name="diagnostico"
                        class="form-control"
                        value="{{ diagnostico.Diagnostico }}"
                        placeholder="El paciente ..."
-                       aria-describedby="basic-addon1">
+                       aria-describedby="basic-addon1">-->
             </div>
+
         </div>
 
         <div class="list-group bloqueTratamiento">
