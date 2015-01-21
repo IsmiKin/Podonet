@@ -5,14 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * HistoriaComplementaria
+ *
  *
  * @ORM\Table(name="HistoriaComplementaria")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\HistoriaComplementariaRepository")
+ * @ORM\Entity
  */
 class HistoriaComplementaria extends Document
 {
-
 
     /**
      * @var string
@@ -38,7 +37,7 @@ class HistoriaComplementaria extends Document
 
     /**
      * @ORM\ManyToOne(targetEntity="Paciente")
-     * @ORM\JoinColumn(name="Paciente_idPaciente", referencedColumnName="idPaciente",nullable=false)
+     * @ORM\JoinColumn(name="Paciente_idPaciente", referencedColumnName="idPaciente",nullable=true)
      **/
     private $paciente;
 
@@ -187,4 +186,49 @@ class HistoriaComplementaria extends Document
     {
         return $this->usuario;
     }
+
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/documents/pacientes/historiacomplementaria/'.$this->paciente->getCodigo();
+    }
+
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime('now'));
+    }
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        if($this->getFile()->getExtension()!="")
+            $this->setFormato($this->getFile()->getExtension());
+        else
+            $this->setFormato($this->getFile()->guessClientExtension());
+
+        // aquí usa el nombre de archivo original pero lo debes
+        // sanear al menos para evitar cualquier problema de seguridad
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->setPath($this->getFile()->getClientOriginalName());
+
+        // limpia la propiedad «file» ya que no la necesitas más
+        $this->setFile(null);
+    }
+
+
+
 }

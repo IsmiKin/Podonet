@@ -1,7 +1,88 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Paciente:consultarHistoriaComplementaria{% endblock %}
+{% block title %}Podonet - Historia Complementaria{% endblock %}
+
+{% block tituloBanner %}Historia Complementaria{% endblock %}
+{% block iconoBanner %}clipboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Paciente:consultarHistoriaComplementaria page</h1>
+
+    <!-- Definimos los tipos para los iconos -->
+    {% set formatosImagen = ['jpg','gif','png'] %}
+    {% set formatosVideo  = ['avi','wmv','mkv','flv'] %}
+    {% set formatosAudio  = ['mp3','wav'] %}
+    {% set formatosTexto  = ['txt'] %}
+    {% set formatosWord    = ['doc','docx'] %}
+    {% set formatosExcel   = ['xls','xlsx','csv'] %}
+    {% set formatosPDF     = ['pdf'] %}
+    {% set formatosCompr   = ['zip','7z','rar','tar.gz'] %}
+
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{codigo }}
+    <div class="row">
+        <form action="{{ path('consultar_historia_complementaria',{'idPaciente':paciente }) }}" method="post" {{ form_enctype(form) }}>
+            <input type="hidden" name="idpaciente" value="{{ paciente }}"/>
+            {{ form_row(form.name) }}
+            {{ form_row(form.file) }}
+            {{ form_row(form.Descripcion) }}
+            {{ form_row (form._token)  }}
+            {{ form_rest(form) }}
+
+            <button type="submit" value="Upload Document" class="btn btn-primary" >
+                <i class="fa fa-upload"></i>  <i class="fa fa-file-archive"></i>  Subir archivo
+            </button>
+        </form>
+    </div>
+
+    <br/>
+    <table class="table-historiac table table-condensed " data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">
+        <thead>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Fecha Subida</th>
+        <th>Formato</th>
+        <th>Acciones</th>
+        </thead>
+        <tbody>
+
+        {% for elemento in historiasc %}
+            <tr data-idgabinete="{{ elemento.id}}">
+                <td class="tdname" data-name="{{ elemento.name}}">{{ elemento.name}}</td>
+                <td class="tddescripcion" data-descripcion="{{ elemento.Descripcion}}">{{ elemento.Descripcion}}</td>
+                <td class="tdfecha" data-fecha="{{ elemento.Fecha|date}}">{{ elemento.Fecha |date}}</td>
+                <td class="tdformato" data-formato="{{ elemento.Formato}}">
+
+                    {% if     elemento.Formato in formatosImagen %} <i class="fa fa-2x fa-file-image-o"></i>
+                    {% elseif elemento.Formato in formatosVideo %}  <i class="fa fa-2x fa-file-movie-o"></i>
+                    {% elseif elemento.Formato in formatosAudio %}  <i class="fa fa-2x fa-file-sound-o"></i>
+                    {% elseif elemento.Formato in formatosTexto %}  <i class="fa fa-2x fa-file-text-o"></i>
+                    {% elseif elemento.Formato in formatosWord %}   <i class="fa fa-2x fa-file-word-o"></i>
+                    {% elseif elemento.Formato in formatosExcel %}   <i class="fa fa-2x fa-file-excel-o"></i>
+                    {% elseif elemento.Formato in formatosPDF %}     <i class="fa fa-2x fa-file-pdf-o"></i>
+                    {% elseif elemento.Formato in formatosCompr %}   <i class="fa fa-2x fa-file-archive-o"></i>
+                    {% else %}                                      <i class="fa fa-2x fa-file-o"></i>
+                    {% endif %}
+
+                </td>
+                <td class="tdacciones">
+                    <!--<button class="btn btn-warning editarGabineteTabla" data-toggle="modal" data-target="#modalEditarForm"><i class="fa fa-edit"></i></button>-->
+
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
 {% endblock %}

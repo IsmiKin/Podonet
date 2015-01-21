@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Table()
+ * @ORM\Table(name="FotoPerfil")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\FotoPerfilRepository")
  */
 class FotoPerfil extends Document{
@@ -42,10 +42,9 @@ class FotoPerfil extends Document{
 
     protected function getUploadDir()
     {
-
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/documents/'.$this->usuario;
+        return 'uploads/documents/usuarios/fotoperfil/'.$this->usuario->getUsername();
     }
 
     public function upload()
@@ -60,13 +59,22 @@ class FotoPerfil extends Document{
 
         // move takes the target directory and then the
         // target filename to move to
+
+        // ISKN MOD-
+        // ponemos al campo name el username del usuario .. si sube una foto se machacara (para la subida del archivo)
+        // OJO!!
+        // lo hacemos asi para tener un nombre fijo que buscar dentro del twig.. no sirve para otros casos
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
+            $this->usuario->getUsername().".jpg"
         );
 
+        // ponemos al campo name el username del usuario .. si sube una foto se machacara (para la BD)
+        // OJO!!
+        // lo hacemos asi para tener un nombre fijo que buscar dentro del twig.. no sirve para otros casos
+        $this->setName($this->usuario->getUsername());
         // set the path property to the filename where you've saved the file
-        $this->setPath($this->usuario);
+        $this->setPath($this->usuario->getUsername());
 
         // limpia la propiedad «file» ya que no la necesitas más
         $this->setFile(null);

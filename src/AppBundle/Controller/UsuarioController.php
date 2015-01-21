@@ -119,12 +119,10 @@ class UsuarioController extends Controller
             $document = $fotoPerfil;
         }
 
-
         $form = $this->createFormBuilder($document)
             ->add('file','file', ['label'=>' '])
             ->getForm();
 
-        $mensaje ="kk";
         $form->handleRequest($request);
         $document->setUsuario($this->getUser());
 
@@ -135,15 +133,15 @@ class UsuarioController extends Controller
                 $em->persist($document);
 
             $em->flush();
-
+            $codigo = "TODO OK";
         }else{
-            $mensaje = $request->get("file").$request->get("name");
+            $codigo = "ERROR EN EL FORM!";
         }
 
         $documentos = $repo->findAll();
 
         return $this->render('Usuario/miFoto.html.twig', array(
-            'form' => $form->createView(), 'documentos' => $documentos, 'codigo'=>$mensaje
+            'form' => $form->createView(), 'documentos' => $documentos, 'codigo'=>$codigo
         ));
     }
 

@@ -13,9 +13,10 @@ crear_paciente:
 consultar_historia_complementaria:
     path:     /historia/complementaria/{idPaciente}
     defaults: { _controller: AppBundle:Paciente:consultarHistoriaComplementaria }
+    methods: [GET,POST]
 
 crear_historia_complementaria:
-    path:     /historia/complementaria/
+    path:     /historia/complementaria/crear/
     defaults: { _controller: AppBundle:Paciente:crearHistoriaComplementaria }
     methods : [POST]
 

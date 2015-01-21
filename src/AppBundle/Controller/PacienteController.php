@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\HistoriaComplementaria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Diagnostico;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PacienteController extends Controller
 {
@@ -29,17 +31,98 @@ class PacienteController extends Controller
                 // ...
             ));    }
 
-    public function consultarHistoriaComplementariaAction($idPaciente)
+   /* public function consultarHistoriaComplementariaAction($idPaciente)
     {
-        return $this->render('Paciente/consultarHistoriaComplementaria.html.twig', array(
-                // ...
-            ));    }
 
-    public function crearHistoriaComplementariaAction()
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:HistoriaComplementaria');
+
+        $historiasc = $repository->findBy(array('paciente' => $idPaciente));
+
+        $document = new HistoriaComplementaria();
+
+        $form = $this->createFormBuilder($document)
+            ->add('name','text',['label'=>'Nombre '])
+            ->add('file','file', ['label'=>' '])
+            ->getForm();
+
+        return $this->render('Paciente/consultarHistoriaComplementaria.html.twig', array(
+                'historiasc' => $historiasc, 'form'=> $form->createView(), 'paciente'=>$idPaciente
+            ));
+    }*/
+
+    public function consultarHistoriaComplementariaAction($idPaciente, Request $request)
     {
-        return $this->render('Paciente/crearHistoriaComplementaria.html.twig', array(
-                // ...
-            ));    }
+
+        $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:HistoriaComplementaria');
+
+        $document = new HistoriaComplementaria();
+
+        $form = $this->createFormBuilder($document)
+            ->add('name','text',['label'=>'Nombre '])
+            ->add('file','file', ['label'=>' '])
+            ->add('Descripcion')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($request->get("idpaciente")!=null){
+            $codigo="hay paciente!";
+            $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+            $paciente = $repoPaciente->find($idPaciente);
+            $document->setPaciente($paciente);
+            $document->setUsuario($this->getUser());
+        }
+
+        if ($form->isValid() && $request->isMethod('POST')) {
+            $document->upload();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($document);
+            $em->flush();
+            $codigo = "TODO OK";
+        }else{
+            $codigo = "ERROR EN EL FORM!";
+        }
+
+        $historiasc = $repository->findBy(array('paciente' => $idPaciente));
+
+        return $this->render('Paciente/consultarHistoriaComplementaria.html.twig', array(
+                'historiasc' => $historiasc, 'form'=> $form->createView(), 'paciente'=>$idPaciente
+                ,'codigo'=>$codigo
+            ));
+    }
+
+    public function crearHistoriaComplementariaAction(Request $request)
+    {
+        $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+
+        $document = new HistoriaComplementaria();
+        $form = $this->createFormBuilder($document)
+            ->add('name','text',['label'=>'Nombre '])
+            ->add('file','file', ['label'=>' '])
+            ->getForm();
+
+        $form->handleRequest($request);
+        $document->setUsuario($this->getUser());
+        $idPaciente= $request->get("idPaciente");
+        $paciente = $repoPaciente->find($idPaciente);
+        $document->setPaciente($paciente);
+
+        //if ($form->isValid() && $request->isMethod('POST')) {
+        if ($form->isValid() ) {
+            ld($form);
+            $document->upload();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($document);
+            $em->flush();
+            $codigo = "TODO OK";
+        }else{
+            $codigo = "ERROR EN EL FORM!";
+        }
+
+        return $this->redirect($this->generateUrl('consultar_historia_complementaria',array('idPaciente'=>$idPaciente)));
+    }
 
     public function editarHistoriaComplementariaAction()
     {

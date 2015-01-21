@@ -17,10 +17,10 @@ class Document
 {
     /**
     * @ORM\Id
-    * @ORM\Column(type="integer")
+    * @ORM\Column(name="id",type="integer")
     * @ORM\GeneratedValue(strategy="AUTO")
     */
-    private $id;
+    protected $id;
 
     /**
     * @ORM\Column(type="string", length=255,nullable=true)
@@ -168,5 +168,3 @@ class Document
 
 
 }
-
-?>

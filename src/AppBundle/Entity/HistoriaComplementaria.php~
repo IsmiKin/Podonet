@@ -5,21 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * HistoriaComplementaria
  *
- * @ORM\Table()
+ *
+ * @ORM\Table(name="HistoriaComplementaria")
  * @ORM\Entity
  */
-class HistoriaComplementaria
+class HistoriaComplementaria extends Document
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idHistoriaComplementaria", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $idHistoriaComplementaria;
 
     /**
      * @var string
@@ -28,12 +20,6 @@ class HistoriaComplementaria
      */
     private $formato;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Contenido", type="binary", length=255)
-     */
-    private $contenido;
 
     /**
      * @var string
@@ -62,15 +48,6 @@ class HistoriaComplementaria
     private $usuario;
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getIdHistoriaComplementaria()
-    {
-        return $this->idHistoriaComplementaria;
-    }
 
     /**
      * Set formato
@@ -209,4 +186,15 @@ class HistoriaComplementaria
     {
         return $this->usuario;
     }
+
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/documents/pacientes/historiacomplementaria/'.$this->paciente->getCodigo();
+    }
+
+
+
 }

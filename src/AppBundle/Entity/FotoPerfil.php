@@ -80,4 +80,5 @@ class FotoPerfil extends Document{
         $this->setFile(null);
     }
 
+
 }
