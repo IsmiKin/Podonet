@@ -10,22 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Patologia;
 use AppBundle\Form\PatologiaType;
 
-/**
- * Patologia controller.
- *
- * @Route("/patologia")
- */
+
 class PatologiaController extends Controller
 {
 
-    /**
-     * Lists all Patologia entities.
-     *
-     * @Route("/", name="admin_patologias")
-     * @Method("GET")
-     * @Template()
-     */
-    public function administrarPatologiasAction()
+
+    public function adminPatologiasAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -35,13 +25,7 @@ class PatologiaController extends Controller
             'entities' => $entities,
         );
     }
-    /**
-     * Creates a new Patologia entity.
-     *
-     * @Route("/", name="patologia_create")
-     * @Method("POST")
-     * @Template("AppBundle:Patologia:new.html.twig")
-     */
+
     public function createAction(Request $request)
     {
         $entity = new Patologia();
@@ -62,13 +46,7 @@ class PatologiaController extends Controller
         );
     }
 
-    /**
-     * Creates a form to create a Patologia entity.
-     *
-     * @param Patologia $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
+
     private function createCreateForm(Patologia $entity)
     {
         $form = $this->createForm(new PatologiaType(), $entity, array(
@@ -81,13 +59,7 @@ class PatologiaController extends Controller
         return $form;
     }
 
-    /**
-     * Displays a form to create a new Patologia entity.
-     *
-     * @Route("/new", name="patologia_new")
-     * @Method("GET")
-     * @Template()
-     */
+
     public function newAction()
     {
         $entity = new Patologia();
@@ -99,13 +71,7 @@ class PatologiaController extends Controller
         );
     }
 
-    /**
-     * Finds and displays a Patologia entity.
-     *
-     * @Route("/{id}", name="patologia_show")
-     * @Method("GET")
-     * @Template()
-     */
+
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -124,13 +90,7 @@ class PatologiaController extends Controller
         );
     }
 
-    /**
-     * Displays a form to edit an existing Patologia entity.
-     *
-     * @Route("/{id}/edit", name="patologia_edit")
-     * @Method("GET")
-     * @Template()
-     */
+
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -151,13 +111,7 @@ class PatologiaController extends Controller
         );
     }
 
-    /**
-    * Creates a form to edit a Patologia entity.
-    *
-    * @param Patologia $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+
     private function createEditForm(Patologia $entity)
     {
         $form = $this->createForm(new PatologiaType(), $entity, array(
@@ -169,13 +123,7 @@ class PatologiaController extends Controller
 
         return $form;
     }
-    /**
-     * Edits an existing Patologia entity.
-     *
-     * @Route("/{id}", name="patologia_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Patologia:edit.html.twig")
-     */
+
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -202,12 +150,7 @@ class PatologiaController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
-    /**
-     * Deletes a Patologia entity.
-     *
-     * @Route("/{id}", name="patologia_delete")
-     * @Method("DELETE")
-     */
+
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
@@ -228,13 +171,7 @@ class PatologiaController extends Controller
         return $this->redirect($this->generateUrl('patologia'));
     }
 
-    /**
-     * Creates a form to delete a Patologia entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
+
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()

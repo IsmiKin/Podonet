@@ -12,8 +12,9 @@
 
 {% block body %}
 
+
     <!-- Definimos los tipos para los iconos -->
-    {% set formatosImagen = ['jpg','gif','png'] %}
+    {% set formatosImagen = ['jpg','gif','png','jpeg'] %}
     {% set formatosVideo  = ['avi','wmv','mkv','flv'] %}
     {% set formatosAudio  = ['mp3','wav'] %}
     {% set formatosTexto  = ['txt'] %}
@@ -72,6 +73,10 @@
                 <td class="tdacciones">
                     <!--<button class="btn btn-warning editarGabineteTabla" data-toggle="modal" data-target="#modalEditarForm"><i class="fa fa-edit"></i></button>-->
 
+                    <!-- Habria que añadir una version para imagenes .. para que en vez de descargar, la muestre -->
+                    <a href="/{{ elemento.getDisplayPath()~"/"~elemento.path }}" target="_blank" class="btn btn-primary">
+                        <i class="fa fa-download"></i>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

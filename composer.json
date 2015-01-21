@@ -23,7 +23,8 @@
         "willdurand/propel-typehintable-behavior": "~1.0",
         "jms/serializer": "0.16.*",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
-        "raulfraile/ladybug-bundle": "dev-master"
+        "raulfraile/ladybug-bundle": "dev-master",
+        "symfony/filesystem": "~2.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

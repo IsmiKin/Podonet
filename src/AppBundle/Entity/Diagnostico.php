@@ -291,4 +291,6 @@ class Diagnostico
     {
         return $this->patologias;
     }
+
+
 }

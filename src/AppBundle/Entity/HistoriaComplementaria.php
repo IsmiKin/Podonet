@@ -187,6 +187,10 @@ class HistoriaComplementaria extends Document
         return $this->usuario;
     }
 
+    // Para no modificar
+    public function getDisplayPath(){
+        return 'uploads/documents/pacientes/historiacomplementaria/'.$this->paciente->getCodigo();
+    }
 
     protected function getUploadDir()
     {
