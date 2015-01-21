@@ -21,9 +21,17 @@ $(document).ready(function(){
 
     $("#botonClearForm").click(limpiarFormulario);
     $(".habilitarFormularioDiagnostico").click(habilitarFormulario);
+    $(".crearFormularioDiagnostico").click(crearDiagnostico);
 
 
 });
+
+function crearDiagnostico(){
+    $(".form-editar-diagnostico input").prop( "disabled", false );
+    $(".habilitarFormularioDiagnostico").hide("slow");
+    $("#botonSubmitForm").show("slow");
+    limpiarFormulario;
+}
 
 function habilitarFormulario(){
     $(".form-editar-diagnostico input").prop( "disabled", false );
@@ -54,6 +62,10 @@ function autoDestroyBadge(){
 function limpiarFormulario()
 {
     $(".form-editar-diagnostico")[0].reset();
+
+    $(':input','.form-editar-diagnostico')
+        .not(':button, :submit, :reset, :hidden')
+        .val('');
 }
 
 function getBadgesDiagnostico(){

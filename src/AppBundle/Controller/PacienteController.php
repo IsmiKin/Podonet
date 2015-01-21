@@ -146,9 +146,14 @@ class PacienteController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Diagnostico');
 
-        $diagnostico= $repository->findOneBy(
+        $ultimoDiagnostico= $repository->findOneBy(
             array('paciente' => $idPaciente),
-            array('fecha' => 'ASC')
+            array('fecha' => 'DESC')
+        );
+
+        $listadoDiagnosticos = $repository->findBy(
+            array('paciente' => $idPaciente),
+            array('fecha' => 'DESC')
         );
 
         if($paciente==null)
@@ -160,7 +165,8 @@ class PacienteController extends Controller
 
         return $this->render('Paciente/consultarDiagnostico.html.twig', array(
             'paciente' => $paciente,
-            'diagnostico' => $diagnostico
+            'diagnostico' => $ultimoDiagnostico,
+            'listaDiagnosticos' => $listadoDiagnosticos
             ));    }
 
     public function crearDiagnosticoAction()
@@ -180,7 +186,7 @@ class PacienteController extends Controller
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setPaciente($paciente);
         $diagnostico->setUsuario($this->getUser());
-        $diagnostico->setFecha(new \DateTime('now'));
+//        $diagnostico->setFecha(new \DateTime('now'));
         $em->persist($diagnostico);
         $em->flush();
 
@@ -215,7 +221,6 @@ class PacienteController extends Controller
         $diagnostico->setDiagnostico($request->get("diagnostico"));
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setFecha(new \DateTime('now'));
-        $em->persist($diagnostico);
         $em->flush();
 
         $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";

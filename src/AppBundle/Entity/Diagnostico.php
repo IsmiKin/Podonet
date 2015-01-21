@@ -256,6 +256,7 @@ class Diagnostico
      */
     public function __construct()
     {
+        $this->fecha = $this->setFecha(new \DateTime('now'));
         $this->patologias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
