@@ -5,11 +5,9 @@
 
     {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('patologia') }}">
-            Back to the list
+    <span>
+        <a class="btn btn-default" href="{{ path('admin_patologia') }}">
+            <i class="fa fa-arrow-left"></i> Volver
         </a>
-    </li>
-</ul>
+    </span>
 {% endblock %}

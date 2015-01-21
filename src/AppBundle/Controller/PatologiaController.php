@@ -21,9 +21,10 @@ class PatologiaController extends Controller
 
         $entities = $em->getRepository('AppBundle:Patologia')->findAll();
 
-        return array(
+        return $this->render('Patologia/index.html.twig', array(
             'entities' => $entities,
-        );
+        ));
+
     }
 
     public function createAction(Request $request)
@@ -37,7 +38,7 @@ class PatologiaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('patologia_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('consultar_patologia', array('id' => $entity->getIdPatologia())));
         }
 
         return array(
@@ -65,10 +66,10 @@ class PatologiaController extends Controller
         $entity = new Patologia();
         $form   = $this->createCreateForm($entity);
 
-        return array(
+        return $this->render('Patologia/new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
 
@@ -84,10 +85,11 @@ class PatologiaController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('Patologia/show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
+
     }
 
 
@@ -104,18 +106,18 @@ class PatologiaController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('Patologia/edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
 
     private function createEditForm(Patologia $entity)
     {
         $form = $this->createForm(new PatologiaType(), $entity, array(
-            'action' => $this->generateUrl('patologia_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('patologia_update', array('id' => $entity->getIdPatologia())),
             'method' => 'PUT',
         ));
 
@@ -141,7 +143,7 @@ class PatologiaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('patologia_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('edit_patologia', array('id' => $id)));
         }
 
         return array(
@@ -168,7 +170,7 @@ class PatologiaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('patologia'));
+        return $this->redirect($this->generateUrl('admin_patologia'));
     }
 
 

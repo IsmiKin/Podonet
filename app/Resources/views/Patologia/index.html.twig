@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Lista de Patologías</h1>
+
+    <table class="records_list table table-condensed footable"
+           data-filter="#filtro"
+           data-page-size="20"
+           data-page-navigation=".pagination">
+    {#<table class="record_properties table-usuarios table table-condensed footable " data-filter="#filtro" data-page-size="20" data-page-navigation=".pagination">#}
+        <thead>
+            <tr>
+                {#<th>Id Patologia</th>#}
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                {#<td><a href="{{ path('consultar_patologia', { 'id': entity.idPatologia }) }}">{{ entity.idPatologia }}</a></td>#}
+                <td>{{ entity.nombre }}</td>
+                <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.categoria }}</td>
+                <td>
+                    <span>
+                        <a class="btn btn-info" href="{{ path('consultar_patologia', { 'id': entity.idPatologia }) }}">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <a class="btn btn-success" href="{{ path('edit_patologia', { 'id': entity.idPatologia }) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+            <a class="btn btn-default" href="{{ path('new_patologia') }}">
+                <i class="fa fa-plus"></i> Nueva Patología
+            </a>
+    {% endblock %}

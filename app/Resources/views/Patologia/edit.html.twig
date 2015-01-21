@@ -1,14 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Patologia edit</h1>
+    <h1>Patologia</h1>
 
     {{ form(edit_form) }}
 
+
+    {{ form(delete_form) }}
     <span>
         <a class="btn btn-default" href="{{ path('admin_patologia') }}">
             <i class="fa fa-arrow-left"></i> Volver
         </a>
     </span>
-    {{ form(delete_form) }}
 {% endblock %}
