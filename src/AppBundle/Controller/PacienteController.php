@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Diagnostico;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class PacienteController extends Controller
 {
@@ -31,26 +33,6 @@ class PacienteController extends Controller
                 // ...
             ));    }
 
-   /* public function consultarHistoriaComplementariaAction($idPaciente)
-    {
-
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:HistoriaComplementaria');
-
-        $historiasc = $repository->findBy(array('paciente' => $idPaciente));
-
-        $document = new HistoriaComplementaria();
-
-        $form = $this->createFormBuilder($document)
-            ->add('name','text',['label'=>'Nombre '])
-            ->add('file','file', ['label'=>' '])
-            ->getForm();
-
-        return $this->render('Paciente/consultarHistoriaComplementaria.html.twig', array(
-                'historiasc' => $historiasc, 'form'=> $form->createView(), 'paciente'=>$idPaciente
-            ));
-    }*/
-
     public function consultarHistoriaComplementariaAction($idPaciente, Request $request)
     {
 
@@ -60,7 +42,7 @@ class PacienteController extends Controller
         $document = new HistoriaComplementaria();
 
         $form = $this->createFormBuilder($document)
-            ->add('name','text',['label'=>'Nombre '])
+            ->add('Nombre','text',['label'=>'Nombre '])
             ->add('file','file', ['label'=>' '])
             ->add('Descripcion')
             ->getForm();
@@ -99,7 +81,7 @@ class PacienteController extends Controller
 
         $document = new HistoriaComplementaria();
         $form = $this->createFormBuilder($document)
-            ->add('name','text',['label'=>'Nombre '])
+            ->add('Nombre','text',['label'=>'Nombre '])
             ->add('file','file', ['label'=>' '])
             ->getForm();
 
@@ -130,11 +112,35 @@ class PacienteController extends Controller
                 // ...
             ));    }
 
-    public function eliminarHistoriaComplementariaAction()
+    public function eliminarHistoriaComplementariaAction(Request $request)
     {
-        return $this->render('Paciente/eliminarHistoriaComplementaria.html.twig', array(
-                // ...
-            ));    }
+        $repoHC = $this->getDoctrine()->getRepository('AppBundle:HistoriaComplementaria');
+        $em = $this->getDoctrine()->getManager();
+
+        $idhc = $request->get("idhc");
+        $idPaciente = $request->get("idpaciente");
+
+        // Habria que hacerlo por id.. no por nombre
+        $hc =$repoHC->find($idhc);
+
+        if(!$hc){
+            throw $this->createNotFoundException('No news found for id ' . $idhc);
+        }
+
+        $fs = new Filesystem();
+
+        $rutarchivo= "../web".$hc->getDisplayPath();
+
+        try {
+            $fs->remove($rutarchivo);
+            $em->remove($hc);
+            $em->flush();
+        } catch (IOExceptionInterface $e) {
+            echo "An error occurred while creating your directory at ".$e->getPath();
+        }
+
+        return $this->redirect($this->generateUrl('consultar_historia_complementaria',array('idPaciente'=>$idPaciente)));
+    }
 
     public function consultarDiagnosticoAction($idPaciente)
     {

@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FotoPerfil extends Document{
 
+
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(name="Usuario_idUsuario", referencedColumnName="id",nullable=false)

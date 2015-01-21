@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Table()
-* @ORM\Entity
+*
 */
 class Document
 {

@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  *
@@ -10,8 +13,78 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="HistoriaComplementaria")
  * @ORM\Entity
  */
-class HistoriaComplementaria extends Document
+class HistoriaComplementaria
 {
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id",type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $name;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param mixed $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $path;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * @var string
@@ -47,6 +120,12 @@ class HistoriaComplementaria extends Document
      **/
     private $usuario;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nombre", type="string", length=255, unique=true, nullable=true)
+     */
+    private $nombre;
 
 
     /**
@@ -73,26 +152,39 @@ class HistoriaComplementaria extends Document
     }
 
     /**
-     * Set contenido
+     * Sets file.
      *
-     * @param binary $contenido
-     * @return HistoriaComplementaria
+     * @param UploadFile $file
      */
-    public function setContenido($contenido)
+    public function setFile(UploadedFile $file = null)
     {
-        $this->contenido = $contenido;
-
-        return $this;
+        $this->file = $file;
     }
 
     /**
-     * Get contenido
+     * Get file.
      *
-     * @return binary
+     * @return UploadedFile
      */
-    public function getContenido()
+    public function getFile()
     {
-        return $this->contenido;
+        return $this->file;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * @param string $nombre
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
     }
 
     /**
@@ -189,7 +281,7 @@ class HistoriaComplementaria extends Document
 
     // Para no modificar
     public function getDisplayPath(){
-        return 'uploads/documents/pacientes/historiacomplementaria/'.$this->paciente->getCodigo();
+        return '/uploads/documents/pacientes/historiacomplementaria/'.$this->paciente->getCodigo().'/'.$this->getPath();
     }
 
     protected function getUploadDir()
@@ -202,6 +294,20 @@ class HistoriaComplementaria extends Document
     public function __construct()
     {
         $this->setFecha(new \DateTime('now'));
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+
+
+    public function getWebPath()
+    {
+        return 'uploads/documents/pacientes/historiacomplementaria/'.$this->paciente->getCodigo();
     }
 
     public function upload()
@@ -222,7 +328,7 @@ class HistoriaComplementaria extends Document
         // move takes the target directory and then the
         // target filename to move to
         $this->getFile()->move(
-            $this->getUploadRootDir(),
+            $this->getUploadDir(),
             $this->getFile()->getClientOriginalName()
         );
 

@@ -26,9 +26,8 @@ editar_historia_complementaria:
     methods : [PUT]
 
 eliminar_historia_complementaria:
-    path:     /historia/complementaria/
+    path:     /historia/complementaria/eliminar/
     defaults: { _controller: AppBundle:Paciente:eliminarHistoriaComplementaria }
-    methods: [DELETE]
 
 consultar_diagnostico:
     path:     /diagnostico/{idPaciente}
