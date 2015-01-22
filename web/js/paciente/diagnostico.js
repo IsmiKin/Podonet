@@ -10,7 +10,7 @@ $(document).ready(function(){
         onSelect: function (suggestion) {
             //window.location.replace(Routing.generate('dashboard_paciente',{id:suggestion.data}));7
 
-            agregarBadge(suggestion.value);
+            agregarBadge(suggestion.value, suggestion.id);
         }
     });
 
@@ -39,15 +39,12 @@ function habilitarFormulario(){
     $("#botonSubmitForm").show("slow");
 }
 
-function agregarBadge(valor)
+function agregarBadge(valor, id)
 {
     // TO-DO: CONTROLAR QUE NO SE META LA MISMA BADGE DOS VECES
-    var badgeNuevo = $("<span/>", {class:"badge"}).append(valor);
+    var badgeNuevo = $("<span/>", {class:"badge", attr: { id: id }}).append(valor);
 
-    //var badgesActuales= $.map($(".containerBadgesPatologia  > span"), function(  elem ) {
-    //    return  $(elem).text();
-    //});
-    var badgesActuales = getBadgesDiagnostico;
+    var badgesActuales = getBadgesDiagnostico();
 
     if($.inArray(valor,badgesActuales)==-1)
         $(".containerBadgesPatologia").append(badgeNuevo);
@@ -70,12 +67,16 @@ function limpiarFormulario()
 
 function getBadgesDiagnostico(){
     var spans = $.map($(".containerBadgesPatologia  > span"), function(  elem ) {
+        var lista = {};
+        lista['nombre'] = $(elem).text();
+        lista['id'] = $(elem).attr("id");
         return  $(elem).text();
     });
 
     return spans;
 }
 
+//Submit valido tanto para create como para update
 function submitEditarDiagnostico(e){
     e.preventDefault();
 
@@ -88,9 +89,9 @@ function submitEditarDiagnostico(e){
     $.each( form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
-    var badgesActuales = getBadgesDiagnostico;
+    var badgesActuales = getBadgesDiagnostico();
 
-    values["patologia"] = badgesActuales;
+    values["patologias"] = badgesActuales;
     values["idpaciente"] = idPaciente;
     values["iddiagnostico"] = idDiagnostico;
 

@@ -17,6 +17,11 @@
     <button type="submit" class="btn btn-default botonTitle crearFormularioDiagnostico" >
         <i class="fa fa-plus"></i> Nuevo
     </button>
+    <span>
+        <a class="btn btn-primary" href="{{ path('admin_patologia') }}">
+            <i class="fa fa-book"></i> Gestionar Patologías
+        </a>
+    </span>
     <br><br>
     <form method="post" class="form-editar-diagnostico"
           data-paciente="{{ paciente.idPaciente }}"

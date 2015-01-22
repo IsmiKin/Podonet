@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/paciente/patologia.css') }}"/>
+{% endblock %}
 
 {% block iconoBanner %}users{% endblock %}
 {% block tituloBanner %}Administración de Patologías{% endblock %}
@@ -23,6 +27,7 @@
             </tr>
         </tbody>
     </table>
+        {{ form(delete_form) }}
         <span>
             <a class="btn btn-default" href="{{ path('admin_patologia') }}">
                 <i class="fa fa-arrow-left"></i> Volver
@@ -33,9 +38,10 @@
                 <i class="fa fa-pencil"></i> Editar
             </a>
         </span>
+
         {#<a class="btn btn-danger" href="">#}
             {#<i class="fa fa-close"></i> Eliminar#}
         {#</a>#}
-    {{ form(delete_form) }}
+
 
 {% endblock %}

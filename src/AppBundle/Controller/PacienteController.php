@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\HistoriaComplementaria;
+use AppBundle\Entity\Patologia;
+use AppBundle\Entity\PatologiaPorDiagnostico;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\Response;
@@ -210,12 +212,21 @@ class PacienteController extends Controller
         $request = $this->get("request");
         $idPaciente = $request->get("idpaciente");
         $idDiagnostico = $request->get("iddiagnostico");
+        $patologias = $request->get("patologias");
+
 
         $em = $this->getDoctrine()->getManager();
         $paciente = $em->getRepository('AppBundle:Paciente')->find($idPaciente);
         $diagnostico = $em->getRepository('AppBundle:Diagnostico')->find($idDiagnostico);
         if (!$paciente || !$diagnostico) {
             throw $this->createNotFoundException('No news found for id ' . $idPaciente);
+        }
+
+        foreach($patologias as $pat)
+        {
+            $patologia = new Patologia();
+            $patologia->setNombre($pat);
+            $patPorDiag = new PatologiaPorDiagnostico();
         }
 
         $diagnostico->setTratamiento($request->get("tratamiento"));
@@ -302,7 +313,7 @@ class PacienteController extends Controller
         foreach($patologias as  $patologia){
             array_push($salida["suggestions"],array(
                 "value"=>$patologia->getNombre(),
-                "data" => $patologia->getIdPatologia()
+                "id" => $patologia->getIdPatologia()
             //, "dataUsuario" => $patologia->getUsuario()
             ));
         }
