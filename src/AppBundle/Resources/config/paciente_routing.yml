@@ -52,6 +52,12 @@ consultar_pacientes_todos:
     options:
         expose: true
 
+consultar_pacientes_filtro:
+    path:       /busqueda/filtro/
+    defaults: { _controller: AppBundle:Paciente:filtroPacientes }
+    options:
+        expose: true
+
 consultar_patologias_todos:
     path:       /patologias/
     defaults: { _controller: AppBundle:Paciente:todasPatologias }

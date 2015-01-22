@@ -1,0 +1,81 @@
+{% extends "::base.html.twig" %}
+{% block tituloBanner %}Agenda - Nueva Cita{% endblock %}
+{% block iconoBanner %}calendar{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
+{% endblock %}
+
+{% block title %}Agenda - Nueva Cita{% endblock %}
+
+{% block body %}
+
+    <div id="calendar"></div>
+
+
+
+    <!-- Modal de nueva cita -->
+    <div class="modal fade" id="modalNuevaCita" tabindex="-1" role="dialog" aria-labelledby="modalForm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Nueva Cita</h4>
+                </div>
+                <div class="modal-body">
+                    <strong>Comienzo:</strong> <span class="horaInicio"></span> &nbsp;&nbsp;
+                    <strong>Fin:</strong> <span class="horaFin"></span>
+
+                    <hr>
+
+                    <strong>Paciente</strong>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="paciente" class="" id="autocomplete"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" hidden="hidden">
+                            <button id="reelegirPaciente" type="button" class="btn btn-primary" hidden="hidden">
+                                <i class="fa fa-refresh"></i>  Reelegir
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">
+                        <i class="fa fa-check"></i>  Confirmar
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        <i class="fa fa-minus-circle"></i>  Cancelar
+                    </button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- no se porque no puedo usar Assetic otra vez.. -->
+    <script src="{{ asset('assets/vendor/moment/min/locales.js') }}"></script>
+    <script src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/fullcalendar/dist/lang/es.js') }}"></script>
+    <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
+
+    <script src="{{ asset('js/agenda/nueva_cita.js') }}"></script>
+
+{% endblock %}
+
+{% block templates %}
+    {{ parent() }}
+    <script src="{{ asset('templates/agenda/compiled_agenda.js') }}"></script>
+
+{% endblock %}

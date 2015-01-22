@@ -1,4 +1,6 @@
 {% extends "::base.html.twig" %}
+{% block tituloBanner %}Agenda{% endblock %}
+{% block iconoBanner %}calendar{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -18,7 +20,7 @@
                 Citas
             </a>
             <a href="" class="list-group-item">Buscar Cita</a>
-            <a href="" class="list-group-item">Crear Cita</a>
+            <a href="{{ path('nueva_cita') }}" class="list-group-item">Crear Cita</a>
             <br><br>
             <a  class="list-group-item active cabeceraPacientesMenuIzq">
                 Pacientes

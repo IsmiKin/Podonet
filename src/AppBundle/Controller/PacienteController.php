@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
+
 class PacienteController extends Controller
 {
     public function dashboardPacienteAction($id)
@@ -152,14 +153,9 @@ class PacienteController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Diagnostico');
 
-        $ultimoDiagnostico= $repository->findOneBy(
+        $diagnostico= $repository->findOneBy(
             array('paciente' => $idPaciente),
-            array('fecha' => 'DESC')
-        );
-
-        $listadoDiagnosticos = $repository->findBy(
-            array('paciente' => $idPaciente),
-            array('fecha' => 'DESC')
+            array('fecha' => 'ASC')
         );
 
         if($paciente==null)
@@ -171,8 +167,7 @@ class PacienteController extends Controller
 
         return $this->render('Paciente/consultarDiagnostico.html.twig', array(
             'paciente' => $paciente,
-            'diagnostico' => $ultimoDiagnostico,
-            'listaDiagnosticos' => $listadoDiagnosticos
+            'diagnostico' => $diagnostico
             ));    }
 
     public function crearDiagnosticoAction()
@@ -192,7 +187,7 @@ class PacienteController extends Controller
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setPaciente($paciente);
         $diagnostico->setUsuario($this->getUser());
-//        $diagnostico->setFecha(new \DateTime('now'));
+        $diagnostico->setFecha(new \DateTime('now'));
         $em->persist($diagnostico);
         $em->flush();
 
@@ -227,6 +222,7 @@ class PacienteController extends Controller
         $diagnostico->setDiagnostico($request->get("diagnostico"));
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setFecha(new \DateTime('now'));
+        $em->persist($diagnostico);
         $em->flush();
 
         $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";
@@ -248,6 +244,35 @@ class PacienteController extends Controller
             ->getRepository('AppBundle:Paciente');
 
         $pacientes= $repository->findAll();
+
+        $salida = array();
+        $salida["query"] = "Unit";
+        $salida["suggestions"] = array();
+        foreach($pacientes as  $paciente){
+            array_push($salida["suggestions"],array("value"=>$paciente->getNombre(), "data" => $paciente->getIdPaciente() ));
+        }
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($salida, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type:','application/json');
+        return $response;
+    }
+
+    public function filtroPacientesAction(Request $request){
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+
+        $filtro = $request->query->get("query");
+
+        //$pacientes= $repository->findAll();
+        $query = $repository->createQueryBuilder('p')
+            ->where('p.nombre LIKE :nombre')
+            ->orWhere('p.apellidos LIKE :apellidos')
+            ->setParameter('nombre', '%'.$filtro.'%')
+            ->setParameter('apellidos', '%'.$filtro.'%')
+            ->getQuery();
+        $pacientes = $query->getResult();
 
         $salida = array();
         $salida["query"] = "Unit";

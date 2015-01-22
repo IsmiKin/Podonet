@@ -37,23 +37,20 @@ class AgendaController extends Controller
     }
 
     public function nuevaCitaAction(){
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Cita');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Cita');
 
-        $cita= $repository->findAll();
-        $serializer = Serializer::create()->build();
-        $data = $serializer ->serialize($cita, 'json');
 
-        $response = new Response($data);
-        $response->headers->set('Content-Type:','application/json');
-        return $response;
+        return $this->render('Agenda/nuevaCita.html.twig', array(
+            // ...
+        ));
     }
 
     public function editarCitaAction()
     {
         return $this->render('Agenda/editarCita.html.twig', array(
                 // ...
-            ));    }
+            ));
+    }
 
     public function eliminarCitaAction()
     {
