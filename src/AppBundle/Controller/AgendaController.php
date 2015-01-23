@@ -37,12 +37,29 @@ class AgendaController extends Controller
     }
 
     public function nuevaCitaAction(){
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Cita');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Gabinete');
 
+        $gabinetes= $repository->getGabinetesActivos();
 
-        return $this->render('Agenda/nuevaCita.html.twig', array(
-            // ...
+        return $this->render('Agenda/nuevaCita.html.twig',array(
+            'gabinetes'=> $gabinetes
         ));
+    }
+
+    public function crearCitaAction(Request $request){
+
+        $idgabinete = $request->get("idgabinete");
+        $horaInicio = $request->get("inicioForm");
+        $horaFin = $request->get("finForm");
+        $paciente = $request->get("paciente");
+        $paciente = $request->get("motivoconsulta");
+        $usuarioCreador = $request->getUser();
+
+        $mensaje="OK";
+        $codigo_error=0;
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
+        return new JsonResponse($datosRespuesta);
     }
 
     public function editarCitaAction()
@@ -175,6 +192,56 @@ class AgendaController extends Controller
         return new JsonResponse($datosRespuesta);
     }
 
+
+    public function getCitaByGabineteRangeAction(Request $request){
+
+        $start = $request->query->get('start');
+        $end = $request->query->get('end');
+        $gabinete = $request->query->get('gabinete');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Cita');
+        $query = $repository->createQueryBuilder('c')
+            ->where('c.fecha >= :inicio')
+            ->andWhere('c.fecha <= :fin')
+            ->andWhere('c.estado =:estado')
+            ->andWhere('c.gabinete =:gabinete')
+            ->setParameter('inicio', $start)
+            ->setParameter('fin', $end)
+            ->setParameter('estado','Activo')
+            ->setParameter('gabinete',$gabinete)
+            ->orderBy('c.fecha', 'DESC')
+            ->getQuery();
+
+        //$citas= $query->getResult();
+        $citasItera = $query->iterate();
+
+        /*$citasformateadas = array_map(function($value) {
+            return
+                array(
+                    'idCita' => $value['idCita'],
+                    'start' => $value['horaInicio'],
+                    'end' =>$value['horaFin'],
+                    'motivoconsulta' => $value['motivoConsulta']
+                );
+            }, $citas);*/
+        $citas = array();
+        foreach( $citasItera as $citita ) {
+            array_push($citas,
+                array('idCita'=>$citita[0]->getIdCita(), 'motivoconsulta'=>$citita[0]->getMotivoConsulta(),
+                      'idGabinete'=>$citita[0]->getGabinete()->getIdGabinete(),
+                       'start'=>$citita[0]->getHoraInicio(),'end'=>$citita[0]->getHoraFin(),
+                       'Paciente'=>$citita[0]->getPaciente()
+                )
+            );
+        }
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($citas, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type:','application/json');
+        return $response;
+
+    }
 
 
 }

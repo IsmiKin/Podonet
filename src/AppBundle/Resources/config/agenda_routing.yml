@@ -10,6 +10,10 @@ nueva_cita:
     path:     /cita/nueva/
     defaults: { _controller: AppBundle:Agenda:nuevaCita }
 
+crear_cita:
+    path:     /cita/crear/
+    defaults: { _controller: AppBundle:Agenda:crearCita }
+
 editar_cita:
     path:     /cita/editar/
     defaults: { _controller: AppBundle:Agenda:editarCita }
@@ -17,6 +21,12 @@ editar_cita:
 eliminar_cita:
     path:     /cita/eliminar/
     defaults: { _controller: AppBundle:Agenda:eliminarCita }
+
+obtener_citas_rango:
+    path:     /cita/api/obtenerrango/
+    defaults: { _controller: AppBundle:Agenda:getCitaByGabineteRange }
+    options:
+        expose: true
 
 ajustes_agenda:
     path:     /ajustes/

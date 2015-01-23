@@ -152,10 +152,11 @@ class AdminUsuarioController extends Controller
             ->getRepository('AppBundle:Log');
 
         $query = $repository->createQueryBuilder('l')
-            ->where('l.fecha >= :inicio AND l.fecha <= :fin')
+            ->where('l.fecha >= :inicio')
+            ->andWhere('l.fecha <= :fin')
             ->setParameter('inicio', $fechaInicio)
             ->setParameter('fin', $fechaFin)
-            ->orderBy('l.fecha', 'ASC')
+            ->orderBy('l.fecha', 'DESC')
             ->getQuery();
 
         $logs= $query->getResult();

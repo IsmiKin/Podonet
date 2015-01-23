@@ -4,17 +4,25 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
-{% endblock %}
+<link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
+    {% endblock %}
 
-{% block title %}Agenda - Nueva Cita{% endblock %}
+      {% block title %}Agenda - Nueva Cita{% endblock %}
 
 {% block body %}
 
-    <div id="calendar"></div>
 
+    <div class="btn-group gabinete-group" >
+    {% for elemento in gabinetes %}
+        <button type="button" class="btn btn-primary myButton" data-idgabinete="{{ elemento.idGabinete }}" >{{ elemento.Codigo }}</button>
+    {% endfor %}
+    </div>
+    <input type="hidden" id="gabineteSeleccionado" value="-1"/>
 
+    <br/>
+    <hr/>
+    <div id="calendar" ></div>
 
     <!-- Modal de nueva cita -->
     <div class="modal fade" id="modalNuevaCita" tabindex="-1" role="dialog" aria-labelledby="modalForm" aria-hidden="true">
@@ -22,36 +30,135 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nueva Cita</h4>
+                    <h4 class="modal-title"><i class="fa fa-2x fa-plus"></i>  Nueva Cita</h4>
                 </div>
                 <div class="modal-body">
-                    <strong>Comienzo:</strong> <span class="horaInicio"></span> &nbsp;&nbsp;
-                    <strong>Fin:</strong> <span class="horaFin"></span>
-
-                    <hr>
-
-                    <strong>Paciente</strong>
                     <div class="row">
-                        <div class="col-md-6">
-                            <input type="text" name="paciente" class="" id="autocomplete"/>
+                        <div class="col-md-8">
+                            <strong>Comienzo:</strong> <span class="horaInicio"></span> &nbsp;&nbsp;
+                            <strong>Fin:</strong> <span class="horaFin"></span>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
-                        <div class="col-md-4" hidden="hidden">
-                            <button id="reelegirPaciente" type="button" class="btn btn-primary" hidden="hidden">
-                                <i class="fa fa-refresh"></i>  Reelegir
+                        <div class="col-md-8"><strong>Paciente</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#nuevoPacienteModal">
+                                <i class="fa fa-plus"></i><i class="fa fa-user"></i>  Crear nuevo
                             </button>
                         </div>
                     </div>
 
+                    <form action="{{ path('crear_cita') }}" method="POST" id="crearCitaForm">
+
+                        <input type="hidden" class="idgabineteForm" name="idgabineteForm" value=""/>
+                        <input type="hidden" class="inicioForm" name="inicioForm" value=""/>
+                        <input type="hidden" class="finForm" name="finForm" value=""/>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="text" name="paciente" class="" id="autocomplete" required/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" hidden="hidden">
+                                <button id="reelegirPaciente" type="button" class="btn btn-primary" hidden="hidden">
+                                    <i class="fa fa-refresh"></i>  Reelegir
+                                </button>
+                            </div>
+                        </div>
+                        <hr/>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="3" name="motivoconsulta" placeholder="Motivo de la consulta" required></textarea>
+                            </div>
+                        </div>
+
+                    </form>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success">
+                    <button type="submit" class="btn btn-success" form="crearCitaForm">
                         <i class="fa fa-check"></i>  Confirmar
                     </button>
                     <button type="button" class="btn btn-danger">
                         <i class="fa fa-minus-circle"></i>  Cancelar
+                    </button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal de Consulta -->
+
+    <div class="modal fade" id="nuevoPacienteModal" tabindex="-1" role="dialog" aria-labelledby="modalForm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-2x fa-plus"></i><i class="fa fa-2x fa-user"></i>  Nuevo paciente</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ path('crear_paciente') }}" method="POST" id="nuevoPacienteForm">
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" pattern=".{2,}" id="inputNombre" name="nombre"  placeholder="Nombre del paciente">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellidos</label>
+                            <input type="text" class="form-control"  pattern=".{2,}" id="inputApellidos" name="apellidos"  placeholder="Apellidos del paciente">
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="botonCrearPaciente" form="nuevoPacienteForm" >
+                        <i class="fa fa-check"></i>  Crear paciente
+                    </button>
+                    <button type="button" class="btn btn-danger"  data-dismiss="modal">
+                        <i class="fa fa-minus-circle"></i>  Cancelar
+                    </button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal de nuevo Usuario -->
+    <div class="modal fade" id="modalConsultaCita" tabindex="-1" role="dialog" aria-labelledby="modalForm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-2x fa-binoculars"></i>  Consulta Cita</h4>
+                </div>
+                <div class="modal-body">
+                    <i class="fa fa-clock-o"></i>  <strong>Comienzo:</strong> <span class="horaInicioConsulta"></span> &nbsp;&nbsp;
+                    <strong>Fin:</strong> <span class="horaFinConsulta"></span>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong><i class="fa fa-user"></i>  Paciente:  </strong><span class="consultaNombrePaciente"></span>
+                            <br/>
+                        </div>
+                        <hr>
+                        <div class="col-md-6">
+                            <i class="fa fa-stethoscope"></i><strong>  Motivo de la consulta:</strong><br/>
+                            <span class="consultaMotivoConsultaPaciente"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger">
+                        <i class="fa fa-trash"></i>  Eliminar
                     </button>
 
                 </div>

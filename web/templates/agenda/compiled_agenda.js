@@ -40,4 +40,14 @@ templates['nuevafila_gabinete'] = template({"1":function(depth0,helpers,partials
   if (stack1 != null) { buffer += stack1; }
   return buffer + ">\n        <button class=\"btn btn-danger habilitarGabineteButton\" data-habilitar=\"false\"><i class=\"fa fa-minus-circle\"></i></button>\n    </span>\n\n</td>\n\n</tr>";
 },"useData":true});
+templates['nuevo_popover_cita'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing;
+  return "<strong>Paciente</strong>:<em> "
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.Paciente : depth0)) != null ? stack1.apellidos : stack1), depth0))
+    + ","
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.Paciente : depth0)) != null ? stack1.nombre : stack1), depth0))
+    + "</em>\n<hr>\n<p>"
+    + escapeExpression(((helper = (helper = helpers.motivoconsulta || (depth0 != null ? depth0.motivoconsulta : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"motivoconsulta","hash":{},"data":data}) : helper)))
+    + "</p>\n";
+},"useData":true});
 })();

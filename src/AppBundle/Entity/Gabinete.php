@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Gabinete
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\GabineteRepository")
  */
 class Gabinete
 {

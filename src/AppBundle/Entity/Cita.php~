@@ -24,14 +24,14 @@ class Cita
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Fecha", type="date")
+     * @ORM\Column(name="Fecha", type="datetime")
      */
     private $fecha;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="FechaCreacion", type="datetime")
+     * @ORM\Column(name="FechaCreacion", type="date")
      */
     private $fechaCreacion;
 
@@ -45,14 +45,14 @@ class Cita
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="HoraInicio", type="time",nullable=true)
+     * @ORM\Column(name="HoraInicio", type="datetime",nullable=true)
      */
     private $horaInicio;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="HoraFin", type="time",nullable=true)
+     * @ORM\Column(name="HoraFin", type="datetime",nullable=true)
      */
     private $horaFin;
 

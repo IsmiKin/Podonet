@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Diagnostico;
+use AppBundle\Entity\Paciente;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 
 
 class PacienteController extends Controller
@@ -30,11 +32,33 @@ class PacienteController extends Controller
             ));
     }
 
-    public function crearPacienteAction()
+    public function crearPacienteAction(Request $request)
     {
-        return $this->render('Paciente/crearPaciente.html.twig', array(
-                // ...
-            ));    }
+        $nombre = $request->get("nombre");
+        $apellidos = $request->get("apellidos");
+        $codigo = $nombre[0].$this->generateRandomString().$apellidos[strlen($apellidos)-1];
+
+        if( $nombre!=null && $apellidos!=null && $codigo!=null){
+            $paciente = new Paciente();
+            $paciente->setNombre($nombre);
+            $paciente->setApellidos($apellidos);
+            $paciente->setCodigo($codigo);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($paciente);
+            $em->flush();
+
+            $mensaje ="TODO OK";
+            $codigo_error = 0;
+        }else{
+            $mensaje = "ERROR CON LOS DATOS";
+            $codigo_error = 1;
+        }
+
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, 'nuevoid'=>$paciente->getIdPaciente(), 'nombre' => $paciente->getNombre()." ".$paciente->getApellidos()) ;
+        return new JsonResponse($datosRespuesta);
+
+    }
 
     public function consultarHistoriaComplementariaAction($idPaciente, Request $request)
     {
@@ -284,7 +308,7 @@ class PacienteController extends Controller
         $salida["query"] = "Unit";
         $salida["suggestions"] = array();
         foreach($pacientes as  $paciente){
-            array_push($salida["suggestions"],array("value"=>$paciente->getNombre(), "data" => $paciente->getIdPaciente() ));
+            array_push($salida["suggestions"],array("value"=>$paciente->getNombre()." ".$paciente->getApellidos(), "data" => $paciente->getIdPaciente() ));
         }
 
         $serializer = Serializer::create()->build();
@@ -348,6 +372,17 @@ class PacienteController extends Controller
         $response = new Response($data);
         $response->headers->set('Content-Type:','application/json');
         return $response;
+    }
+
+    // funcion auxiliar.. habria que ponerla en otro sitio
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 }
