@@ -2,6 +2,9 @@
  * Created by kuku on 18/01/15.
  */
 
+var listaPatologiasEliminadas = [];
+var contadorPatologiasEliminadas = 0;
+
 $(document).ready(function(){
 
     var buscador = $("#patologiaBusqueda");
@@ -53,6 +56,8 @@ function agregarBadge(valor, id)
 }
 
 function autoDestroyBadge(){
+    listaPatologiasEliminadas[contadorPatologiasEliminadas] = { nombre : $(this).text(),  id : $(this).attr("id") };
+    contadorPatologiasEliminadas++;
     $(this).remove();
 }
 
@@ -65,11 +70,24 @@ function limpiarFormulario()
         .val('');
 }
 
+function getBadgesArrayDatos(){
+    var lista = [];
+    var i = 0;
+    var spans = $.map($(".containerBadgesPatologia  > span"), function(  elem ) {
+
+        lista[i] = { nombre : $(elem).text(),  id : $(elem).attr("id") };
+
+        i++;
+
+        return  $(elem).text();
+    });
+
+    if(lista.length==0) return false;
+    return lista;
+}
+
 function getBadgesDiagnostico(){
     var spans = $.map($(".containerBadgesPatologia  > span"), function(  elem ) {
-        var lista = {};
-        lista['nombre'] = $(elem).text();
-        lista['id'] = $(elem).attr("id");
         return  $(elem).text();
     });
 
@@ -89,12 +107,14 @@ function submitEditarDiagnostico(e){
     $.each( form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
-    var badgesActuales = getBadgesDiagnostico();
+    var badgesActuales = getBadgesArrayDatos();
+    if(listaPatologiasEliminadas.length==0)
+        listaPatologiasEliminadas = false;
 
+    values["patologiasEliminadas"] = listaPatologiasEliminadas;
     values["patologias"] = badgesActuales;
     values["idpaciente"] = idPaciente;
     values["iddiagnostico"] = idDiagnostico;
-
     $.ajax({
         type: 'POST', url: form.data("action"),
         data: $.param(values),

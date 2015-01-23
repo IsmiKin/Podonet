@@ -157,7 +157,7 @@ class PacienteController extends Controller
 
         $diagnostico= $repository->findOneBy(
             array('paciente' => $idPaciente),
-            array('fecha' => 'ASC')
+            array('fecha' => 'DESC')
         );
 
         if($paciente==null)
@@ -189,7 +189,6 @@ class PacienteController extends Controller
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setPaciente($paciente);
         $diagnostico->setUsuario($this->getUser());
-        $diagnostico->setFecha(new \DateTime('now'));
         $em->persist($diagnostico);
         $em->flush();
 
@@ -213,6 +212,7 @@ class PacienteController extends Controller
         $idPaciente = $request->get("idpaciente");
         $idDiagnostico = $request->get("iddiagnostico");
         $patologias = $request->get("patologias");
+        $patologiasEliminadas = $request->get("patologiasEliminadas");
 
 
         $em = $this->getDoctrine()->getManager();
@@ -222,18 +222,42 @@ class PacienteController extends Controller
             throw $this->createNotFoundException('No news found for id ' . $idPaciente);
         }
 
-        foreach($patologias as $pat)
+        ld($patologiasEliminadas);
+        if ($patologiasEliminadas!="false")
         {
-            $patologia = new Patologia();
-            $patologia->setNombre($pat);
-            $patPorDiag = new PatologiaPorDiagnostico();
+            foreach($patologiasEliminadas as $pat)
+            {
+                $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
+                    'nombre' => $pat['nombre']));
+                ld($patologia);
+                $patPorDiag = $em->getRepository('AppBundle:PatologiaPorDiagnostico')->findOneBy(array(
+                    'Diagnostico_idDiagnostico' => intval($idDiagnostico),
+                    'Patologia_idPatologia' => $patologia->getIdPatologia()
+                ));
+                ld($patPorDiag);
+                $em->remove($patPorDiag);
+            }
         }
+        if ($patologias!="false")
+        {
+            foreach($patologias as $pat)
+            {
+                $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
+                    'nombre' => $pat['nombre']));
+
+                $patPorDiag = new PatologiaPorDiagnostico();
+                $patPorDiag->setIdPatologia($patologia->getIdPatologia());
+                $patPorDiag->setIdDiagnostico(intval($idDiagnostico));
+                $em->persist($patPorDiag);
+            }
+        }
+
 
         $diagnostico->setTratamiento($request->get("tratamiento"));
         $diagnostico->setDiagnostico($request->get("diagnostico"));
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setFecha(new \DateTime('now'));
-        $em->persist($diagnostico);
+        //$em->persist($diagnostico);
         $em->flush();
 
         $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";

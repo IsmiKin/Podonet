@@ -11,19 +11,18 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cita
+ * Pato logiaPorDiagnostico
  *
- * @ORM\Table()
+ * @ORM\Table()(name="PatologiaPorDiagnostico")
  * @ORM\Entity
  */
-class Cita
+class PatologiaPorDiagnostico
 {
     /**
      * @var integer
      *
      * @ORM\Column(name="Diagnostico_idDiagnostico", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idDiagnostico;
 
@@ -32,7 +31,6 @@ class Cita
      *
      * @ORM\Column(name="Patologia_idPatologia", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idPatologia;
 
