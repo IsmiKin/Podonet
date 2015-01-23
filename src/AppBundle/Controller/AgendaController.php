@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use AppBundle\Entity\Gabinete;
+use AppBundle\Entity\Cita;
 use AppBundle\Entity\Log;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -48,15 +49,32 @@ class AgendaController extends Controller
 
     public function crearCitaAction(Request $request){
 
-        $idgabinete = $request->get("idgabinete");
-        $horaInicio = $request->get("inicioForm");
-        $horaFin = $request->get("finForm");
-        $paciente = $request->get("paciente");
-        $paciente = $request->get("motivoconsulta");
-        $usuarioCreador = $request->getUser();
+        $repoGabinete = $this->getDoctrine()->getRepository('AppBundle:Gabinete');
+        $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+        $gabinete = $repoGabinete->find($request->get("idgabineteForm"));
+        $paciente = $repoPaciente->find($request->get("idpacienteForm"));
 
-        $mensaje="OK";
-        $codigo_error=0;
+        $nuevaCita = new Cita();
+        $nuevaCita->setEstado("Activo");
+        $nuevaCita->setGabinete($gabinete);
+        $nuevaCita->setPaciente($paciente);
+        $nuevaCita->setUsuarioCreador($this->getUser());
+        $nuevaCita->setFecha(new \DateTime($request->get("inicioForm")));
+        $nuevaCita->setHoraInicio(new \DateTime($request->get("inicioForm")));
+        $nuevaCita->setHoraFin(new \DateTime($request->get("finForm")));
+        $nuevaCita->setMotivoConsulta($request->get("motivoconsulta"));
+
+        $em = $this->getDoctrine()->getManager();
+
+        try{
+            $em->persist($nuevaCita);
+            $em->flush();
+            $mensaje="OK";
+            $codigo_error=0;
+        }catch(ORMException $e){
+            $mensaje="NO-OK";
+            $codigo_error=1;
+        }
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
         return new JsonResponse($datosRespuesta);
@@ -69,11 +87,25 @@ class AgendaController extends Controller
             ));
     }
 
-    public function eliminarCitaAction()
+    public function eliminarCitaAction(Request $request)
     {
-        return $this->render('Agenda/eliminarCita.html.twig', array(
-                // ...
-            ));    }
+        $repoCita = $this->getDoctrine()->getRepository('AppBundle:Cita');
+        $cita = $repoCita->find($request->get('idcita'));
+
+        $em = $this->getDoctrine()->getManager();
+        try{
+            $em->remove($cita);
+            $em->flush();
+            $mensaje="OK";
+            $codigo_error=0;
+        }catch(ORMException $e){
+            $mensaje="NO-OK";
+            $codigo_error=1;
+        }
+
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
+        return new JsonResponse($datosRespuesta);
+    }
 
     public function ajustesAgendaAction()
     {

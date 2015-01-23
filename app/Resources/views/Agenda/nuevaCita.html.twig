@@ -56,10 +56,11 @@
                         <input type="hidden" class="idgabineteForm" name="idgabineteForm" value=""/>
                         <input type="hidden" class="inicioForm" name="inicioForm" value=""/>
                         <input type="hidden" class="finForm" name="finForm" value=""/>
+                        <input type="hidden" class="idpacienteForm" name="idpacienteForm" value=""/> <!-- No deberia hacer falta!!-->
 
                         <div class="row">
                             <div class="col-md-8">
-                                <input type="text" name="paciente" class="" id="autocomplete" required/>
+                                <input type="text" name="paciente" id="autocomplete" required/>
                             </div>
                         </div>
                         <div class="row">
@@ -84,7 +85,7 @@
                     <button type="submit" class="btn btn-success" form="crearCitaForm">
                         <i class="fa fa-check"></i>  Confirmar
                     </button>
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
                         <i class="fa fa-minus-circle"></i>  Cancelar
                     </button>
 
@@ -119,7 +120,7 @@
                     <button type="submit" class="btn btn-success" id="botonCrearPaciente" form="nuevoPacienteForm" >
                         <i class="fa fa-check"></i>  Crear paciente
                     </button>
-                    <button type="button" class="btn btn-danger"  data-dismiss="modal">
+                    <button type="button" class="btn btn-danger close" data-dismiss="modal"  data-dismiss="modal">
                         <i class="fa fa-minus-circle"></i>  Cancelar
                     </button>
 
@@ -157,7 +158,7 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger botonEliminarCita" data-idcita="-1" data-idevent="-1">
                         <i class="fa fa-trash"></i>  Eliminar
                     </button>
 

@@ -13,6 +13,7 @@ var formularioNuevaCita = $("#crearCitaForm");
 var modalCrearPaciente = $("#nuevoPacienteModal");
 var radioGabinetes = $(".gabinete-group button");
 var gabineteSeleccionado =$("#gabineteSeleccionado");
+var botonEliminarCita = $(".botonEliminarCita");
 
 $(document).ready(function(){
 
@@ -50,6 +51,8 @@ $(document).ready(function(){
             modalConsultaCita.find('.horaFinConsulta').empty().append(calEvent.end.format('HH mm'));
             modalConsultaCita.find('.consultaNombrePaciente').empty().append(calEvent.Paciente.nombre+" "+calEvent.Paciente.apellidos);
             modalConsultaCita.find('.consultaMotivoConsultaPaciente').empty().append(calEvent.motivoconsulta);
+            modalConsultaCita.find('.botonEliminarCita').data('idcita',calEvent.idCita);
+            modalConsultaCita.find('.botonEliminarCita').data('idevent',calEvent._id);
         },
         eventRender: function(event, element){
             element.popover({
@@ -62,29 +65,17 @@ $(document).ready(function(){
             });
         },
         select: function(start, end,jsEvent,view) {
-           /* var title = prompt('Event Title:');
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }*/
-
             var modovista=view.name;
-            if(modovista=='agendaDay')
+            if(modovista=='agendaDay'||modovista=='agendaWeek')
             {
                 modalNuevaCita.modal('show');
+
                 modalNuevaCita.find('.horaInicio').empty().append(start.format('HH:mm'));
                 modalNuevaCita.find('.horaFin').empty().append(end.format('HH:mm'));
 
-                modalNuevaCita.find('.inicioForm').empty().val(start.format('HH:mm'));
-                modalNuevaCita.find('.finForm').empty().val(end.format('HH:mm'));
-                console.log($(this).parent());
-                console.log($(this).parent().data("idgabinete"));
-                modalNuevaCita.find(".idgabineteForm").empty().val($(this).parent().data("idgabinete"));
+                modalNuevaCita.find('.inicioForm').empty().val(start);
+                modalNuevaCita.find('.finForm').empty().val(end);
+                modalNuevaCita.find(".idgabineteForm").empty().val(gabineteSeleccionado.val());
             }
 
             $('#calendar').fullCalendar('unselect');
@@ -110,6 +101,7 @@ $(document).ready(function(){
         onSelect: function (suggestion) {
             inputAutocomplete.prop('disabled', true);
             reelegirButton.parent().show();
+            $(".idpacienteForm").val(suggestion.data);// No se porque el formulario.serialize() no coge el paciente..
         }
     });
 
@@ -123,6 +115,8 @@ $(document).ready(function(){
     formularioNuevaCita.submit(crearCita);
 
     radioGabinetes.click(cambiarGabinete);
+
+    botonEliminarCita.click(eliminarCita);
 });
 
 function crearPaciente(e){
@@ -160,12 +154,8 @@ function crearCita(e){
         data: formulario.serialize(),
         success: function(respuesta) {
             if(respuesta.codigo_error==0){
-                /*console.log({value:respuesta.nombre,data:respuesta.nuevoid});
-                modalCrear.modal('hide');
-                var newOptions = {query:Unit,suggestions:[{value:respuesta.nombre,data:respuesta.nuevoid}]};
-                inputAutocomplete.setOptions(newOptions);
-                inputAutocomplete.val(respuesta.nombre);*/
-
+                calendario.fullCalendar( 'refetchEvents' );
+                modalNuevaCita.modal('hide');
             }else
                 console.log("error!");
 
@@ -177,4 +167,21 @@ function cambiarGabinete(){
     var radio = $(this);
     gabineteSeleccionado.val(radio.data("idgabinete"));
     calendario.fullCalendar( 'refetchEvents' );
+}
+
+function eliminarCita(){
+    var boton = $(this);
+    $.ajax({
+        type: "POST", url: Routing.generate('eliminar_cita'),
+        data: { idcita : boton.data('idcita')},
+        success: function(respuesta) {
+            if(respuesta.codigo_error==0){
+                console.log(respuesta);
+                modalConsultaCita.modal('hide');
+                calendario.fullCalendar('removeEvents', boton.data('idevent'));
+            }else
+                console.log("error!");
+
+        }
+    });
 }
