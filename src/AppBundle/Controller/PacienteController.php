@@ -171,6 +171,8 @@ class PacienteController extends Controller
 
     public function consultarDiagnosticoAction($idPaciente)
     {
+        $listaPatologias = array();
+
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Paciente');
 
@@ -184,6 +186,18 @@ class PacienteController extends Controller
             array('fecha' => 'DESC')
         );
 
+        $patPorDiag = $this->getDoctrine()->getRepository('AppBundle:PatologiaPorDiagnostico')->findBy(array(
+            'idDiagnostico' => $diagnostico->getIdDiagnostico()
+        ));
+
+        foreach($patPorDiag as $pXd)
+        {
+            //Sacamos la patologia desde la tabla MxM
+            $patologia= $this->getDoctrine()->getRepository('AppBundle:Patologia')->find($pXd->getIdPatologia());
+
+            array_push($listaPatologias, $patologia);
+        }
+
         if($paciente==null)
         {
             //Deberia ir a un 404
@@ -193,7 +207,8 @@ class PacienteController extends Controller
 
         return $this->render('Paciente/consultarDiagnostico.html.twig', array(
             'paciente' => $paciente,
-            'diagnostico' => $diagnostico
+            'diagnostico' => $diagnostico,
+            'patologias' => $listaPatologias
             ));    }
 
     public function crearDiagnosticoAction()
@@ -258,9 +273,9 @@ class PacienteController extends Controller
                     'Diagnostico_idDiagnostico' => intval($idDiagnostico),
                     'Patologia_idPatologia' => $patologia->getIdPatologia()
                 ));
-                ld($patPorDiag);
                 $em->remove($patPorDiag);
             }
+            ld($patPorDiag);
         }
         if ($patologias!="false")
         {

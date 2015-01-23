@@ -2,9 +2,6 @@ admin_patologia:
     path:     /
     defaults: { _controller: AppBundle:Patologia:adminPatologias }
 
-patologia:
-    path:     /
-    defaults: { _controller: AppBundle:Patologia:adminPatologias }
 
 patologia_create:
     path:     /crear

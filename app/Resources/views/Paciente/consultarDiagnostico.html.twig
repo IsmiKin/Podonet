@@ -10,7 +10,6 @@
 
 {% block body %}
 
-
     <button type="submit" class="btn btn-success botonTitle habilitarFormularioDiagnostico" >
         <i class="fa fa-pencil"></i> Editar
     </button>
@@ -18,7 +17,11 @@
         <i class="fa fa-plus"></i> Nuevo
     </button>
     <span>
-        <a class="btn btn-primary" href="{{ path('admin_patologia') }}">
+        <a class="btn btn-primary"
+           href="{{ path('admin_patologia', {
+               'idPaciente':  paciente.idPaciente,
+               'idDiagnostico': diagnostico.idDiagnostico}) }}"
+           target="_blank">
             <i class="fa fa-book"></i> Gestionar Patologías
         </a>
     </span>
@@ -43,7 +46,9 @@
                 </div>
                 <div class="row">
                     <div class="containerBadgesPatologia col-lg-12">
-
+                        {% for pat in patologias %}
+                            <span class="badge" id="{{ pat.idPatologia }}">{{ pat.nombre }}</span>
+                        {% endfor %}
                     </div>
                 </div>
                 <input type="text"

@@ -15,14 +15,15 @@ class PatologiaController extends Controller
 {
 
 
-    public function adminPatologiasAction()
+    public function adminPatologiasAction(Request $request)
     {
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AppBundle:Patologia')->findAll();
 
         return $this->render('Patologia/index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $entities
         ));
 
     }
