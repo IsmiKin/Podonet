@@ -1,0 +1,58 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PodoNet - Ajustes Agenda{% endblock %}
+
+{% block iconoBanner %}home{% endblock %}
+{% block tituloBanner %}Pagina de Inicio{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/general/home.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <h1>¡Bienvenido {{ app.user.Nombre }}!</h1>
+    <br/><br/>
+
+    {% if is_granted('ROLE_SECRETARIO') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN')  %}
+        <div class="list-group bloqueSecretaria">
+            <a class="list-group-item active">
+                <i class="fa fa-fax fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Secretaria</strong></span>
+            </a>
+
+            <div class="well ">
+                <a class="btn btn-large botonMenu"><i class="fa fa-calendar fa-5x"></i><h4>Agenda</h4></a>
+                <a class="btn btn-large botonMenu"><i class="fa fa-gear fa-5x"></i><h4>Ajustes Agenda</h4></a>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if is_granted('ROLE_ESTUDIANTE') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN') %}
+    <div class="list-group bloquePodologia">
+        <a class="list-group-item active">
+            <i class="fa fa-user-md fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Podologia</strong></span>
+        </a>
+
+        <div class="well ">
+            <a class="btn btn-large botonMenu"><i class="fa fa-search fa-5x"></i><h4>Buscar Paciente</h4></a>
+            <a class="btn btn-large botonMenu"><i class="fa fa-plus fa-5x"></i><i class="fa fa-user fa-5x"></i><h4>Nuevo Paciente</h4></a>
+            <a class="btn btn-large botonMenu"><i class="fa fa-bug fa-5x"></i><h4>Gestionar Patologias</h4></a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN')  %}
+    <div class="list-group bloqueAdministracion">
+        <a class="list-group-item list-group-item-danger active">
+            <i class="fa fa-wrench fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Administracion</strong></span>
+        </a>
+
+        <div class="well ">
+            <a class="btn btn-large botonMenu"><i class="fa fa-users fa-5x"></i><h4>Administrar Usuarios</h4></a>
+            <a class="btn btn-large botonMenu"><i class="fa fa-plus fa-5x"></i><i class="fa fa-user fa-5x"></i><h4>Nuevo Usuario</h4></a>
+            <a class="btn btn-large botonMenu"><i class="fa fa-search fa-5x"></i><i class="fa fa-file-text fa-5x"></i><h4>Consultar Logs</h4></a>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

@@ -6,6 +6,8 @@
     {% block stylesheets %}
         {% stylesheets
         "assets/vendor/bootstrap/dist/css/bootstrap.min.css"
+        'http://fonts.googleapis.com/css?family=Economica|Montez'
+
         filter='cssrewrite' output='css/compiled/all.css'
         %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
