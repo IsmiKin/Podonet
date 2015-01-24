@@ -39,6 +39,10 @@ crear_diagnostico:
     options:
         expose: true
 
+nuevo_diagnostico:
+    path:     /diagnostico/nuevo/{idPaciente}/{idDiagnostico}
+    defaults: { _controller: AppBundle:Paciente:nuevoDiagnostico }
+
 editar_diagnostico:
     path:     /diagnostico/editar/
     defaults: { _controller: AppBundle:Paciente:editarDiagnostico }

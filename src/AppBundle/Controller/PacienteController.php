@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\HistoriaComplementaria;
 use AppBundle\Entity\Patologia;
 use AppBundle\Entity\PatologiaPorDiagnostico;
+use AppBundle\Entity\PatologiaPorDiagnosticoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\Response;
@@ -211,6 +212,13 @@ class PacienteController extends Controller
             'patologias' => $listaPatologias
             ));    }
 
+    public function nuevoDiagnosticoAction($idPaciente, $idDiagnostico){
+        return $this->render('Paciente/crearDiagnostico.html.twig', array(
+            'idPaciente' => $idPaciente,
+            'idDiagnostico' => $idDiagnostico
+        ));
+    }
+
     public function crearDiagnosticoAction()
     {
         $request = $this->get("request");
@@ -222,14 +230,33 @@ class PacienteController extends Controller
         if (!$paciente || !$diagnostico) {
             throw $this->createNotFoundException('No news found for id ' . $idPaciente);
         }
-
         $diagnostico->setTratamiento($request->get("tratamiento"));
         $diagnostico->setDiagnostico($request->get("diagnostico"));
         $diagnostico->setEvolucion($request->get("evolucion"));
         $diagnostico->setPaciente($paciente);
+        $diagnostico->setFecha(new \DateTime('now'));
         $diagnostico->setUsuario($this->getUser());
+        ld("Antes de persist");
+        ld($diagnostico);
         $em->persist($diagnostico);
         $em->flush();
+        ld("Diagnostico creado");
+
+        $patologias = $request->get("patologias");
+        if ($patologias!="false")
+        {
+            foreach($patologias as $pat)
+            {
+                $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
+                    'nombre' => $pat['nombre']));
+                ld("PatologiaxDiag a insertar: ".$pat['nombre']);
+                $patPorDiag = new PatologiaPorDiagnostico();
+                $patPorDiag->setIdPatologia($patologia->getIdPatologia());
+                $patPorDiag->setIdDiagnostico(intval($diagnostico->getIdDiagnostico()));
+
+                $em->persist($patPorDiag);
+            }
+        }
 
         $mensaje = "Se ha actualizado el diagnostico con id ".$diagnostico->getIdDiagnostico()." del paciente: ".$paciente->getIdPaciente().". correctamente";
         $codigo_error = 0;
@@ -261,21 +288,21 @@ class PacienteController extends Controller
             throw $this->createNotFoundException('No news found for id ' . $idPaciente);
         }
 
-        ld($patologiasEliminadas);
+        $patologiasOriginales = $em->getRepository('AppBundle:PatologiaPorDiagnostico')->findPatByIdDiag($idDiagnostico);
+
         if ($patologiasEliminadas!="false")
         {
             foreach($patologiasEliminadas as $pat)
             {
                 $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
                     'nombre' => $pat['nombre']));
-                ld($patologia);
                 $patPorDiag = $em->getRepository('AppBundle:PatologiaPorDiagnostico')->findOneBy(array(
-                    'Diagnostico_idDiagnostico' => intval($idDiagnostico),
-                    'Patologia_idPatologia' => $patologia->getIdPatologia()
+                    'idDiagnostico' => intval($idDiagnostico),
+                    'idPatologia' => $patologia->getIdPatologia()
                 ));
+                ld("PatologiaxDiag eliminada: ".$pat['nombre']);
                 $em->remove($patPorDiag);
             }
-            ld($patPorDiag);
         }
         if ($patologias!="false")
         {
@@ -283,10 +310,11 @@ class PacienteController extends Controller
             {
                 $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
                     'nombre' => $pat['nombre']));
-
+                if (in_array($patologia, $patologiasOriginales)) continue;
                 $patPorDiag = new PatologiaPorDiagnostico();
                 $patPorDiag->setIdPatologia($patologia->getIdPatologia());
                 $patPorDiag->setIdDiagnostico(intval($idDiagnostico));
+
                 $em->persist($patPorDiag);
             }
         }

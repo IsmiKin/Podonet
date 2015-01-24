@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Pato logiaPorDiagnostico
  *
- * @ORM\Table()(name="PatologiaPorDiagnostico")
- * @ORM\Entity
+ * @ORM\Table()(name="PatPorDiagRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\PatPorDiagRepository")
  */
 class PatologiaPorDiagnostico
 {

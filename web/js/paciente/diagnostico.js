@@ -11,14 +11,21 @@ $(document).ready(function(){
     $('#patologiaBusqueda').autocomplete({
         serviceUrl: Routing.generate('consultar_patologias_todos'),
         onSelect: function (suggestion) {
-            //window.location.replace(Routing.generate('dashboard_paciente',{id:suggestion.data}));7
+            //window.location.replace(Routing.generate('dashboard_paciente',{id:suggestion.data}));
 
             agregarBadge(suggestion.value, suggestion.id);
         }
     });
 
+    var badgesInicio = $(".containerBadgesPatologia  > span");
+    badgesInicio.click(autoDestroyBadge);
+
     $(".form-editar-diagnostico input").prop( "disabled", true );
+    $(".create input").prop( "disabled", false );
+
     $("#botonSubmitForm").hide();
+    $(".btnCrear").show();
+    //En el twig de crear hay que mostrarlo
 
     $(".form-editar-diagnostico").submit(submitEditarDiagnostico);
 
@@ -120,8 +127,7 @@ function submitEditarDiagnostico(e){
         data: $.param(values),
         success: function(data) {
             if(data.codigo_error==0){
-            }else
-                console.log("error!");
+            }
         }
     });
 
