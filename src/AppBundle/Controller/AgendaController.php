@@ -16,10 +16,13 @@ class AgendaController extends Controller
 {
     public function agendaPrincipalAction()
     {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Gabinete');
 
-        return $this->render('Agenda/agendaPrincipal.html.twig', array(
-                // ...
-            ));
+        $gabinetes= $repository->getGabinetesActivos();
+
+        return $this->render('Agenda/nuevaCita.html.twig',array(
+            'gabinetes'=> $gabinetes
+        ));
     }
 
     public function consultarCitaAction($id)
@@ -246,15 +249,6 @@ class AgendaController extends Controller
         //$citas= $query->getResult();
         $citasItera = $query->iterate();
 
-        /*$citasformateadas = array_map(function($value) {
-            return
-                array(
-                    'idCita' => $value['idCita'],
-                    'start' => $value['horaInicio'],
-                    'end' =>$value['horaFin'],
-                    'motivoconsulta' => $value['motivoConsulta']
-                );
-            }, $citas);*/
         $citas = array();
         foreach( $citasItera as $citita ) {
             array_push($citas,
@@ -262,6 +256,45 @@ class AgendaController extends Controller
                       'idGabinete'=>$citita[0]->getGabinete()->getIdGabinete(),
                        'start'=>$citita[0]->getHoraInicio(),'end'=>$citita[0]->getHoraFin(),
                        'Paciente'=>$citita[0]->getPaciente()
+                )
+            );
+        }
+
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($citas, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type:','application/json');
+        return $response;
+
+    }
+
+    public function getCitaTodayAction(Request $request){
+
+        $start = new \DateTime('yesterday');
+        $end = new \DateTime('tomorrow');
+
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Cita');
+        $query = $repository->createQueryBuilder('c')
+            ->where('c.fecha >= :inicio')
+            ->andWhere('c.fecha <= :fin')
+            ->andWhere('c.estado =:estado')
+            ->setParameter('inicio', $start)
+            ->setParameter('fin', $end)
+            ->setParameter('estado','Activo')
+            ->orderBy('c.fecha', 'DESC')
+            ->getQuery();
+
+        //$citas= $query->getResult();
+        $citasItera = $query->iterate();
+
+        $citas = array();
+        foreach( $citasItera as $citita ) {
+            array_push($citas,
+                array('idCita'=>$citita[0]->getIdCita(), 'motivoconsulta'=>$citita[0]->getMotivoConsulta(),
+                    'idGabinete'=>$citita[0]->getGabinete()->getIdGabinete(),
+                    'start'=>$citita[0]->getHoraInicio(),'end'=>$citita[0]->getHoraFin(),
+                    'Paciente'=>$citita[0]->getPaciente()
                 )
             );
         }

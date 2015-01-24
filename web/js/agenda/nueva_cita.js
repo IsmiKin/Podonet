@@ -27,6 +27,9 @@ $(document).ready(function(){
         selectable: true,
         selectHelper: true,
         slotDuration: { days:0, hours:0, minutes:5 },
+        minTime:"10:00:00",
+        maxTime:"20:00:00",
+        weekends:false,
         events: {
             url:   Routing.generate('obtener_citas_rango'),
             data:function(){
@@ -55,6 +58,7 @@ $(document).ready(function(){
             modalConsultaCita.find('.botonEliminarCita').data('idevent',calEvent._id);
         },
         eventRender: function(event, element){
+
             element.popover({
                 animation:true,
                 html:true,

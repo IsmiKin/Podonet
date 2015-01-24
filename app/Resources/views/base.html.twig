@@ -44,24 +44,34 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <center><i class="fa fa-user-md fa-2x iconoNavBar"></i></center>
+                        <center><i class="fa fa-home fa-3x iconoNavBar"></i></center>
+                        <a href="{{ path('app_homepage') }}">INICIO</a>
+                    </li>
+                    {% if is_granted('ROLE_ESTUDIANTE') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN') %}
+                    <li class="page-scroll">
+                        <center><i class="fa fa-user-md fa-3x iconoNavBar"></i></center>
                         <a href="{{ path('busqueda_paciente') }}">Pacientes</a>
                     </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_SECRETARIO') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN')  %}
                     <li class="page-scroll">
-                        <center><i class="fa fa-calendar fa-2x iconoNavBar"></i></center>
+                        <center><i class="fa fa-calendar fa-3x iconoNavBar"></i></center>
                         <a href="{{ path('agenda_principal') }}">Agenda</a>
                     </li>
+                    {% endif %}
+                    {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN')  %}
                     <li class="page-scroll">
-                        <center><i class="fa fa-users fa-2x iconoNavBar"></i></center>
+                        <center><i class="fa fa-users fa-3x iconoNavBar"></i></center>
                         <a href="{{ path('administrar_usuarios') }}">Usuarios</a>
                     </li>
+                    {% endif %}
                     <li class="page-scroll">
-                        <center><i class="fa fa-user fa-2x iconoNavBar"></i></center>
+                        <center><i class="fa fa-user fa-3x iconoNavBar"></i></center>
                         <a href="{{ path('perfil_usuario') }}">Perfil</a>
                     </li>
                     <li class="page-scroll">
-                        <center><i class="fa fa-sign-out fa-2x iconoNavBar"></i></center>
-                        <a href="#contact">Salir</a>
+                        <center><i class="fa fa-sign-out fa-3x iconoNavBar"></i></center>
+                        <a href="{{ path('fos_user_security_logout') }}">Salir</a>
                     </li>
                 </ul>
             </div>

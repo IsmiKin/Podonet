@@ -11,6 +11,7 @@ use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Diagnostico;
 use AppBundle\Entity\Paciente;
+use AppBundle\Form\PacienteType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
@@ -58,6 +59,31 @@ class PacienteController extends Controller
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, 'nuevoid'=>$paciente->getIdPaciente(), 'nombre' => $paciente->getNombre()." ".$paciente->getApellidos()) ;
         return new JsonResponse($datosRespuesta);
+
+    }
+
+    public function nuevoPacienteAction(Request $request){
+
+        $paciente = new Paciente();
+        $nombre = $request->get("nombre");
+        $apellidos = $request->get("apellidos");
+        $codigo = $nombre[0].$this->generateRandomString().$apellidos[strlen($apellidos)-1];
+        $mensaje = "Mostrando form";
+
+        if( $nombre!=null && $apellidos!=null && $codigo!=null) {
+            $paciente = new Paciente();
+            $paciente->setNombre($nombre);
+            $paciente->setApellidos($apellidos);
+            $paciente->setCodigo($codigo);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($paciente);
+            $em->flush();
+            $mensaje = "Se ha creado el paciente".$paciente->getNombre();
+        }
+
+        return $this->render('Paciente/crearPaciente.html.twig', array(
+
+        ));
 
     }
 

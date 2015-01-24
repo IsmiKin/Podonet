@@ -8,6 +8,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/general/home.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
 {% endblock %}
 
 {% block body %}
@@ -15,44 +16,83 @@
     <br/><br/>
 
     {% if is_granted('ROLE_SECRETARIO') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN')  %}
-        <div class="list-group bloqueSecretaria">
-            <a class="list-group-item active">
-                <i class="fa fa-fax fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Secretaria</strong></span>
-            </a>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="list-group bloqueSecretaria">
+                    <a class="list-group-item active">
+                        <i class="fa fa-fax fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Secretaria</strong></span>
+                    </a>
 
-            <div class="well ">
-                <a class="btn btn-large botonMenu"><i class="fa fa-calendar fa-5x"></i><h4>Agenda</h4></a>
-                <a class="btn btn-large botonMenu"><i class="fa fa-gear fa-5x"></i><h4>Ajustes Agenda</h4></a>
+                    <div class="well ">
+                        <a href="{{ path('agenda_principal') }}" class="btn btn-large botonMenu"><i class="fa fa-calendar fa-5x"></i><h4>Agenda</h4></a>
+                        <a href="{{ path('ajustes_agenda') }}" class="btn btn-large botonMenu"><i class="fa fa-gear fa-5x"></i><h4>Ajustes Agenda</h4></a>
+                    </div>
+                </div>
             </div>
+
         </div>
     {% endif %}
 
     {% if is_granted('ROLE_ESTUDIANTE') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN') %}
-    <div class="list-group bloquePodologia">
-        <a class="list-group-item active">
-            <i class="fa fa-user-md fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Podologia</strong></span>
-        </a>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="calendario"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="list-group bloquePodologia">
+                <a class="list-group-item active">
+                    <i class="fa fa-user-md fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Podologia</strong></span>
+                </a>
 
-        <div class="well ">
-            <a class="btn btn-large botonMenu"><i class="fa fa-search fa-5x"></i><h4>Buscar Paciente</h4></a>
-            <a class="btn btn-large botonMenu"><i class="fa fa-plus fa-5x"></i><i class="fa fa-user fa-5x"></i><h4>Nuevo Paciente</h4></a>
-            <a class="btn btn-large botonMenu"><i class="fa fa-bug fa-5x"></i><h4>Gestionar Patologias</h4></a>
+                <div class="well ">
+                    <a href="{{ path('busqueda_paciente') }}" class="btn btn-large botonMenu"><i class="fa fa-search fa-5x"></i><h4>Buscar Paciente</h4></a>
+                    <a href="{{ path('nuevo_paciente') }}" class="btn btn-large botonMenu"><i class="fa fa-plus fa-5x"></i><i class="fa fa-user fa-5x"></i><h4>Nuevo Paciente</h4></a>
+                    <a href="{{ path('admin_patologia') }}" class="btn btn-large botonMenu"><i class="fa fa-bug fa-5x"></i><h4>Gestionar Patologias</h4></a>
+                </div>
+            </div>
         </div>
     </div>
     {% endif %}
 
     {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN')  %}
-    <div class="list-group bloqueAdministracion">
-        <a class="list-group-item list-group-item-danger active">
-            <i class="fa fa-wrench fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Administracion</strong></span>
-        </a>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="list-group bloqueAdministracion">
+                <a class="list-group-item list-group-item-danger active">
+                    <i class="fa fa-wrench fa-3x" ></i> &nbsp; &nbsp;<span class="tituloPanel"><strong>Administracion</strong></span>
+                </a>
 
-        <div class="well ">
-            <a class="btn btn-large botonMenu"><i class="fa fa-users fa-5x"></i><h4>Administrar Usuarios</h4></a>
-            <a class="btn btn-large botonMenu"><i class="fa fa-plus fa-5x"></i><i class="fa fa-user fa-5x"></i><h4>Nuevo Usuario</h4></a>
-            <a class="btn btn-large botonMenu"><i class="fa fa-search fa-5x"></i><i class="fa fa-file-text fa-5x"></i><h4>Consultar Logs</h4></a>
+                <div class="well ">
+                    <a href="{{ path('administrar_usuarios') }}" class="btn btn-large botonMenu"><i class="fa fa-users fa-5x"></i><h4>Administrar Usuarios</h4></a>
+                    <a href="{{ path('crear_usuario') }}" class="btn btn-large botonMenu"><i class="fa fa-plus fa-5x"></i><i class="fa fa-user fa-5x"></i><h4>Nuevo Usuario</h4></a>
+                    <a href="{{ path('pre_administrar_logs') }}" class="btn btn-large botonMenu"><i class="fa fa-search fa-5x"></i><i class="fa fa-file-text fa-5x"></i><h4>Consultar Logs</h4></a>
+                </div>
+            </div>
         </div>
     </div>
+
     {% endif %}
+
+    {% if is_granted('ROLE_ESTUDIANTE') or is_granted('ROLE_PIR') or is_granted('ROLE_PODOLOGO') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERADMIN') %}
+        {% block javascripts %}
+            {{ parent() }}
+            <script src="{{ asset('assets/vendor/moment/min/locales.js') }}"></script>
+            <script src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>
+            <script src="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.js') }}"></script>
+            <script src="{{ asset('assets/vendor/fullcalendar/dist/lang/es.js') }}"></script>
+            <script src="{{ asset('js/general/home.js') }}"></script>
+        {% endblock %}
+
+        {% block templates %}
+            {{ parent() }}
+            <script src="{{ asset('templates/agenda/compiled_agenda.js') }}"></script>
+
+        {% endblock %}
+
+    {% endif %}
+
+
 
 {% endblock %}

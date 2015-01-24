@@ -59,8 +59,6 @@ class AdminUsuarioController extends Controller
             }else{
                 $mensaje = "Ha ocurrido un error al validar el formulario del usuario"." errores:".$formCrear->getErrorsAsString();
             }
-            // Creamos el log
-            $this->procesarLog("Usuario",$mensaje,null);
 
             return $this->redirect($this->generateUrl('administrar_usuarios'));
         }

@@ -22,10 +22,6 @@
 !bin/symfony_requirements
 /vendor/*
 
-# FOS UserBundle needed not ignore
-!/vendor/friendsofsymfony/
-/vendor/friendsofsymfony/jsrouting-bundle/
-
 # Assets and user uploads
 /web/bundles/
 /web/assets/vendor/

@@ -1,7 +1,32 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Paciente:crearPaciente{% endblock %}
+{% block title %}PodoNet - Ajustes Agenda{% endblock %}
+
+{% block iconoBanner %}plus{% endblock %}
+{% block tituloBanner %}<i class="fa fa-3x fa-user"></i> &nbsp; Nuevo Paciente{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/general/home.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
+{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Paciente:crearPaciente page</h1>
+
+    <div class="row">
+
+        <form action="{{ path('nuevo_paciente') }}" method="POST">
+            <label for="codigoInput">Codigo</label>
+            <input type="text" id="codigoInput" class="form-control" name="codigo" />
+
+            <label for="nombreInput">Nombre</label>
+            <input type="text" id="nombreInput" class="form-control" name="nombre" />
+
+            <label for="apellidosInput">Apellidos</label>
+            <input type="text" id="apellidosInput" class="form-control" name="apellidos" />
+            <br/>
+            <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Confirmar</button>
+        </form>
+    </div>
+
 {% endblock %}

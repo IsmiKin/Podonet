@@ -4,11 +4,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-<link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
-<link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
-    {% endblock %}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/devbridge-autocomplete/content/styles.css') }}"
+{% endblock %}
 
-      {% block title %}Agenda - Nueva Cita{% endblock %}
+{% block title %}Agenda - Nueva Cita{% endblock %}
 
 {% block body %}
 

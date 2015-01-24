@@ -28,6 +28,12 @@ obtener_citas_rango:
     options:
         expose: true
 
+obtener_citas_hoy:
+    path:    /cita/api/obtenerhoy/
+    defaults: { _controller: AppBundle:Agenda:getCitaToday }
+    options:
+        expose: true
+
 ajustes_agenda:
     path:     /ajustes/
     defaults: { _controller: AppBundle:Agenda:ajustesAgenda }
