@@ -35,7 +35,7 @@ class PatPorDiagRepository extends EntityRepository
                 join AppBundle:PatologiaPorDiagnostico pXd
                 where p.idPatologia = pXd.idPatologia and pXd.idDiagnostico = :id'
             )->setParameter('id', $idDiagnostico)
-        ->getResult();
+            ->getResult();
         return $query;
 
 //        $em = $this->getEntityManager();
@@ -48,6 +48,32 @@ class PatPorDiagRepository extends EntityRepository
 //            ->getQuery();
 //
 //        return $q->getResult();
+    }
+
+    public function findPatByIdDiagArray($idDiagnostico)
+    {
+        $idDiagnostico = intval($idDiagnostico);
+
+//
+//        return $this->getEntityManager()
+//            ->createQueryBuilder()
+//            ->select('p')
+//            ->from('AppBundle:Patologia', 'p')
+//            ->innerJoin('AppBundle:PatologiaPorDiagnostico','pXd')
+//            ->where('p.idPatologia = pXd.idPatologia')
+//            ->andWhere(' pXd.idDiagnostico = :id')
+//            ->setParameter('id', $idDiagnostico)
+//            ->getQuery()
+//            ->getResult();
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'select p from AppBundle:Patologia p
+                join AppBundle:PatologiaPorDiagnostico pXd
+                where p.idPatologia = pXd.idPatologia and pXd.idDiagnostico = :id'
+            )->setParameter('id', $idDiagnostico)
+            ->getArrayResult();
+        return $query;
     }
 
 

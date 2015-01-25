@@ -47,6 +47,10 @@ nuevo_diagnostico:
     path:     /diagnostico/nuevo/{idPaciente}/{idDiagnostico}
     defaults: { _controller: AppBundle:Paciente:nuevoDiagnostico }
 
+nuevo_diagnostico_sin_param:
+    path:     /diagnostico/nuevo/
+    defaults: { _controller: AppBundle:Paciente:nuevoDiagnostico }
+
 editar_diagnostico:
     path:     /diagnostico/editar/
     defaults: { _controller: AppBundle:Paciente:editarDiagnostico }

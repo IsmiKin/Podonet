@@ -1,5 +1,7 @@
 {% extends "::base.html.twig" %}
 
+{% block htmltag %}ng-app="myDiagnostico"{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/paciente/diagnostico.css') }}"/>
@@ -11,103 +13,123 @@
 
 {% block body %}
 
-    <button type="submit" class="btn btn-success botonTitle habilitarFormularioDiagnostico" >
-        <i class="fa fa-pencil"></i> Editar
-    </button>
+    <div class="containerMain"  ng-controller="MainController as main">
+
+        <select class="form-control" ng-model="diagnosticoSeleccionado" ng-options="diagnostico.fecha.date for diagnostico in diagnosticos track by diagnostico.idDiagnostico"></select>
+
+        <button type="submit" class="btn btn-success botonTitle habilitarFormularioDiagnostico" >
+            <i class="fa fa-pencil"></i> Editar
+        </button>
     <span>
         <a class="btn btn-default botonTitle crearFormularioDiagnostico"
-           href="{{ path('nuevo_diagnostico', {
-               'idPaciente':  paciente.idPaciente,
-               'idDiagnostico': diagnostico.idDiagnostico}) }}">
+           href="{{ path('nuevo_diagnostico_sin_param') }}{{ paciente.idPaciente }}/{[{  diagnosticoSeleccionado.idDiagnostico }]}">
             <i class="fa fa-plus"></i> Nuevo
         </a>
     </span>
     <span>
         <a class="btn btn-primary"
-           href="{{ path('admin_patologia', {
-               'idPaciente':  paciente.idPaciente,
-               'idDiagnostico': diagnostico.idDiagnostico}) }}"
+           href="{{ path('admin_patologia')}}"
            target="_blank">
             <i class="fa fa-book"></i> Gestionar Patologías
         </a>
     </span>
-    <br><br>
-    <form method="post" class="form-editar-diagnostico"
-          data-paciente="{{ paciente.idPaciente }}"
-          data-diagnostico="{{ diagnostico.idDiagnostico }}"
-          data-action="{{ path('crear_diagnostico') }}">
-        <div class="list-group bloqueDiagnosico">
+        <br><br>
 
-            <a class="list-group-item active  ">
-                <i class="fa fa-heartbeat fa-2x" ></i>  <span class="tituloPanel">&nbsp;Diagnóstico</span>
-            </a>
+        <form method="post" class="form-editar-diagnostico"
+              data-paciente="{{ paciente.idPaciente }}"
+              data-diagnostico="{[{ diagnosticoSeleccionado.idDiagnostico }]}"
+              data-action="{{ path('editar_diagnostico') }}">
 
-            <div class="well containerFormularioDiagnostico">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h5>Buscador de Patologías</h5>
-                        <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/>
+            <div class="list-group bloqueDiagnosico">
+
+                <a class="list-group-item active  ">
+                    <i class="fa fa-heartbeat fa-2x" ></i>  <span class="tituloPanel">&nbsp;Diagnóstico</span>
+                </a>
+
+                <div class="well containerFormularioDiagnostico">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5>Buscador de Patologías</h5>
+                            <input type="text" name="paciente" class="form-control" id="patologiaBusqueda"/>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="containerBadgesPatologia col-lg-12">
+                            <div class=""  ng-repeat="pat in diagnosticoSeleccionado.patologias">
+                                <span class="badge" id="{[{ pat.idPatologia }]}">{[{ pat.nombre }]}</span>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input type="text"
+                                       name="diagnostico"
+                                       class="form-control"
+                                       value="{{ diagnostico.Diagnostico }}"
+                                       ng-model="diagnosticoSeleccionado.diagnostico"
+                                       placeholder="El paciente ..."
+                                       aria-describedby="basic-addon1"/>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
-                <div class="row">
-                    <div class="containerBadgesPatologia col-lg-12">
-                        {% for pat in patologias %}
-                            <span class="badge" id="{{ pat.idPatologia }}">{{ pat.nombre }}</span>
-                        {% endfor %}
+
+                <div class="list-group bloqueTratamiento">
+                    <a class="list-group-item active  ">
+                        <i class="fa fa-medkit fa-2x" ></i>  <span class="tituloPanel">&nbsp;Tratamiento</span>
+                    </a>
+
+                    <div class="well containerFormularioTratamiento">
+                        <input type="text"
+                               class="form-control"
+                               name="tratamiento"
+                               ng-model="diagnosticoSeleccionado.tratamiento"
+                               value="{{ diagnostico.Tratamiento }}"
+                               placeholder="Debe tomar ..."
+                               aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <input type="text"
-                       name="diagnostico"
-                       class="form-control"
-                       value="{{ diagnostico.Diagnostico }}"
-                       placeholder="El paciente ..."
-                       aria-describedby="basic-addon1"/>
-            </div>
 
-        </div>
+                <div class="list-group bloqueEvolucion">
+                    <a class="list-group-item active">
+                        <i class="fa fa-spinner fa-2x" ></i>  <span class="tituloPanel">&nbsp;Evolución</span>
+                    </a>
 
-        <div class="list-group bloqueTratamiento">
-            <a class="list-group-item active  ">
-                <i class="fa fa-medkit fa-2x" ></i>  <span class="tituloPanel">&nbsp;Tratamiento</span>
-            </a>
+                    <div class="well containerFormularioEvolucion">
+                        <input type="text"
+                               class="form-control"
+                               name="evolucion"
+                               ng-model="diagnosticoSeleccionado.evolucion"
+                               value="{{ diagnostico.Evolucion }}"
+                               placeholder="La inflamación ..."
+                               aria-describedby="basic-addon1">
+                    </div>
+                </div>
 
-            <div class="well containerFormularioTratamiento">
-                <input type="text"
-                       class="form-control"
-                       name="tratamiento"
-                       value="{{ diagnostico.Tratamiento }}"
-                       placeholder="Debe tomar ..."
-                       aria-describedby="basic-addon1">
-            </div>
-        </div>
+                <div class="botoneraFormulario">
+                    <button id="botonSubmitForm" type="submit" class="btn btn-success" aria-label="Left Align">
+                        <i class="fa fa-edit"></i> Guardar</button>
+                    <button id="botonClearForm" type="reset" class="btn btn-default" aria-label="Left Align">
+                        <i class="fa fa-eraser"></i> Limpiar</button>
+                </div>
+        </form>
 
-        <div class="list-group bloqueEvolucion">
-            <a class="list-group-item active">
-                <i class="fa fa-spinner fa-2x" ></i>  <span class="tituloPanel">&nbsp;Evolución</span>
-            </a>
-
-            <div class="well containerFormularioEvolucion">
-                <input type="text"
-                       class="form-control"
-                       name="evolucion"
-                       value="{{ diagnostico.Evolucion }}"
-                       placeholder="La inflamación ..."
-                       aria-describedby="basic-addon1">
-            </div>
-        </div>
-
-        <div class="botoneraFormulario">
-            <button id="botonSubmitForm" type="submit" class="btn btn-success" aria-label="Left Align">
-                <i class="fa fa-edit"></i> Guardar</button>
-            <button id="botonClearForm" type="reset" class="btn btn-default" aria-label="Left Align">
-                <i class="fa fa-eraser"></i> Limpiar</button>
-        </div>
-    </form>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        var diagnosticos = {{ listadiagnosticos|raw }};
+    </script>
+
+    <script src="{{ asset('assets/vendor/angularjs/angular.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
+
+    <script src="{{ asset('js/paciente/diagnostico_ang.js') }}"></script>
     <script src="{{ asset('js/paciente/diagnostico.js') }}"></script>
 {% endblock %}
