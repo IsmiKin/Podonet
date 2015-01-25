@@ -1,7 +1,57 @@
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/usuario/perfil/ayuda.css') }}"/>
+{% endblock %}
+
 {% block title %}AppBundle:Usuario:ayudaUsuario{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Usuario:ayudaUsuario page</h1>
+    <div class="row">
+        <div class="col-sm-4">
+            <div id="indiceAyuda" class="list-group "
+                 data-spy="affix" data-offset-top="300" data-offset-bottom="50"
+                    >
+                <a href="#" class="list-group-item active  ">
+                    <i class="fa fa-book fa-2x" ></i> <span class="tituloPanel">Índice de secciones</span>
+                </a>
+
+                <a href="#" class="list-group-item"  >
+                    <strong>Dashboard: </strong> <em>Vista principal de la aplicación, ¿qué se puede hacer?. </em>
+                </a>
+                <a href="#" class="list-group-item"  >
+                    <strong>Gestionar Agenda: </strong><em>Gestión de la agenda de la UDA, personalización e informes </em>
+                </a>
+                <a href="#" class="list-group-item"  >
+                    <strong>Gestionar Usuarios: </strong><em>Mantenimiento de los usuarios de la aplicación </em>
+                </a>
+                <a href="#" class="list-group-item"  >
+                    <strong>Gestionar Pacientes: </strong><em>Acciones sobre información de pacientes; anamnesis, diagnósticos, historias complementarias... </em>
+                </a>
+                <a href="#" class="list-group-item"  >
+                    <strong>Mi usuario: </strong><em>Funciones sobre la información de tu usuario en la aplicación, datos personales, contacto, foto, perfil... </em>
+                </a>
+
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="contenidoDashboard" >
+                <h2>1. Dashboard</h2>
+                <div class="well">
+                    Dashboard es el panel principal de la aplicación. Es el punto de entrada después de la pasarela de logueo.
+                    Desde él se pueden acceder a los distintos puntos de la web en función del rol indicado en el usuario autenticado.
+                </div>
+                <h4>1.1 Secretaría</h4>
+                Acciones sobre la agenda
+                <ul>
+                    <li>Agenda: </li><em>Acceso a la vista de Agenda, desde ella se podrán añadir citas, pacientes, consultar y editar días... etc.</em>
+                    <li>Ajustes Agenda: </li>Permite modificar los parámetros con los que se genera la agenda, esto es la gestión de gabinetes.
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
 {% endblock %}

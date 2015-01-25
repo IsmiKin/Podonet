@@ -212,7 +212,13 @@ class PacienteController extends Controller
             array('paciente' => $idPaciente),
             array('fecha' => 'DESC')
         );
+        if (!$diagnostico)
+            return $this->redirect($this->generateUrl('nuevo_diagnostico',array(
+                'idPaciente' => $idPaciente,
+                'idDiagnostico' => 0
+            )));
 
+//        ld($diagnostico->getIdDiagnostico());
         $patPorDiag = $this->getDoctrine()->getRepository('AppBundle:PatologiaPorDiagnostico')->findBy(array(
             'idDiagnostico' => $diagnostico->getIdDiagnostico()
         ));
