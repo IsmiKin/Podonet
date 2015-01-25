@@ -11,9 +11,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Pato logiaPorDiagnostico
+ * PatologiaPorDiagnostico
  *
- * @ORM\Table()(name="PatPorDiagRepository")
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\PatPorDiagRepository")
  */
 class PatologiaPorDiagnostico
