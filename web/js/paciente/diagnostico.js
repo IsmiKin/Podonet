@@ -126,8 +126,7 @@ function submitEditarDiagnostico(e){
         type: 'POST', url: form.data("action"),
         data: $.param(values),
         success: function(data) {
-            if(data.codigo_error==0){
-            }
+            window.location = Routing.generate('consultar_diagnostico',{'idPaciente':idPaciente, 'idDiagnostico':idDiagnostico});
         }
     });
 
