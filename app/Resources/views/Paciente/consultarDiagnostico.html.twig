@@ -15,11 +15,24 @@
 
     <div class="containerMain"  ng-controller="MainController as main">
 
-        <select class="form-control" id="comboFechasDiag" ng-model="diagnosticoSeleccionado" ng-options="diagnostico.fecha.date for diagnostico in diagnosticos track by diagnostico.idDiagnostico"></select>
+        <div class="row">
+            <div class="col-md-4">
+                <select class="form-control" id="comboFechasDiag" ng-model="diagnosticoSeleccionado" ng-options="diagnostico.fecha.date for diagnostico in diagnosticos track by diagnostico.idDiagnostico"></select>
+            </div>
+        </div>
 
-        <button type="submit" class="btn btn-success botonTitle habilitarFormularioDiagnostico" >
+        <br/>
+
+        <button type="button" class="btn btn-success botonTitle habilitarFormularioDiagnostico" >
             <i class="fa fa-pencil"></i> Editar
         </button>
+
+        <span class="prehidden" hidden="hidden">
+            <button type="button" class="btn btn-default botonTitle cancelarFormularioDiagnostico" >
+                <i class="fa fa-minus-circle"></i> Cancelar
+            </button>
+        </span>
+
     <span>
         <a class="btn btn-default botonTitle crearFormularioDiagnostico"
            href="{{ path('nuevo_diagnostico_sin_param') }}{{ paciente.idPaciente }}/{[{  diagnosticoSeleccionado.idDiagnostico }]}">
@@ -56,8 +69,8 @@
                     </div>
                     <div class="row">
                         <div class="containerBadgesPatologia col-lg-12">
-                            <div class=""  ng-repeat="pat in diagnosticoSeleccionado.patologias">
-                                <span class="badge" id="{[{ pat.idPatologia }]}">{[{ pat.nombre }]}</span>
+                            <div class="containerBadgesPatologia"  ng-repeat="pat in diagnosticoSeleccionado.patologias">
+                                <span class="badge" ng-class="badge" id="{[{ pat.idPatologia }]}">{[{ pat.nombre }]}</span>
                             </div>
 
 

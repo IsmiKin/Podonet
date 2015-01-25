@@ -5,6 +5,7 @@
 var listaPatologiasEliminadas = [];
 var contadorPatologiasEliminadas = 0;
 var comboFechasDiag = $("#comboFechasDiag");
+var botonCancelarFormulario = $(".cancelarFormularioDiagnostico");
 
 $(document).ready(function(){
 
@@ -34,25 +35,35 @@ $(document).ready(function(){
     $(".habilitarFormularioDiagnostico").click(habilitarFormulario);
     $(".crearFormularioDiagnostico").click(crearDiagnostico);
     comboFechasDiag.change(actualizarListenersBadges);
+    botonCancelarFormulario.click(cancelarFormulario);
     $(".badge").click(autoDestroyBadge);
 
 });
 
 function crearDiagnostico(){
     $(".form-editar-diagnostico input").prop( "disabled", false );
+    comboFechasDiag.prop("disabled",true);
     $(".habilitarFormularioDiagnostico").hide("slow");
     $("#botonSubmitForm").show("slow");
-    limpiarFormulario;
+    limpiarFormulario();
 }
 
 function actualizarListenersBadges(){
     $(".badge").click(autoDestroyBadge);
 }
 
+function cancelarFormulario(){
+    $(".form-editar-diagnostico input").prop( "disabled", true );
+    $(".habilitarFormularioDiagnostico").show("slow");
+    $("#botonSubmitForm").hide("slow");
+    $(this).parent().hide("show");
+}
+
 function habilitarFormulario(){
     $(".form-editar-diagnostico input").prop( "disabled", false );
     $(".habilitarFormularioDiagnostico").hide("slow");
     $("#botonSubmitForm").show("slow");
+    botonCancelarFormulario.parent().show("slow");
 }
 
 function agregarBadge(valor, id)
