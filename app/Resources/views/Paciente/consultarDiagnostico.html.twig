@@ -13,6 +13,8 @@
 
 {% block body %}
 
+    {% include "Paciente/menupagpaciente.html.twig" with {"opcion":"diagnostico"} %}
+
     <div class="containerMain"  ng-controller="MainController as main">
 
         <div class="row">

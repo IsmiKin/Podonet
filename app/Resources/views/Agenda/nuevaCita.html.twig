@@ -12,8 +12,8 @@
 
 {% block body %}
 
-
-    <div class="btn-group gabinete-group" >
+    <label for="gabinetes">Gabinetes</label>
+    <div class="btn-group gabinete-group" name="gabinetes">
     {% for elemento in gabinetes %}
         <button type="button" class="btn btn-primary myButton" data-idgabinete="{{ elemento.idGabinete }}" >{{ elemento.Codigo }}</button>
     {% endfor %}

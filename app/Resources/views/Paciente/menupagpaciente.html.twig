@@ -2,5 +2,6 @@
     <li role="presentation" {% if opcion=="inicio" %}class="active" {% endif %}><a href="{{ path('dashboard_paciente',{id:paciente.idPaciente}) }}"><i class="fa fa-home"></i>  Inicio</a></li>
     <li role="presentation" {% if opcion=="historiageneral" %}class="active" {% endif %}><a href="{{ path('consultar_historia_general',{idPaciente:paciente.idPaciente}) }}">Historia General</a></li>
     <li role="presentation" {% if opcion=="historiacomplementaria" %}class="active" {% endif %}><a href="{{ path('consultar_historia_complementaria',{idPaciente:paciente.idPaciente}) }}">Historia Complementaria</a></li>
+    <li role="presentation" {% if opcion=="diagnostico" %}class="active" {% endif %}><a href="{{ path('consultar_diagnostico',{idPaciente:paciente.idPaciente}) }}">Diagnostico</a></li>
     <li role="presentation" {% if opcion=="historiamecanica" %}class="active" {% endif %}><a href="#">Historia Mecanica</a></li>
 </ul>

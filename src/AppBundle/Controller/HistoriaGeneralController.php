@@ -8,9 +8,12 @@ class HistoriaGeneralController extends Controller
 {
     public function consultarHistoriaGeneralAction($idPaciente)
     {
+        $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+        $paciente = $repoPaciente->find($idPaciente);
         return $this->render('HistoriaGeneral/consultarHistoriaGeneral.html.twig', array(
-                // ...
-            ));    }
+                'paciente'=>$paciente
+            ));
+    }
 
     public function editarDatosSemipermanentesAction()
     {
