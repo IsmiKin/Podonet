@@ -25,7 +25,8 @@ class PacienteController extends Controller
     {
         return $this->render('Paciente/dashboardPaciente.html.twig', array(
                 // ...
-            ));    }
+            ));
+    }
 
     public function busquedaPacienteAction()
     {
@@ -200,25 +201,26 @@ class PacienteController extends Controller
     {
         $listaPatologias = array();
 
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Paciente');
+        $repositoryPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
 
-        $paciente= $repository->find($idPaciente);
+        $paciente= $repositoryPaciente->find($idPaciente);
 
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Diagnostico');
+        $repositoryDiagnostico = $this->getDoctrine()->getRepository('AppBundle:Diagnostico');
 
-        $diagnostico= $repository->findOneBy(
+        $diagnostico= $repositoryDiagnostico->findOneBy(
             array('paciente' => $idPaciente),
             array('fecha' => 'DESC')
         );
+
         if (!$diagnostico)
             return $this->redirect($this->generateUrl('nuevo_diagnostico',array(
                 'idPaciente' => $idPaciente,
                 'idDiagnostico' => 0
-            )));
+            ))
+        );
 
-//        ld($diagnostico->getIdDiagnostico());
+        $listaDiagnosticos = $repositoryDiagnostico->getDiagnosticoByPacienteArray($paciente);
+
         $patPorDiag = $this->getDoctrine()->getRepository('AppBundle:PatologiaPorDiagnostico')->findBy(array(
             'idDiagnostico' => $diagnostico->getIdDiagnostico()
         ));
@@ -241,8 +243,10 @@ class PacienteController extends Controller
         return $this->render('Paciente/consultarDiagnostico.html.twig', array(
             'paciente' => $paciente,
             'diagnostico' => $diagnostico,
-            'patologias' => $listaPatologias
-            ));    }
+            'patologias' => $listaPatologias,
+            'listadiagnosticos' => json_encode($listaDiagnosticos)
+            ));
+    }
 
     public function nuevoDiagnosticoAction($idPaciente, $idDiagnostico){
         return $this->render('Paciente/crearDiagnostico.html.twig', array(
