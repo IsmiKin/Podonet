@@ -1,7 +1,35 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Paciente:dashboardPaciente{% endblock %}
+{% block title %}Podonet - Pagina de paciente{% endblock %}
+
+{% block tituloBanner %}Pagina de Paciente{% endblock %}
+{% block iconoBanner %}user-md{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Paciente:dashboardPaciente page</h1>
+
+        <div class="row">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-success active">
+                    <i class="fa fa-stethoscope fa-2x" ></i>  <span class="tituloPanel">Datos de Paciente</span>
+                </a>
+
+                <a href="#" class="list-group-item"  >
+                    <strong>Nombre Completo :</strong> {{ paciente.Nombre }} {{ paciente.Apellidos }}
+                </a>
+                <a href="#" class="list-group-item"  >
+                    <strong>Codigo :</strong> {{ paciente.Codigo }}
+                </a>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
 {% endblock %}

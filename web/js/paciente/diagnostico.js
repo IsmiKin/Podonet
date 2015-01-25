@@ -4,6 +4,7 @@
 
 var listaPatologiasEliminadas = [];
 var contadorPatologiasEliminadas = 0;
+var comboFechasDiag = $("#comboFechasDiag");
 
 $(document).ready(function(){
 
@@ -32,7 +33,8 @@ $(document).ready(function(){
     $("#botonClearForm").click(limpiarFormulario);
     $(".habilitarFormularioDiagnostico").click(habilitarFormulario);
     $(".crearFormularioDiagnostico").click(crearDiagnostico);
-
+    comboFechasDiag.change(actualizarListenersBadges);
+    $(".badge").click(autoDestroyBadge);
 
 });
 
@@ -41,6 +43,10 @@ function crearDiagnostico(){
     $(".habilitarFormularioDiagnostico").hide("slow");
     $("#botonSubmitForm").show("slow");
     limpiarFormulario;
+}
+
+function actualizarListenersBadges(){
+    $(".badge").click(autoDestroyBadge);
 }
 
 function habilitarFormulario(){

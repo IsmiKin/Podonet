@@ -23,8 +23,10 @@ class PacienteController extends Controller
 {
     public function dashboardPacienteAction($id)
     {
+        $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+        $paciente = $repoPaciente->find($id);
         return $this->render('Paciente/dashboardPaciente.html.twig', array(
-                // ...
+                'paciente'=>$paciente
             ));
     }
 
