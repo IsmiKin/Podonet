@@ -75,3 +75,4 @@ consultar_patologias_todos:
     defaults: { _controller: AppBundle:Paciente:todasPatologias }
     options:
         expose: true
+

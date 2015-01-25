@@ -391,4 +391,9 @@ class DatosPersonales
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->setFechaAlta(new \DateTime('now'));
+    }
 }

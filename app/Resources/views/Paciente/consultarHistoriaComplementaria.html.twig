@@ -12,7 +12,6 @@
 
 {% block body %}
 
-
     <!-- Definimos los tipos para los iconos -->
 
     {% set formatosImagen = ['jpg','gif','png','jpeg'] %}
@@ -25,10 +24,12 @@
     {% set formatosCompr   = ['zip','7z','rar','tar.gz'] %}
 
     {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-    {{codigo }}
+
+    {% include "Paciente/menupagpaciente.html.twig" with {"opcion":"historiacomplementaria"} %}
+
     <div class="row">
-        <form action="{{ path('consultar_historia_complementaria',{'idPaciente':paciente }) }}" method="post" {{ form_enctype(form) }}>
-            <input type="hidden" name="idpaciente" value="{{ paciente }}"/>
+        <form action="{{ path('consultar_historia_complementaria',{'idPaciente':paciente.idPaciente }) }}" method="post" {{ form_enctype(form) }}>
+            <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}"/>
             {{ form_row(form.Nombre) }}
             {{ form_row(form.file) }}
             {{ form_row(form.Descripcion) }}
@@ -83,7 +84,7 @@
                         </div>
                         <div class="col-sm-2">
                             <form action="{{ path('eliminar_historia_complementaria') }}" method="POST">
-                                <input type="hidden" name="idpaciente" value="{{ paciente }}"/>
+                                <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}"/>
                                 <input type="hidden" name="idhc" value="{{ elemento.id }}"/>
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>

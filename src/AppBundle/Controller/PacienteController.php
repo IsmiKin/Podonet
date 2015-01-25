@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DatosPersonales;
 use AppBundle\Entity\HistoriaComplementaria;
 use AppBundle\Entity\Patologia;
 use AppBundle\Entity\PatologiaPorDiagnostico;
@@ -81,6 +82,13 @@ class PacienteController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($paciente);
             $em->flush();
+
+            // Inicializamos sus datos personales
+            $datosPersonales = new DatosPersonales();
+            $datosPersonales->setPaciente($paciente);
+            $em->persist($datosPersonales);
+            $em->flush();
+
             $mensaje = "Se ha creado el paciente".$paciente->getNombre();
         }
 
@@ -104,12 +112,12 @@ class PacienteController extends Controller
             ->add('Descripcion')
             ->getForm();
 
+        $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+        $paciente = $repoPaciente->find($idPaciente);
         $form->handleRequest($request);
 
         if($request->get("idpaciente")!=null){
             $codigo="hay paciente!";
-            $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
-            $paciente = $repoPaciente->find($idPaciente);
             $document->setPaciente($paciente);
             $document->setUsuario($this->getUser());
         }
@@ -127,7 +135,7 @@ class PacienteController extends Controller
         $historiasc = $repository->findBy(array('paciente' => $idPaciente));
 
         return $this->render('Paciente/consultarHistoriaComplementaria.html.twig', array(
-                'historiasc' => $historiasc, 'form'=> $form->createView(), 'paciente'=>$idPaciente
+                'historiasc' => $historiasc, 'form'=> $form->createView(), 'paciente'=>$paciente
                 ,'codigo'=>$codigo
             ));
     }
