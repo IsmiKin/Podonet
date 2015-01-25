@@ -17,17 +17,9 @@
     height: 80%;
 }
 
-/*.containerFormularioDiagnostico input{*/
-    /*height: 100%;*/
-    /*width: 80%;*/
-    /*display: inline;*/
-    /*margin-left: 1%;*/
-    /*margin-bottom: 1%;*/
-/*}*/
-
-/*#patologiaBusqueda {*/
-    /*width: 30%;*/
-/*}*/
+.list-group-item span{
+    font-size: 20px;
+}
 
 .containerFormularioDiagnostico button{
     width: 15%;
