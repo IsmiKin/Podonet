@@ -24,7 +24,11 @@
         "jms/serializer": "0.16.*",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "raulfraile/ladybug-bundle": "dev-master",
-        "symfony/filesystem": "~2.6"
+        "symfony/filesystem": "~2.6",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "ext-apcu": "*",
+        "sensio/generator-bundle": "~2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
@@ -36,14 +40,12 @@
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
         ]
