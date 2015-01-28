@@ -292,7 +292,6 @@ class AgendaController extends Controller
         foreach( $citasItera as $citita ) {
             array_push($citas,
                 array('idCita'=>$citita[0]->getIdCita(), 'motivoconsulta'=>$citita[0]->getMotivoConsulta(),
-                    'idGabinete'=>$citita[0]->getGabinete()->getIdGabinete(),
                     'start'=>$citita[0]->getHoraInicio(),'end'=>$citita[0]->getHoraFin(),
                     'Paciente'=>$citita[0]->getPaciente()
                 )
