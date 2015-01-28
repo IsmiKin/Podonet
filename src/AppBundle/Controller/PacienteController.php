@@ -90,6 +90,8 @@ class PacienteController extends Controller
             $em->flush();
 
             $mensaje = "Se ha creado el paciente".$paciente->getNombre();
+            return $this->redirect($this->generateUrl('dashboard_paciente',array('id'=>$paciente->getIdPaciente())));
+
         }
 
         return $this->render('Paciente/crearPaciente.html.twig', array(

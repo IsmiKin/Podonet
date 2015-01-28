@@ -12,6 +12,10 @@
 
 {% block body %}
 
+    <a href="{{ path('nuevo_paciente') }}" class="btn btn-success">
+        <i class="fa fa-plus"></i>  Crear nuevo paciente
+    </a>
+    <br/>
     <input type="text" name="paciente" class="" id="autocomplete"/>
 
 {% endblock %}
