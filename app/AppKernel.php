@@ -37,9 +37,33 @@ class AppKernel extends Kernel
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
     
+    protected $varDir;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($environment, $debug)
+    {
+        $this->rootDir = __DIR__;
+        $this->varDir  = dirname($this->rootDir) . '/var';
+
+        parent::__construct($environment, $debug);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCacheDir()
     {
-        return realpath($this->rootDir.'/../var/cache').'/'.$this->environment;
+        return $this->varDir . '/cache/' . $this->environment;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return $this->varDir . '/logs';
     }
     
 }
