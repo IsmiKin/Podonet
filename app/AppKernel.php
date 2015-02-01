@@ -39,7 +39,7 @@ class AppKernel extends Kernel
     
     public function getCacheDir()
     {
-        return realpath($this->rootDir.'/../var/cache)'.'/'.$this->environment;
+        return realpath($this->rootDir.'/../var/cache)'.'/'.$this->environment);
     }
     
 }
