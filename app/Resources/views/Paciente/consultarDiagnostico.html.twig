@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block iconoBanner %}heartbeat{% endblock %}
+{% block tituloBanner %}Diagnóstico y Tratamiento{% endblock %}
 {% block title %}Podonet - Diagnóstico{% endblock %}
 
 {% block body %}
@@ -43,7 +44,8 @@
     </span>
     <span>
         <a class="btn btn-primary"
-           href="{{ path('admin_patologia')}}"
+           href="{{ path('admin_patologia', {'idPaciente': paciente.idPaciente}) }}"
+           {#href="{{ path('admin_patologia')}}"#}
            target="_blank">
             <i class="fa fa-book"></i> Gestionar Patologías
         </a>

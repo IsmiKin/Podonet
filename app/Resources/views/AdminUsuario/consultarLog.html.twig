@@ -1,8 +1,8 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Podonet - Administracion Logs{% endblock %}
+{% block title %}Podonet - Administraci&oacute;n Logs{% endblock %}
 
-{% block tituloBanner %}Administracion Logs{% endblock %}
+{% block tituloBanner %}Administraci&oacute;n Logs{% endblock %}
 {% block iconoBanner %}book{% endblock %}
 
 {% block stylesheets %}
@@ -30,13 +30,13 @@
                 <strong>Fecha :</strong> {{ log.Fecha|date("d/m/Y") }}
             </a>
             <a href="#" class="list-group-item"  >
-                <strong>Categoria :</strong> {{ log.Categoria }}
+                <strong>Categor&iacute;a :</strong> {{ log.Categoria }}
             </a>
             <a href="#" class="list-group-item"  >
-                <strong>Subcategoria :</strong> {{ log.Subcategoria }}
+                <strong>Subcategor&iacute;a :</strong> {{ log.Subcategoria }}
             </a>
             <a href="#" class="list-group-item"  >
-                <strong>Descripcion:</strong> <br/>
+                <strong>Descripci&oacute;n:</strong> <br/>
                 {{ log.Descripcion}}
             </a>
         </div>
@@ -66,7 +66,7 @@
             </a>
             <a href="#" class="list-group-item"  >
                 <strong>Email:</strong> {{ log.Usuario.email }}<br/>
-                <strong>Telefono:</strong> {{ log.Usuario.Telefono }}
+                <strong>Tel&eacute;fono:</strong> {{ log.Usuario.Telefono }}
             </a>
         </div>
     </div>
@@ -84,7 +84,7 @@
                     <strong>Nombre Completo :</strong> {{ log.Paciente.Nombre }} {{ log.Paciente.Apellidos }}
                 </a>
                 <a href="#" class="list-group-item"  >
-                    <strong>Codigo :</strong> {{ log.Paciente.Codigo }}
+                    <strong>C&oacute;digo :</strong> {{ log.Paciente.Codigo }}
                 </a>
             </div>
         </div>

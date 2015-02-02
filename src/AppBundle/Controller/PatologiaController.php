@@ -14,8 +14,7 @@ use AppBundle\Form\PatologiaType;
 class PatologiaController extends Controller
 {
 
-
-    public function adminPatologiasAction(Request $request)
+    public function adminPatologiasAction(Request $request, $idPaciente)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -23,7 +22,8 @@ class PatologiaController extends Controller
         $entities = $em->getRepository('AppBundle:Patologia')->findAll();
 
         return $this->render('Patologia/index.html.twig', array(
-            'entities' => $entities
+            'entities' => $entities,
+            'idPaciente' => $idPaciente
         ));
 
     }
