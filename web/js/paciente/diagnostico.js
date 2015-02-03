@@ -74,7 +74,7 @@ function agregarBadge(valor, id)
     var badgesActuales = getBadgesDiagnostico();
 
     if($.inArray(valor,badgesActuales)==-1)
-        $(".containerBadgesPatologiaAng").append(badgeNuevo);
+        $(".containerBadgesPatologia:first").append(badgeNuevo);
 
     badgeNuevo.click(autoDestroyBadge);
 }

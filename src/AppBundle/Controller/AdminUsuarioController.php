@@ -63,7 +63,7 @@ class AdminUsuarioController extends Controller
             return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
-            'formCrear' => $formCrear->createView(), 'mensaje' => $mensaje
+            'formCrear' => $formCrear->createView()
             ));
     }
 
@@ -83,7 +83,7 @@ class AdminUsuarioController extends Controller
             {
                 $rol = $request->get("rol");
                 $usuario->addRole($rol);
-                if($usuario->get)
+
                 $em->persist($usuario);
                 $em->flush();
 
@@ -99,8 +99,7 @@ class AdminUsuarioController extends Controller
 
         return $this->render('AdminUsuario/editarUsuario.html.twig', array(
             'usuario' => $usuario,
-            'formEditar' => $formEditar->createView(),
-            'mensajeReturn' => $mensaje
+            'formEditar' => $formEditar->createView()
         ));    }
 
     public function habilitarUsuarioAction(Request $request)

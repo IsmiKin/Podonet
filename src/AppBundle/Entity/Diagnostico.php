@@ -70,17 +70,6 @@ class Diagnostico
     private $usuario;
 
 
-
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Patologia")
-     * @ORM\JoinTable(name="PatologiaPorDiagnostico",
-     *      joinColumns={@ORM\JoinColumn(name="Diagnostico_idDiagnostico", referencedColumnName="idDiagnostico")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="Patologia_idPatologia", referencedColumnName="idPatologia")}
-     *      )
-     **/
-    private $patologias;
-
     /**
      * Get id
      *
