@@ -349,7 +349,8 @@ class PacienteController extends Controller
             foreach($patologiasEliminadas as $pat)
             {
                 $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
-                    'nombre' => $pat['nombre']));
+                    'idPatologia' => $pat['id']));
+
                 $patPorDiag = $em->getRepository('AppBundle:PatologiaPorDiagnostico')->findOneBy(array(
                     'idDiagnostico' => intval($idDiagnostico),
                     'idPatologia' => $patologia->getIdPatologia()
@@ -387,11 +388,14 @@ class PacienteController extends Controller
         // Creamos el log
         $em->getRepository('AppBundle:Log')->procesarLogAgenda("Diagnostico",$mensaje,null,$this->getUser());
 
-        $serializer = Serializer::create()->build();
-        $data = $serializer ->serialize($diagnostico, 'json');
+        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "diagnostico"=>$diagnostico) ;
 
-        $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "diagnostico"=>$data) ;
-        return new JsonResponse($datosRespuesta);
+        $serializer = Serializer::create()->build();
+        $data = $serializer ->serialize($datosRespuesta, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type:','application/json');
+        return $response;
 
     }
 
