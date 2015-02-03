@@ -160,7 +160,6 @@ class PacienteController extends Controller
 
         //if ($form->isValid() && $request->isMethod('POST')) {
         if ($form->isValid() ) {
-            //ld($form);
             $document->upload();
             $em = $this->getDoctrine()->getManager();
             $em->persist($document);
@@ -291,11 +290,8 @@ class PacienteController extends Controller
         $diagnostico->setFecha(new \DateTime('now'));
         $diagnostico->setUsuario($this->getUser());
 
-        //ld($diagnostico);
         $em->persist($diagnostico);
         $em->flush();
-
-
         $patologias = $request->get("patologias");
         if ($patologias!="false")
         {
@@ -303,7 +299,6 @@ class PacienteController extends Controller
             {
                 $patologia = $em->getRepository('AppBundle:Patologia')->findOneBy(array(
                     'nombre' => $pat['nombre']));
-
                 $patPorDiag = new PatologiaPorDiagnostico();
                 $patPorDiag->setIdPatologia($patologia->getIdPatologia());
                 $patPorDiag->setIdDiagnostico(intval($diagnostico->getIdDiagnostico()));
@@ -355,7 +350,6 @@ class PacienteController extends Controller
                     'idDiagnostico' => intval($idDiagnostico),
                     'idPatologia' => $patologia->getIdPatologia()
                 ));
-                //ld("PatologiaxDiag eliminada: ".$pat['nombre']);
                 $em->remove($patPorDiag);
             }
         }
