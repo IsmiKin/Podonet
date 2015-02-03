@@ -16,6 +16,8 @@
     {#{{ idPaciente }}#}
     {#{{ idDiagnostico }}#}
 
+    {% include "Paciente/menupagpaciente.html.twig" with {"opcion":"diagnostico"} %}
+
     <span>
         <a class="btn btn-primary"
            href="{{ path('admin_patologia', {

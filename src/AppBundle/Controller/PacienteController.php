@@ -227,6 +227,7 @@ class PacienteController extends Controller
         if (!$diagnostico)
             return $this->redirect($this->generateUrl('nuevo_diagnostico',array(
                 'idPaciente' => $idPaciente,
+                'paciente' => $paciente,
                 'idDiagnostico' => 0
             ))
         );
@@ -261,8 +262,13 @@ class PacienteController extends Controller
     }
 
     public function nuevoDiagnosticoAction($idPaciente, $idDiagnostico){
+        $repositoryPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+
+        $paciente= $repositoryPaciente->find($idPaciente);
+
         return $this->render('Paciente/crearDiagnostico.html.twig', array(
             'idPaciente' => $idPaciente,
+            'paciente' => $paciente,
             'idDiagnostico' => $idDiagnostico
         ));
     }

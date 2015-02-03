@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block iconoBanner %}bug{% endblock %}
-{% block tituloBanner %}Patologías{% endblock %}
-{% block title %}Podonet - Patologías{% endblock %}
+{% block tituloBanner %}Patolog&iacute;as{% endblock %}
+{% block title %}Podonet - Patolog&iacute;as{% endblock %}
 
 {% block body -%}
-    <h1>Lista de Patologías</h1>
+    <h1>Lista de Patolog&iacute;as</h1>
 
     <table class="records_list table table-condensed footable"
            data-filter="#filtro"
@@ -22,7 +22,7 @@
                 {#<th>Id Patologia</th>#}
                 <th>Nombre</th>
                 <th>Fecha</th>
-                <th>Categoria</th>
+                <th>Categor&iacute;a</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -51,7 +51,7 @@
     </table>
 
     <a class="btn btn-primary" href="{{ path('new_patologia') }}">
-        <i class="fa fa-plus"></i> Nueva Patología
+        <i class="fa fa-plus"></i> Nueva Patolog&iacute;a
     </a>
     {% if idPaciente %}
         <a class="btn btn-default" href="{{ path('consultar_diagnostico', { 'idPaciente': idPaciente }) }}">
