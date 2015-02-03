@@ -1,5 +1,7 @@
 {% extends "::base.html.twig" %}
 
+{% block htmltag %}ng-app="myHojaGeneral"{% endblock %}
+
 {% block title %}Podonet - Historia General{% endblock %}
 
 {% block tituloBanner %}<i class="fa fa-2x fa-file"></i>   Historia General{% endblock %}
@@ -16,7 +18,9 @@
 
     <br/>
 
-    <div class="row">
+    <div class="containerMain"   ng-controller="MainController as main">
+
+    <div class="row"   ng-controller="DPController as DPCtrl" ng-init="this.init()">
         <div class="list-group bloqueDatosPersonales">
             <a class="list-group-item active  ">
                 <i class="fa fa-user fa-2x" ></i>  <span class="tituloPanel">&nbsp;Datos de Afiliacion</span>
@@ -40,6 +44,8 @@
                         <input type="text" class="form-control" name="telefono" value="" placeholder="Telefono del paciente">
                     </div>
                     <div clas="col-sm-4">
+                        <br/>
+                        <label> Sexo</label>
                         <label class="radio-inline">
                             <input type="radio" name="sexo" id="inlineRadio1" value="Hombre"> Hombre
                         </label>
@@ -226,9 +232,24 @@
                         </select>
                     </div>
                 </div>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label for="fxNacimiento">Fecha Nacimiento</label>
+                        <input class="form-control datepickerFxNacimiento" name="fxNacimiento"/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="NIF">NIF</label>
+                        <input type="text" class="form-control" name="NIF" placeholder="NIF"/>
+                    </div>
+                </div>
 
             </div>
         </div>
+
+
+
+    </div>
 
     </div>
 
@@ -236,5 +257,14 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('assets/vendor/angularjs/angular.min.js') }}"></script>
+
+    <script>
+        var paciente = {{ pacienteJSON | raw}} ;
+        console.log(paciente);
+    </script>
+
+    <script src="{{ asset('js/paciente/hojageneral/datospersonales_ang.js') }}"></script>
+    <script src="{{ asset('js/paciente/hojageneral/hojageneral_ang.js') }}"></script>
 
 {% endblock %}

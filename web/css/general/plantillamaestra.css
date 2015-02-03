@@ -292,3 +292,10 @@ main {
     }
 }
 
+.menu-up{
+    float:right;
+}
+
+.logo-banner{
+    float:left;
+}

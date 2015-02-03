@@ -3,15 +3,36 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JMS\Serializer\SerializerBuilder as Serializer;
 
 class HistoriaGeneralController extends Controller
 {
     public function consultarHistoriaGeneralAction($idPaciente)
     {
+        $pacienteCompleto = array();
+
         $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+        $repoDP = $this->getDoctrine()->getRepository('AppBundle:DatosPersonales');
+        $repoDSP = $this->getDoctrine()->getRepository('AppBundle:DatosSemipermanentes');
+        $repoAnamnesis = $this->getDoctrine()->getRepository('AppBundle:Anamnesis');
+        $repoDA = $this->getDoctrine()->getRepository('AppBundle:DatosAnamnesis');
+        $repoDAD = $this->getDoctrine()->getRepository('AppBundle:DatosAfeccionesDermicas');
+        $repoDO = $this->getDoctrine()->getRepository('AppBundle:DatosOnicopatis');
+
         $paciente = $repoPaciente->find($idPaciente);
+
+        $pacienteCompleto['Paciente'] = $paciente;
+        $pacienteCompleto['DatosPersonales'] = $repoDP->findOneBy(array('paciente'=>$paciente)) ;
+        $pacienteCompleto['DatosSemipermanentes'] = $repoDSP->findOneBy(array('paciente' => $paciente));
+        $pacienteCompleto['Anamnesis'] = $repoAnamnesis->findOneBy(array('paciente' => $paciente));
+
+
+
+        $serializer = Serializer::create()->build();
+        $pacienteJSON = $serializer ->serialize($pacienteCompleto, 'json');
+
         return $this->render('HistoriaGeneral/consultarHistoriaGeneral.html.twig', array(
-                'paciente'=>$paciente
+                'paciente'=>$paciente, 'pacienteJSON' => $pacienteJSON
             ));
     }
 
