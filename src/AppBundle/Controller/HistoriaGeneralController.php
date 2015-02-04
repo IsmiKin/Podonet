@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DatosAfeccionesDermicas;
+use AppBundle\Entity\DatosOnicopatis;
+use Proxies\__CG__\AppBundle\Entity\DatosAnamnesis;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 
@@ -22,11 +25,28 @@ class HistoriaGeneralController extends Controller
         $paciente = $repoPaciente->find($idPaciente);
 
         $pacienteCompleto['Paciente'] = $paciente;
-        $pacienteCompleto['DatosPersonales'] = $repoDP->findOneBy(array('paciente'=>$paciente)) ;
-        $pacienteCompleto['DatosSemipermanentes'] = $repoDSP->findOneBy(array('paciente' => $paciente));
-        $pacienteCompleto['Anamnesis'] = $repoAnamnesis->findOneBy(array('paciente' => $paciente));
+        $pacienteCompleto['DatosPersonales'] = $repoDP->findBy(array('paciente'=>$paciente)) ;
+        $pacienteCompleto['DatosSemipermanentes'] = $repoDSP->findBy(array('paciente' => $paciente));
 
+        $anamnesis =  $repoAnamnesis->findBy(array('paciente' => $paciente), array('fecha' => 'DESC'));
+        $pacienteCompleto['Anamnesis'] = $anamnesis;
 
+        // Si tiene algun anamnesis, sacamos el resto de datos
+        if($anamnesis){
+            $datosAD = $repoDAD->getBySomeAnamnesis($anamnesis);
+            $datosA = $repoDA->getBySomeAnamnesis($anamnesis);
+            $datosO = $repoDO->getBySomeAnamnesis($anamnesis);
+        }
+
+        // Revisar esta parte
+
+        if(!$datosAD) $datosAD = new DatosAfeccionesDermicas();
+        if(!$datosA) $datosA = new DatosAnamnesis();
+        if(!$datosO) $datosO = new DatosOnicopatis();
+
+        $pacienteCompleto['DatosAD'] = $datosAD;
+        $pacienteCompleto['DatosA'] = $datosA;
+        $pacienteCompleto['DatosO'] = $datosO;
 
         $serializer = Serializer::create()->build();
         $pacienteJSON = $serializer ->serialize($pacienteCompleto, 'json');
