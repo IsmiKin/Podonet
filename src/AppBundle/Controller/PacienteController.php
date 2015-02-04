@@ -220,7 +220,7 @@ class PacienteController extends Controller
 
         $diagnostico= $repositoryDiagnostico->findOneBy(
             array('paciente' => $idPaciente),
-            array('fecha' => 'DESC')
+            array('fecha' => 'ASC')
         );
 
         if (!$diagnostico)
@@ -444,11 +444,18 @@ class PacienteController extends Controller
     }
 
     //Devuelve todas las patologías
-    public function todasPatologiasAction(){
+    public function todasPatologiasAction(Request $request){
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Patologia');
 
-        $patologias= $repository->findAll();
+
+        $filtro = $request->query->get("query");
+
+        $query = $repository->createQueryBuilder('p')
+            ->where('p.nombre LIKE :nombre')
+            ->setParameter('nombre', '%'.$filtro.'%')
+            ->getQuery();
+        $patologias = $query->getResult();
 
         $salida = array();
         $salida["query"] = "Unit";

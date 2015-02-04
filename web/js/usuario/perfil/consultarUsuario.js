@@ -4,6 +4,8 @@
 
 $(document).ready(function(){
 
+    $(".containerBotonAplicarCambiosDatosPersonales").hide();
+    $("#formularioDatosPersonales").hide();
     $(".showFormEditar").click(mostrarFormulario);
     $(".cancelFormEditar").click(cancelFormEditar);
 

@@ -20,7 +20,13 @@
                 <strong>Nombre de usuario :</strong> {{ app.user.username }}
             </a>
             <a href="#" class="list-group-item"  >
-                <strong>Rol :</strong> <em>¡Por implementar!</em>
+                <strong>Rol :</strong>
+                {% if     "ROLE_SUPER_ADMIN" in app.user.roles %} Administrador
+                {% elseif "ROLE_ADMIN" in app.user.roles %}  Administrador
+                {% elseif "ROLE_SECRETARIO" in app.user.roles %}  Secretario
+                {% elseif "ROLE_PODOLOGO" in app.user.roles %}  Pod&oacute;logo
+                {% elseif "ROLE_PIR" in app.user.roles %}  PIR
+                {% endif %}
             </a>
             <a href="#" class="list-group-item"  >
                 <strong>Email :</strong>  {{ app.user.email }}
@@ -65,15 +71,15 @@
                     <strong>Tel&eacute;fono :</strong>  {{ app.user.Telefono }}
                 </a>
             </span>
-            <span id="formularioDatosPersonales" hidden="hidden">
-                <form id="formDatosPersonales" method="POST" action="{{ path('editar_perfil') }}"> <!-- HIJO DE PUTA PUCHE -->
+            <span id="formularioDatosPersonales" >
+                <form id="formDatosPersonales" method="POST" action="{{ path('editar_perfil') }}">
                     <a class="list-group-item"  >
                         {{ form_row(formEditarDP.nombre) }}
                     </a>
                     <a class="list-group-item"  >
                         {{ form_row(formEditarDP.apellidos) }}
                     </a>
-                    <a class="list-group-item"  >
+                    <a class="list-group-item" >
                         {{ form_row(formEditarDP.telefono) }}
                     </a>
                     <div hidden="hidden" >
