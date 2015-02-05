@@ -41,6 +41,14 @@ class UsuarioController extends Controller
             $formEditar->handleRequest($request);
             if($formEditar->isValid() && $formEditar->isSubmitted())
             {
+                $nombre = $request->get('nombre');
+                $apellidos = $request->get('apellidos');
+                $telefono = $request->get('telefono');
+
+                $usuario->setNombre($nombre);
+                $usuario->setApellidos($apellidos);
+                $usuario->setTelefono($telefono);
+
                 $em->flush();
 
                 $mensaje = "El usuario con id ".$usuario->getId()." ha actualizado su perfil correctamente";

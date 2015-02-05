@@ -61,27 +61,34 @@
             </a>
 
             <span id="informacionDatosPersonales">
-                <a href="#" class="list-group-item"  >
+                <a class="list-group-item"  >
                     <strong>Nombre:</strong> {{ app.user.Nombre}}
                 </a>
-                <a href="#" class="list-group-item"  >
+                <a class="list-group-item"  >
                     <strong>Apellidos :</strong> {{ app.user.Apellidos}}
                 </a>
-                <a href="#" class="list-group-item"  >
+                <a class="list-group-item"  >
                     <strong>Tel&eacute;fono :</strong>  {{ app.user.Telefono }}
                 </a>
             </span>
             <span id="formularioDatosPersonales" >
                 <form id="formDatosPersonales" method="POST" action="{{ path('editar_perfil') }}">
                     <a class="list-group-item"  >
-                        {{ form_row(formEditarDP.nombre) }}
+                        <strong>Nombre:</strong> <input type="text" class="form-control"
+                                                        name="nombre"
+                                                        value="{{ app.user.Nombre}}">
                     </a>
                     <a class="list-group-item"  >
-                        {{ form_row(formEditarDP.apellidos) }}
+                        <strong>Apellidos:</strong> <input type="text" class="form-control"
+                                                        name="apellidos"
+                                                        value="{{ app.user.Apellidos}}">
                     </a>
                     <a class="list-group-item" >
-                        {{ form_row(formEditarDP.telefono) }}
+                        <strong>Tel&eacute;fono:</strong> <input type="text" class="form-control"
+                                                        name="telefono"
+                                                        value="{{ app.user.Telefono}}">
                     </a>
+
                     <div hidden="hidden" >
                         {{ form_row(formEditarDP.username, { 'attr': {'class': 'hide'} }) }}
                         {{ form_row(formEditarDP.email, { 'attr': {'class': 'hide'} }) }}
