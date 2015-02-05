@@ -1,8 +1,5 @@
 /**
- * Created by ismikin on 3/02/15.
- */
-/**
- * Created by ismikin on 25/01/15.
+ * Created by ismikin
  */
 
 'use strict';

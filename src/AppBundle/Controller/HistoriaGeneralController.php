@@ -4,9 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\DatosAfeccionesDermicas;
 use AppBundle\Entity\DatosOnicopatis;
-use Proxies\__CG__\AppBundle\Entity\DatosAnamnesis;
+use AppBundle\Entity\Paciente;
+use AppBundle\Entity\DatosPersonales;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class HistoriaGeneralController extends Controller
 {
@@ -80,16 +83,58 @@ class HistoriaGeneralController extends Controller
                 // ...
             ));    }
 
-    public function editarDatosPersonalesAction()
+    public function editarDatosPersonalesAction(Request $request)
     {
-        return $this->render('HistoriaGeneral/editarDatosPersonales.html.twig', array(
-                // ...
-            ));    }
+
+            $idpaciente = $request->get("idpaciente");
+            $repoDP = $this->getDoctrine()->getRepository('AppBundle:DatosPersonales');
+            $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+
+            $paciente = $repoPaciente->find(intval($idpaciente));
+            $dp = $repoDP->findBy(array('paciente'=>$paciente));
+
+            $nuevo = false;
+
+            if(!$dp){
+                $nuevo =true;
+                $dp = new DatosPersonales();
+                $dp->setPaciente($paciente);
+            }
+
+            $this->handleRequestManulDP($dp,$request);
+
+            if($nuevo) $repoDP->persist($dp);
+
+            $repoDP->flush();
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
+            return new JsonResponse($respuesta);
+
+
+        //    $respuesta = array('mensaje' => 'Error!', 'codigo_error'=>1);
+        //    return new JsonResponse($respuesta);
+
+
+
+    }
 
     public function crearDatosPersonalesAction()
     {
         return $this->render('HistoriaGeneral/crearDatosPersonales.html.twig', array(
                 // ...
             ));    }
+
+    private function handleRequestManulDP(&$dp, $request){
+        $dp->setEmail($request("email"));
+        $dp->setTelefono($request("telefono"));
+        $dp->setNIF($request("NIF"));
+        $dp->setDomicilio($request("domicilio"));
+        $dp->setCodigoPostal($request("codigopostal"));
+        $dp->setFechaNacimiento($request("fxNacimiento"));
+        $dp->setLocalidad($request("localidad"));
+        $dp->setSexo($request("sexo"));
+        $dp->setPais($request("pais"));
+        $dp->setNIF($request("NIF"));
+    }
 
 }
