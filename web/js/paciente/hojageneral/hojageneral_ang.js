@@ -5,7 +5,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('myHojaGeneral',['datosPersonalesMod']).config(function($interpolateProvider){
+var app = angular.module('myHojaGeneral',['datosPersonalesMod','datosAnamnesisMod','datosSPMod']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 

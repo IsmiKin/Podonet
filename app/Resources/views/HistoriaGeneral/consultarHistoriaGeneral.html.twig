@@ -18,11 +18,16 @@
 
     <br/>
 
-    <div class="containerMain"   ng-controller="MainController as main">
+    <div class="containerMain" ng-controller="MainController as main">
 
         <!-- Seccion de Datos Personales -->
         {% include "HistoriaGeneral/consultaHGDatosPersonales.html.twig" %}
 
+        <!-- Seccion de Datos Semipermanentes -->
+        {% include "HistoriaGeneral/consultaHGDatosSemipermanentes.html.twig" %}
+
+        <!-- Seccion de Datos Anamnesis -->
+        <!-- {% include "HistoriaGeneral/consultaHGDatosAnamnesis.html.twig" %} -->
     </div>
 
     {% include "HistoriaGeneral/dialogos.html.twig" %}
@@ -38,6 +43,7 @@
         console.log(paciente);
     </script>
 
+    <script src="{{ asset('js/paciente/hojageneral/datossemipermanentes_ang.js') }}"></script>
     <script src="{{ asset('js/paciente/hojageneral/datospersonales_ang.js') }}"></script>
     <script src="{{ asset('js/paciente/hojageneral/hojageneral_ang.js') }}"></script>
 

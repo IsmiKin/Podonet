@@ -83,6 +83,12 @@ class DatosAnamnesis
      **/
     private $anamnesis;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="Usuario_idUsuario", referencedColumnName="id",nullable=false)
+     **/
+    private $usuario;
+
 
     /**
      * Get id
@@ -300,4 +306,28 @@ class DatosAnamnesis
     {
         return $this->anamnesis;
     }
+
+    /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     * @return Log
+     */
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \AppBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
 }

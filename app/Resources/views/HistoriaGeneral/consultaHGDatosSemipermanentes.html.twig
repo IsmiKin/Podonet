@@ -1,0 +1,41 @@
+
+<div class="row"   ng-controller="DSPController as DSPCtrl" ng-init="this.init()">
+    <div class="list-group bloqueDatosSemipermanentes">
+        <a class="list-group-item active  ">
+            <i class="fa fa-user fa-2x" ></i>  <span class="tituloPanel">&nbsp;Datos Semipermanentes</span>
+            <span class="pull-right">
+                <button type="button" class="btn btn-default" ng-show="expandido" ng-click="setExpandido(false)">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button type="button" class="btn btn-default" ng-hide="expandido" ng-click="setExpandido(true)">
+                    <i class="fa fa-expand"></i>
+                </button>
+            </span>
+        </a>
+
+        <div class="well containerFormularioDatosSemipermanentes" ng-show="expandido">
+            <form id="formularioDatosSemipermanentes" name="formularioDatosSemipermanentes" ng-submit="submitFormulario()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-warning" ng-hide="editando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-danger" ng-show="editando" ng-click="setEditando(false)"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-show="editando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <fieldset ng-disabled="!editando">
+
+                    <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}">
+
+
+                </fieldset>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

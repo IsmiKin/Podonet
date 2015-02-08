@@ -1,0 +1,24 @@
+<div class="row"   ng-controller="DAController as DACtrl" ng-init="this.init()">
+    <div class="list-group bloqueDatosAnamnesis">
+        <a class="list-group-item active  ">
+            <i class="fa fa-user-md fa-2x" ></i>  <span class="tituloPanel">&nbsp;Datos de Anamnesis</span>
+            <span class="pull-right">
+                <button type="button" class="btn btn-default" ng-show="expandido" ng-click="setExpandido(false)">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button type="button" class="btn btn-default" ng-hide="expandido" ng-click="setExpandido(true)">
+                    <i class="fa fa-expand"></i>
+                </button>
+            </span>
+        </a>
+
+        <div class="well containerFormularioDatosAnamnesis" ng-show="expandido">
+            <form id="formularioDatosAnamnesis" name="formularioDatosPersonales" ng-submit="submitFormulario()">
+
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
