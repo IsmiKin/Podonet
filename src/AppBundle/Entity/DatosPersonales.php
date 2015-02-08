@@ -59,7 +59,7 @@ class DatosPersonales
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="FechaNacimiento", type="date",nullable=true)
+     * @ORM\Column(name="FechaNacimiento", type="datetime",nullable=true)
      */
     private $fechaNacimiento;
 

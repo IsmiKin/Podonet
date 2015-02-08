@@ -3,9 +3,17 @@
     <div class="list-group bloqueDatosPersonales">
         <a class="list-group-item active  ">
             <i class="fa fa-user fa-2x" ></i>  <span class="tituloPanel">&nbsp;Datos de Afiliacion</span>
+            <span class="pull-right">
+                <button type="button" class="btn btn-default" ng-show="expandido" ng-click="setExpandido(false)">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button type="button" class="btn btn-default" ng-hide="expandido" ng-click="setExpandido(true)">
+                    <i class="fa fa-expand"></i>
+                </button>
+            </span>
         </a>
 
-        <div class="well containerFormularioDatosPersonales">
+        <div class="well containerFormularioDatosPersonales" ng-show="expandido">
         <form id="formularioDatosPersonales" name="formularioDatosPersonales" ng-submit="submitFormulario()">
 
             <div class="row">
@@ -24,11 +32,11 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" value="" placeholder="Nombre del paciente" required>
+                    <input type="text" class="form-control" name="nombre" ng-model="dpaciente.nombre" placeholder="Nombre del paciente" required>
                 </div>
                 <div class="col-sm-4">
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" class="form-control" name="apellidos" value="" placeholder="Apellidos del paciente" required>
+                    <input type="text" class="form-control" name="apellidos" ng-model="dpaciente.apellidos" placeholder="Apellidos del paciente" required>
                 </div>
             </div>
             <br/>
@@ -59,7 +67,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label for="email">E-mail</label>
-                    <input type="text" class="form-control" ng-model="dp.email" name="email" placeholder="Correo electronico"/>
+                    <input type="email" class="form-control" ng-model="dp.email" name="email" placeholder="Correo electronico"/>
                 </div>
             </div>
                 <br/>

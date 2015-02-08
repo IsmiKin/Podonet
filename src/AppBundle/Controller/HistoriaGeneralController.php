@@ -106,17 +106,14 @@ class HistoriaGeneralController extends Controller
                 $dp = $repoDP->findOneBy(array('paciente'=>$paciente));
 
                 $nuevo = false;
-                //echo "dp es : ".var_dump($dp);
-                if($dp==null){
-                  //  echo "no existe DP".$paciente->getNombre();
 
+                if($dp==null){
                     $nuevo =true;
                     $dp = new DatosPersonales();
                     $dp->setPaciente($paciente);
                 }
-                //echo "dp despues if : ".var_dump($dp);
 
-                $this->handleRequestManulDP($dp,$params);
+                $this->handleRequestManulDP($dp,$paciente,$params);
 
                 if($nuevo) $em->persist($dp);
 
@@ -126,13 +123,6 @@ class HistoriaGeneralController extends Controller
                 return new JsonResponse($respuesta);
             }
 
-
-
-        //    $respuesta = array('mensaje' => 'Error!', 'codigo_error'=>1);
-        //    return new JsonResponse($respuesta);
-
-
-
     }
 
     public function crearDatosPersonalesAction()
@@ -141,7 +131,9 @@ class HistoriaGeneralController extends Controller
                 // ...
             ));    }
 
-    private function handleRequestManulDP(&$dp, $params){
+    private function handleRequestManulDP(&$dp,$paciente, $params){
+        $paciente->setNombre($params['nombre']);
+        $paciente->setApellidos($params['apellidos']);
         $dp->setEmail($params["email"]);
         $dp->setTelefono($params["telefono"]);
         $dp->setNIF($params["nif"]);

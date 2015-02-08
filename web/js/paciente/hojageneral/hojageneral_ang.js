@@ -9,7 +9,6 @@ var app = angular.module('myHojaGeneral',['datosPersonalesMod']).config(function
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 
-
 app.controller('MainController',  function($scope,$rootScope) {
 //    $scope.diagnosticos = diagnosticos;
 //    $scope.diagnosticoSeleccionado = $scope.diagnosticos[1];

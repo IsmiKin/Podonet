@@ -9,12 +9,12 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
+    <link rel="stylesheet" href="{{ asset('css/paciente/hojageneral/hojageneral.css') }}"/>
 {% endblock %}
 
 {% block body %}
 
-    {% include "Paciente/menupagpaciente.html.twig" with {"opcion":"historiageneral"} %}
+    {% include "Paciente/menupagpaciente.html.twig" with {"opcion":"hojageneral"} %}
 
     <br/>
 
@@ -24,6 +24,8 @@
         {% include "HistoriaGeneral/consultaHGDatosPersonales.html.twig" %}
 
     </div>
+
+    {% include "HistoriaGeneral/dialogos.html.twig" %}
 
 {% endblock %}
 
