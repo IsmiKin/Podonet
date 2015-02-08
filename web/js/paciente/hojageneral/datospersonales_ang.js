@@ -11,23 +11,24 @@ var app = angular.module('datosPersonalesMod',[]).config(function($interpolatePr
 });
 
 app.controller('DPController',  function($scope,$rootScope,$http) {
-//    $scope.diagnosticos = diagnosticos;
-//    $scope.diagnosticoSeleccionado = $scope.diagnosticos[1];
+
     $scope.editando = false;
+    $scope.dp = paciente.DatosPersonales[0];
+
     var fxNacimiento = $(".datepickerFxNacimiento");
     var form = $("#formularioDatosPersonales");
 
     $scope.init = function(){
-        fxNacimiento.datepicker({ language:"es" });
+        fxNacimiento.datepicker({ language:"es",clearBtn:true,format:"dd/mm/yyyy"  });
     };
 
     $scope.setEditando = function(valor){
         $scope.editando = valor;
-    }
+    };
 
     $scope.submitFormulario = function(){
-        console.log(form.serialize());
-        $http.post(Routing.generate('editar_datos_personales'),form.serialize()+'&idpaciente='+paciente.Paciente.id_paciente )
+        var dataEnviar = JSON.stringify(form.serializeObject());
+        $http.post(Routing.generate('editar_datos_personales'),dataEnviar )
             .success(function(data, status, headers, config) {
                 if(data.codigo_error==0){
                     console.log("way")
@@ -37,6 +38,6 @@ app.controller('DPController',  function($scope,$rootScope,$http) {
             .error(function(data, status, headers, config) {
             console.log("AJAX failed!");
         });
-    }
+    };
 
 });

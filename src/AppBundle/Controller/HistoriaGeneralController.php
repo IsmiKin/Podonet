@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DatosAfeccionesDermicas;
+use AppBundle\Entity\DatosAnamnesis;
 use AppBundle\Entity\DatosOnicopatis;
 use AppBundle\Entity\Paciente;
 use AppBundle\Entity\DatosPersonales;
@@ -39,6 +40,10 @@ class HistoriaGeneralController extends Controller
             $datosAD = $repoDAD->getBySomeAnamnesis($anamnesis);
             $datosA = $repoDA->getBySomeAnamnesis($anamnesis);
             $datosO = $repoDO->getBySomeAnamnesis($anamnesis);
+        }else{
+            $datosAD = null;
+            $datosA = null;
+            $datosO = null;
         }
 
         // Revisar esta parte
@@ -85,30 +90,42 @@ class HistoriaGeneralController extends Controller
 
     public function editarDatosPersonalesAction(Request $request)
     {
+            if($request->isMethod("POST")){
 
-            $idpaciente = $request->get("idpaciente");
-            $repoDP = $this->getDoctrine()->getRepository('AppBundle:DatosPersonales');
-            $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+                $params = array();
+                $content = $this->get("request")->getContent();
+                if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
 
-            $paciente = $repoPaciente->find(intval($idpaciente));
-            $dp = $repoDP->findBy(array('paciente'=>$paciente));
+                $em = $this->getDoctrine()->getManager();
 
-            $nuevo = false;
+                $idpaciente = $params["idpaciente"];
+                $repoDP = $this->getDoctrine()->getRepository('AppBundle:DatosPersonales');
+                $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
 
-            if(!$dp){
-                $nuevo =true;
-                $dp = new DatosPersonales();
-                $dp->setPaciente($paciente);
+                $paciente = $repoPaciente->find(intval($idpaciente));
+                $dp = $repoDP->findOneBy(array('paciente'=>$paciente));
+
+                $nuevo = false;
+                //echo "dp es : ".var_dump($dp);
+                if($dp==null){
+                  //  echo "no existe DP".$paciente->getNombre();
+
+                    $nuevo =true;
+                    $dp = new DatosPersonales();
+                    $dp->setPaciente($paciente);
+                }
+                //echo "dp despues if : ".var_dump($dp);
+
+                $this->handleRequestManulDP($dp,$params);
+
+                if($nuevo) $em->persist($dp);
+
+                $em->flush();
+
+                $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
+                return new JsonResponse($respuesta);
             }
 
-            $this->handleRequestManulDP($dp,$request);
-
-            if($nuevo) $repoDP->persist($dp);
-
-            $repoDP->flush();
-
-            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
-            return new JsonResponse($respuesta);
 
 
         //    $respuesta = array('mensaje' => 'Error!', 'codigo_error'=>1);
@@ -124,17 +141,17 @@ class HistoriaGeneralController extends Controller
                 // ...
             ));    }
 
-    private function handleRequestManulDP(&$dp, $request){
-        $dp->setEmail($request("email"));
-        $dp->setTelefono($request("telefono"));
-        $dp->setNIF($request("NIF"));
-        $dp->setDomicilio($request("domicilio"));
-        $dp->setCodigoPostal($request("codigopostal"));
-        $dp->setFechaNacimiento($request("fxNacimiento"));
-        $dp->setLocalidad($request("localidad"));
-        $dp->setSexo($request("sexo"));
-        $dp->setPais($request("pais"));
-        $dp->setNIF($request("NIF"));
+    private function handleRequestManulDP(&$dp, $params){
+        $dp->setEmail($params["email"]);
+        $dp->setTelefono($params["telefono"]);
+        $dp->setNIF($params["nif"]);
+        $dp->setDomicilio($params["domicilio"]);
+        $dp->setCodigoPostal($params["codigopostal"]);
+        $dp->setFechaNacimiento(new \DateTime($params["fxNacimiento"]));
+        $dp->setLocalidad($params["localidad"]);
+        $dp->setSexo($params["sexo"]);
+        $dp->setPais($params["pais"]);
+        $dp->setProvincia($params["provincia"]);
     }
 
 }
