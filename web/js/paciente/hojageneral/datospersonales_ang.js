@@ -6,9 +6,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('datosPersonalesMod',[]).config(function($interpolateProvider){
-    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-});
+var app = angular.module('datosPersonalesMod',[]);
 
 app.controller('DPController',  function($scope,$rootScope,$http) {
 

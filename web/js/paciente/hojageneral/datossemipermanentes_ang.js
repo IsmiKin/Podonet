@@ -5,23 +5,22 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('datosSPMod',[]).config(function($interpolateProvider){
-    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-});
+var app = angular.module('datosSPMod',[]);
 
-app.controller('DPController',  function($scope,$rootScope,$http) {
+app.controller('DSPController',  function($scope,$rootScope,$http) {
 
     $scope.editando = false;
-    $scope.dpaciente = paciente.Paciente;
-    $scope.dp = paciente.DatosPersonales[0];
     $scope.expandido = true;
+    $scope.dpaciente = paciente.Paciente;
+    $scope.dspall = paciente.DatosSemipermanentes;
+    $scope.dsp = paciente.DatosSemipermanentes[0];
 
-    var fxNacimiento = $(".datepickerFxNacimiento");
+    /*var fxNacimiento = $(".datepickerFxNacimiento");
     var form = $("#formularioDatosPersonales");
-    var dialog = $("#dialogoNotificacion");
+    var dialog = $("#dialogoNotificacion");*/
 
     $scope.init = function(){
-        fxNacimiento.datepicker({ language:"es",clearBtn:true,dateFormat:"dd/mm/yyyy"  });
+        //fxNacimiento.datepicker({ language:"es",clearBtn:true,dateFormat:"dd/mm/yyyy"  });
     };
 
     $scope.setEditando = function(valor){
@@ -51,7 +50,6 @@ app.controller('DPController',  function($scope,$rootScope,$http) {
                 dialog.find('.completadoerror').show();
             });
 
-        //setTimeout("dialog.modal('hide')",1000);
         $scope.setEditando(false);
     };
 

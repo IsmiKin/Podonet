@@ -257,10 +257,20 @@
             </div>
 
             </fieldset>
-        </form>
 
+
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-warning" ng-hide="editando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                <button type="button" class="btn btn-danger" ng-show="editando" ng-click="setEditando(false)"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                <button type="submit" class="btn btn-success" ng-show="editando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+            </div>
         </div>
 
+        </div>
+        </form>
     </div>
 
 </div>

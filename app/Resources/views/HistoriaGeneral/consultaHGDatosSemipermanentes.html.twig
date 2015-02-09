@@ -17,10 +17,13 @@
             <form id="formularioDatosSemipermanentes" name="formularioDatosSemipermanentes" ng-submit="submitFormulario()">
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <button type="button" class="btn btn-warning" ng-hide="editando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
                         <button type="button" class="btn btn-danger" ng-show="editando" ng-click="setEditando(false)"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
                         <button type="submit" class="btn btn-success" ng-show="editando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-control" ng-model="dsp"  ng-options="datossp.fecha for datossp in dspall track by datossp.id_datos_semipermanentes "></select>
                     </div>
                 </div>
 
@@ -30,8 +33,50 @@
 
                     <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}">
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="medicacion">Medicacion</label>
+                            <textarea rows="2" cols="20" class="form-control" name="medicacion" ng-model="dsp.medicacion" placeholder="Medicacion" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="alergias">Alergias</label>
+                            <textarea rows="2" cols="20" class="form-control" name="alergias" ng-model="dsp.alergias" placeholder="Alergias" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="descripcion">Descripcion</label>
+                            <textarea rows="2" cols="20" class="form-control" name="descripcion" ng-model="dsp.descripcion" placeholder="Descripcion" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="Talla">Talla</label>
+                            <input type="number" class="form-control" name="talla" ng-model="dsp.talla" placeholder="Talla" step="0.5" min="0.00"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="Peso">Peso</label>
+                            <input type="number" class="form-control" name="peso" ng-model="dsp.peso" placeholder="Peso" step="0.5" min="0.00"/>
+                        </div>
+                    </div>
+
+
 
                 </fieldset>
+
+                <hr/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-warning" ng-hide="editando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-danger" ng-show="editando" ng-click="setEditando(false)"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-show="editando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                    </div>
+                </div>
             </form>
 
         </div>
