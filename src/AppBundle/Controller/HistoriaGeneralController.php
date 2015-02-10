@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\DatosAfeccionesDermicas;
 use AppBundle\Entity\DatosAnamnesis;
 use AppBundle\Entity\DatosOnicopatis;
+use AppBundle\Entity\DatosSemipermanentes;
 use AppBundle\Entity\Paciente;
 use AppBundle\Entity\DatosPersonales;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -64,17 +65,59 @@ class HistoriaGeneralController extends Controller
             ));
     }
 
-    public function editarDatosSemipermanentesAction()
+    public function editarDatosSemipermanentesAction(Request $request)
     {
-        return $this->render('HistoriaGeneral/editarDatosSemipermanentes.html.twig', array(
-                // ...
-            ));    }
+        if($request->isMethod("POST")){
 
-    public function crearDatosSemipermanentesAction()
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoDSP = $this->getDoctrine()->getRepository('AppBundle:DatosSemipermanentes');
+            $dsp = $repoDSP->find(intval($params['iddsp']));
+
+            $this->handleRequestManualDSP($dsp,$params);
+            $em->flush();
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
+            return new JsonResponse($respuesta);
+        }
+
+    }
+
+    public function crearDatosSemipermanentesAction(Request $request)
     {
-        return $this->render('HistoriaGeneral/crearDatosSemipermanentes.html.twig', array(
-                // ...
-            ));    }
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $idpaciente = $params["idpaciente"];
+            $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+            $paciente = $repoPaciente->find(intval($idpaciente));
+
+            $nuevoDSP = new DatosSemipermanentes();
+
+            $this->handleRequestManualDSP($nuevoDSP ,$params);
+
+            $nuevoDSP->setUsuario($this->getUser());
+            $nuevoDSP->setPaciente($paciente);
+
+            $em->persist($nuevoDSP);
+            $em->flush();
+
+            $serializer = Serializer::create()->build();
+            $dspJSON = $serializer ->serialize($nuevoDSP, 'json');
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevodsp' => $dspJSON );
+            return new JsonResponse($respuesta);
+        }
+    }
 
     public function crearAnamnesisAction()
     {
@@ -113,7 +156,7 @@ class HistoriaGeneralController extends Controller
                     $dp->setPaciente($paciente);
                 }
 
-                $this->handleRequestManulDP($dp,$paciente,$params);
+                $this->handleRequestManualDP($dp,$paciente,$params);
 
                 if($nuevo) $em->persist($dp);
 
@@ -131,7 +174,7 @@ class HistoriaGeneralController extends Controller
                 // ...
             ));    }
 
-    private function handleRequestManulDP(&$dp,$paciente, $params){
+    private function handleRequestManualDP(&$dp,$paciente, $params){
         $paciente->setNombre($params['nombre']);
         $paciente->setApellidos($params['apellidos']);
         $dp->setEmail($params["email"]);
@@ -144,6 +187,15 @@ class HistoriaGeneralController extends Controller
         $dp->setSexo($params["sexo"]);
         $dp->setPais($params["pais"]);
         $dp->setProvincia($params["provincia"]);
+    }
+
+    private function handleRequestManualDSP(&$dsp,$params){
+        $dsp->setMedicacion($params['medicacion']);
+        $dsp->setAlergias($params['alergias']);
+        $dsp->setDescripcion($params['descripcion']);
+        $dsp->setTalla(floatval($params['talla']));
+        $dsp->setPeso(floatval($params['peso']));
+        $dsp->setPieDominante($params['piedominante']);
     }
 
 }

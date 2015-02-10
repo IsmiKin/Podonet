@@ -299,4 +299,10 @@ class DatosSemipermanentes
     {
         return $this->usuario;
     }
+
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime('now'));
+    }
+
 }

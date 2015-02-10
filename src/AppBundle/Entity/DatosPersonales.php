@@ -57,7 +57,7 @@ class DatosPersonales
     private $codigoPostal;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="FechaNacimiento", type="datetime",nullable=true)
      */

@@ -3,11 +3,11 @@ consultar_historia_general:
     defaults: { _controller: AppBundle:HistoriaGeneral:consultarHistoriaGeneral }
 
 editar_datos_semipermanentes:
-    path:     /semipermanentes/editar
+    path:     /semipermanentes/editar/
     defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosSemipermanentes }
 
 crear_datos_semipermanentes:
-    path:     /semipermanentes/crear
+    path:     /semipermanentes/crear/
     defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosSemipermanentes }
 
 crear_anamnesis:

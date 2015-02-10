@@ -18,20 +18,23 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-warning" ng-hide="editando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
-                        <button type="button" class="btn btn-danger" ng-show="editando" ng-click="setEditando(false)"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
-                        <button type="submit" class="btn btn-success" ng-show="editando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        <button type="button" class="btn btn-warning" ng-hide="editando || dspall.length<1 || creando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Nuevo</button>
                     </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" ng-model="dsp"  ng-options="datossp.fecha for datossp in dspall track by datossp.id_datos_semipermanentes "></select>
+                    <div class="col-sm-4 pull-right">
+                        <select class="form-control" ng-model="dsp"  ng-hide="editando || dspall.length<1 || creando" ng-init="dspall[0]" ng-options="datossp.fecha |date for datossp in dspall track by datossp.id_datos_semipermanentes "></select>
                     </div>
                 </div>
 
                 <hr/>
 
-                <fieldset ng-disabled="!editando">
+                <fieldset ng-disabled="!editando && !creando">
 
                     <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}">
+                    <input type="text" style="display: none;" name="iddsp" ng-model="dsp.id_datos_semipermanentes"/>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -39,42 +42,49 @@
                             <textarea rows="2" cols="20" class="form-control" name="medicacion" ng-model="dsp.medicacion" placeholder="Medicacion" ></textarea>
                         </div>
                     </div>
-
+                    <br/>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="alergias">Alergias</label>
                             <textarea rows="2" cols="20" class="form-control" name="alergias" ng-model="dsp.alergias" placeholder="Alergias" ></textarea>
                         </div>
                     </div>
-
+                    <br/>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="descripcion">Descripcion</label>
                             <textarea rows="2" cols="20" class="form-control" name="descripcion" ng-model="dsp.descripcion" placeholder="Descripcion" ></textarea>
                         </div>
                     </div>
-
+                    <br/>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label for="Talla">Talla</label>
-                            <input type="number" class="form-control" name="talla" ng-model="dsp.talla" placeholder="Talla" step="0.5" min="0.00"/>
+                            <input type="text" class="form-control" pattern="\d+(.\d{2})?" name="talla" ng-model="dsp.talla" placeholder="Talla (ej:12.22)" />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label for="Peso">Peso</label>
-                            <input type="number" class="form-control" name="peso" ng-model="dsp.peso" placeholder="Peso" step="0.5" min="0.00"/>
+                            <input type="text" class="form-control" pattern="\d+(.\d{2})?" name="peso" ng-model="dsp.peso" placeholder="Peso (ej:72.22)" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="piedominante">Peso</label>
+                            <select class="form-control" name="piedominante" ng-model="dsp.pie_dominante" >
+                                <option value="derecho">Derecho</option>
+                                <option value="izquierdo">Izquierdo</option>
+                            </select>
                         </div>
                     </div>
-
-
 
                 </fieldset>
 
                 <hr/>
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-warning" ng-hide="editando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
-                        <button type="button" class="btn btn-danger" ng-show="editando" ng-click="setEditando(false)"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
-                        <button type="submit" class="btn btn-success" ng-show="editando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        <button type="button" class="btn btn-warning" ng-hide="editando || dspall.length<1 || creando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Nuevo</button>
                     </div>
                 </div>
             </form>
