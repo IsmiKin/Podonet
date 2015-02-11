@@ -77,6 +77,7 @@ class DatosAnamnesis
      */
     private $formulaDigital;
 
+
     /**
      * @ORM\ManyToOne(targetEntity="Anamnesis")
      * @ORM\JoinColumn(name="Anamnesis_idAnamnesis", referencedColumnName="idAnamnesis",nullable=false)

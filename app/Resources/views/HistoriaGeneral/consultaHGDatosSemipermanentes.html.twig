@@ -22,7 +22,7 @@
                         <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
                         <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
                         <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
-                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Nuevo</button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Continuar</button>
                     </div>
                     <div class="col-sm-4 pull-right">
                         <select class="form-control" ng-model="dsp"  ng-hide="editando || dspall.length<1 || creando" ng-init="dspall[0]" ng-options="datossp.fecha |date for datossp in dspall track by datossp.id_datos_semipermanentes "></select>
@@ -72,6 +72,31 @@
                                 <option value="derecho">Derecho</option>
                                 <option value="izquierdo">Izquierdo</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <b>Fumador</b><input type="checkbox" class="form-control" ng-init="dsp.fumador = dsp.fumador || false"  name="fumador" ng-model="dsp.fumador">
+                        </div>
+                        <div class="col-sm-2">
+                            <b>Bebedor</b><input type="checkbox" class="form-control" name="bebedor" ng-model="dsp.bebedor">
+                        </div>
+                        <div class="col-sm-2">
+                            <b>HTA</b><input type="checkbox" class="form-control" name="hta" ng-model="dsp.hta">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <b>Diabetico</b><input type="checkbox" class="form-control" name="diabetico" ng-model="dsp.diabetico">
+                        </div>
+                        <div class="col-sm-2">
+                            <b>Intervencion Quirurgica Anterior</b><input type="checkbox" class="form-control" name="intervencion_quirurgica" ng-model="dsp.intervencion_quirurgica">
+                        </div>
+                        <div class="col-sm-2">
+                            <b>Anestesiado Anteriormente</b><input type="checkbox" class="form-control" name="anestesiado_anteriormente" ng-model="dsp.anestesiado_anteriormente">
                         </div>
                     </div>
 

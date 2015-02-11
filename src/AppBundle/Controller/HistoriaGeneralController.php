@@ -196,6 +196,12 @@ class HistoriaGeneralController extends Controller
         $dsp->setTalla(floatval($params['talla']));
         $dsp->setPeso(floatval($params['peso']));
         $dsp->setPieDominante($params['piedominante']);
+        $dsp->setFumador($params['fumador']);
+        $dsp->setBebedor($params['bebedor']);
+        $dsp->setAnestesiadoAnteriormente($params['anestesiado_anteriormente']);
+        $dsp->setIntervencionQuirurgica($params['intervencion_quirurgica']);
+        $dsp->setHta($params['hta']);
+        $dsp->setDiabetico($params['diabetico']);
     }
 
 }

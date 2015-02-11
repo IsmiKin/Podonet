@@ -71,6 +71,48 @@ class DatosSemipermanentes
     private $pieDominante;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="Fumador", type="boolean",nullable=true)
+     */
+    private $fumador;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="Bebedor", type="boolean",nullable=true)
+     */
+    private $bebedor;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="AnestesiadoAnt", type="boolean",nullable=true)
+     */
+    private $anestesiadoAnteriormente;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="IntervencionQuirurigca", type="boolean",nullable=true)
+     */
+    private $intervencionQuirurgica;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="HTA", type="boolean",nullable=true)
+     */
+    private $hta;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="Diabetico", type="boolean",nullable=true)
+     */
+    private $diabetico;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Paciente")
      * @ORM\JoinColumn(name="Paciente_idPaciente", referencedColumnName="idPaciente",nullable=false)
      **/
@@ -288,6 +330,102 @@ class DatosSemipermanentes
         $this->usuario = $usuario;
 
         return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFumador()
+    {
+        return $this->fumador;
+    }
+
+    /**
+     * @param boolean $fumador
+     */
+    public function setFumador($fumador)
+    {
+        $this->fumador = $fumador;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isBebedor()
+    {
+        return $this->bebedor;
+    }
+
+    /**
+     * @param boolean $bebedor
+     */
+    public function setBebedor($bebedor)
+    {
+        $this->bebedor = $bebedor;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAnestesiadoAnteriormente()
+    {
+        return $this->anestesiadoAnteriormente;
+    }
+
+    /**
+     * @param boolean $anestesiadoAnteriormente
+     */
+    public function setAnestesiadoAnteriormente($anestesiadoAnteriormente)
+    {
+        $this->anestesiadoAnteriormente = $anestesiadoAnteriormente;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIntervencionQuirurgica()
+    {
+        return $this->intervencionQuirurgica;
+    }
+
+    /**
+     * @param boolean $intervencionQuirurgica
+     */
+    public function setIntervencionQuirurgica($intervencionQuirurgica)
+    {
+        $this->intervencionQuirurgica = $intervencionQuirurgica;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHta()
+    {
+        return $this->hta;
+    }
+
+    /**
+     * @param boolean $hta
+     */
+    public function setHta($hta)
+    {
+        $this->hta = $hta;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDiabetico()
+    {
+        return $this->diabetico;
+    }
+
+    /**
+     * @param boolean $diabetico
+     */
+    public function setDiabetico($diabetico)
+    {
+        $this->diabetico = $diabetico;
     }
 
     /**
