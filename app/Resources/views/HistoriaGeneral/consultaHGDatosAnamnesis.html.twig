@@ -24,10 +24,12 @@
                         <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Nuevo</button>
                     </div>
                     <div class="col-sm-2 pull-right">
-                        <select class="form-control" ng-model="anamnesisActual"  ng-hide="editando || anamnesisAll.length<1 || creando" ng-init="anamnesisAll[0]" ng-options="anamnesis.fecha |date for anamnesis in anamnesisAll track by anamnesis.id_anamnesis "></select>
+                        <i>Hora</i>
+                        <select class="form-control" ng-model="datosAnamnesis"  ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosAnamnesis.fecha|date:'hh:mm' for datosAnamnesis in datosAAll|filter:perteneceAnamnesis track by datosA.idAnamnesis "></select>
                     </div>
                     <div class="col-sm-2 pull-right">
-                        <select class="form-control" ng-model="datosAnamnesis"  ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosAnamnesis.fecha |date for datosAnamnesis in datosAAll|filter:perteneceAnamnesis track by datosA.idAnamnesis "></select>
+                        <b>Fecha</b>
+                        <select class="form-control" ng-model="anamnesisActual"  ng-hide="editando || anamnesisAll.length<1 || creando" ng-init="anamnesisAll[0]" ng-options="anamnesis.fecha|date for anamnesis in anamnesisAll track by anamnesis.id_anamnesis "></select>
                     </div>
                 </div>
 
