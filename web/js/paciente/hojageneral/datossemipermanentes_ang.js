@@ -60,7 +60,16 @@ app.controller('DSPController',  function($scope,$rootScope,$http) {
         if ($scope.editando)    ruta = Routing.generate('editar_datos_semipermanentes')
         else                    ruta = Routing.generate('crear_datos_semipermanentes');
 
-        var dataEnviar = JSON.stringify(form.serializeObject());
+        var dataPreEnviar = form.serializeObject();
+        console.log(dataPreEnviar);
+        
+        form.find('input[type=checkbox]').each(
+            function(index,element) {
+                dataPreEnviar[element.name] = element.checked;
+            });
+
+        var dataEnviar = JSON.stringify(dataPreEnviar);
+
         $http.post(ruta,dataEnviar )
             .success(function(data, status, headers, config) {
                 if(data.codigo_error==0){
