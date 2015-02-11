@@ -5,14 +5,16 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('datosAnamnesisMod',[]).config(function($interpolateProvider){
-    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-});
+var app = angular.module('datosAnamnesisMod',[]);
 
-app.controller('DPController',  function($scope,$rootScope,$http) {
+app.controller('DAController',  function($scope,$rootScope,$http) {
 
     $scope.editando = false;
     $scope.dpaciente = paciente.Paciente;
+    $scope.anamnesisAll = paciente.Anamnesis;
+    $scope.anamnesisActual = paciente.Anamnesis[0];
+    $scope.datosAnamnesis = null;
+    $scope.datosAAll = paciente.DatosA;
     //$scope.dp = paciente.DatosAnamnesis[0];
     $scope.expandido = true;
 
@@ -30,6 +32,10 @@ app.controller('DPController',  function($scope,$rootScope,$http) {
 
     $scope.setExpandido = function(valor){
         $scope.expandido = valor;
+    };
+
+    $scope.perteneceAnamnesis = function(datosAnamnesis){
+        return (datosAnamnesis.Anamnesis_idAnamnesis == $scope.anamnesisActual.id_anamnesis);
     };
 
     $scope.submitFormulario = function(){

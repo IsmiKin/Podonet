@@ -27,7 +27,7 @@
         {% include "HistoriaGeneral/consultaHGDatosSemipermanentes.html.twig" %}
 
         <!-- Seccion de Datos Anamnesis -->
-        <!-- {% include "HistoriaGeneral/consultaHGDatosAnamnesis.html.twig" %} -->
+        {% include "HistoriaGeneral/consultaHGDatosAnamnesis.html.twig" %}
     </div>
 
     {% include "HistoriaGeneral/dialogos.html.twig" %}
@@ -44,6 +44,7 @@
 
     </script>
 
+    <script src="{{ asset('js/paciente/hojageneral/datosanamnesis_ang.js') }}"></script>
     <script src="{{ asset('js/paciente/hojageneral/datospersonales_ang.js') }}"></script>
     <script src="{{ asset('js/paciente/hojageneral/datossemipermanentes_ang.js') }}"></script>
     <script src="{{ asset('js/paciente/hojageneral/hojageneral_ang.js') }}"></script>

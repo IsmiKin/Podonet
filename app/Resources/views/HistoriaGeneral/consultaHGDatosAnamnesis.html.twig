@@ -1,7 +1,7 @@
 <div class="row"   ng-controller="DAController as DACtrl" ng-init="this.init()">
     <div class="list-group bloqueDatosAnamnesis">
         <a class="list-group-item active  ">
-            <i class="fa fa-user-md fa-2x" ></i>  <span class="tituloPanel">&nbsp;Datos de Anamnesis</span>
+            <i class="fa fa-stethoscope fa-2x" ></i>  <span class="tituloPanel">&nbsp;Datos de Anamnesis</span>
             <span class="pull-right">
                 <button type="button" class="btn btn-default" ng-show="expandido" ng-click="setExpandido(false)">
                     <i class="fa fa-compress"></i>
@@ -15,6 +15,23 @@
         <div class="well containerFormularioDatosAnamnesis" ng-show="expandido">
             <form id="formularioDatosAnamnesis" name="formularioDatosPersonales" ng-submit="submitFormulario()">
 
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-warning" ng-hide="editando || dspall.length<1 || creando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Nuevo</button>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <select class="form-control" ng-model="anamnesisActual"  ng-hide="editando || anamnesisAll.length<1 || creando" ng-init="anamnesisAll[0]" ng-options="anamnesis.fecha |date for anamnesis in anamnesisAll track by anamnesis.id_anamnesis "></select>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <select class="form-control" ng-model="datosAnamnesis"  ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosAnamnesis.fecha |date for datosAnamnesis in datosAAll|filter:perteneceAnamnesis track by datosA.idAnamnesis "></select>
+                    </div>
+                </div>
+
+                <hr/>
 
             </form>
         </div>

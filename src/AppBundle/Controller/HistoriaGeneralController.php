@@ -33,7 +33,7 @@ class HistoriaGeneralController extends Controller
         $pacienteCompleto['DatosPersonales'] = $repoDP->findBy(array('paciente'=>$paciente)) ;
         $pacienteCompleto['DatosSemipermanentes'] = $repoDSP->findBy(array('paciente' => $paciente), array('fecha' => 'DESC'));
 
-        $anamnesis =  $repoAnamnesis->findBy(array('paciente' => $paciente), array('fecha' => 'DESC'));
+        $anamnesis =  $repoAnamnesis->findBy(array('paciente' => $paciente, 'estado' => 'Visible'), array('fecha' => 'DESC'));
         $pacienteCompleto['Anamnesis'] = $anamnesis;
 
         // Si tiene algun anamnesis, sacamos el resto de datos

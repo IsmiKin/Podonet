@@ -22,7 +22,7 @@ class DatosAnamnesisRepository extends EntityRepository{
                 ->setParameter('anamnesis',$anamnesis)
                 ->getQuery();
 
-            $dad = $q->getArrayResult(); // no se porque array_merge no va ..
+            $dad = $q->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)->getArrayResult(); // no se porque array_merge no va ..
             foreach($dad as $d)     array_push($resultado,$d);
 
         }
