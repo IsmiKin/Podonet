@@ -43,9 +43,9 @@ class DatosAnamnesis
     private $dolor;
 
     /**
-     * @var binary
+     * @var string
      *
-     * @ORM\Column(name="ImagenDolor", type="binary", nullable=true)
+     * @ORM\Column(name="ImagenDolor", type="string", nullable=true)
      */
     private $imagenDolor;
 

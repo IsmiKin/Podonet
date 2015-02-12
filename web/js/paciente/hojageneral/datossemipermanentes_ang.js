@@ -62,7 +62,7 @@ app.controller('DSPController',  function($scope,$rootScope,$http) {
 
         var dataPreEnviar = form.serializeObject();
         console.log(dataPreEnviar);
-        
+
         form.find('input[type=checkbox]').each(
             function(index,element) {
                 dataPreEnviar[element.name] = element.checked;

@@ -13,7 +13,7 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
     $scope.dpaciente = paciente.Paciente;
     $scope.anamnesisAll = paciente.Anamnesis;
     $scope.anamnesisActual = paciente.Anamnesis[0];
-    $scope.datosAnamnesis = null;
+    //$scope.datosAnamnesis = null;
     $scope.datosAAll = paciente.DatosA;
     //$scope.dp = paciente.DatosAnamnesis[0];
     $scope.expandido = true;
@@ -60,5 +60,26 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
         //setTimeout("dialog.modal('hide')",1000);
         $scope.setEditando(false);
     };
+
+});
+
+app.directive('mypaint', function() {
+    return {
+        restrict: 'E',
+        scope: { ancho : '@', alto:'@', ident: '@', imagen:'@' },
+        template: '<canvas id="canvas_{{ident}}"  width="{{ancho}}" height="{{alto}}" style="cursor: crosshair; background:url(\'/img/hojageneral/{{imagen}}.png\');">Your browser does not support HTML5 Canvas.</canvas> ',
+        link : function(scope,element,attributes){
+            element.find("canvas").sketchpad({
+                aspectRatio: 2 / 1,             // (Required) To preserve the drawing, an aspect ratio must be specified
+                backgroundColor: '#FFFFFF',      // (Optional) Set the background of the canvas
+                strokes: 'JSON',                // (Optional) Initialize the sketchpad with stroke data
+                lineColor: '#000000'
+            });
+        },
+        controller: function($scope,$element) {
+
+
+        }
+    }
 
 });

@@ -37,6 +37,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('assets/vendor/angularjs/angular.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/responsive-sketchpad/responsive-sketchpad.js') }}"></script>
 
     <script>
         var paciente = {{ pacienteJSON | raw}} ;
