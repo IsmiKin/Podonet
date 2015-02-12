@@ -63,20 +63,58 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
 
 });
 
-app.directive('mypaint', function() {
+
+
+app.directive('mypaint', function($compile) {
+
+    var getTemplate = function(content) {
+        return Handlebars.templates.imagenpaint(content);
+    }
     return {
         restrict: 'E',
-        scope: { ancho : '@', alto:'@', ident: '@', imagen:'@' },
-        template: '<canvas id="canvas_{{ident}}"  width="{{ancho}}" height="{{alto}}" style="cursor: crosshair; background:url(\'/img/hojageneral/{{imagen}}.png\');">Your browser does not support HTML5 Canvas.</canvas> ',
+        scope: { ident : '@', ancho:'@', alto:'@', imagen:'@' },
+        transclude:true,
         link : function(scope,element,attributes){
-            element.find("canvas").sketchpad({
+            var colores = [{color:'#f00', title:"color1"},{color:'#f00', title:"color10"},{color:'#0f0', title:"color2"},{color:'#0ff', title:"color3"},{color:'#fff', title:"color4"}]
+            scope["colores"]= colores;
+            element.html(getTemplate(scope));
+
+            var canvas = element.find("canvas");
+            canvas.sketchpad({
                 aspectRatio: 2 / 1,             // (Required) To preserve the drawing, an aspect ratio must be specified
                 backgroundColor: '#FFFFFF',      // (Optional) Set the background of the canvas
                 strokes: 'JSON',                // (Optional) Initialize the sketchpad with stroke data
                 lineColor: '#000000'
             });
+
+            element.find("button").click(function(){ canvas.setLineColor($(this).data("color"))}).tooltip();
+            element.find(".tamanoPuntero").click(function(){ canvas.setLineSize($(this).val())});
+            element.find(".toolimage").tooltip();
+            element.find(".botonRedo").click(function(){ canvas.redo(); });
+            element.find(".botonUndo").click(function(){ canvas.undo(); });
+            element.find(".botonClear").click(function(){ canvas.clear(); });
+
+        }
+    }
+
+});
+
+app.directive('mycolor', function() {
+    return {
+        restrict: 'E',
+        scope: { canvas:'@' },
+        transclude:true,
+        template: '',
+        link : function(scope,element,attributes){
+            var canvas = $("#canvas_"+scope.canvas)[0];
+            console.log(canvas[0]);
+            element.click(function(){
+                console.log(canvas);
+                canvas.setLineColor(element.data('color'));
+            });
+
         },
-        controller: function($scope,$element) {
+        controller: function($scope,$element,$attrs, $transclude) {
 
 
         }
