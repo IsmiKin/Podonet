@@ -25,3 +25,11 @@ editar_datos_personales:
 crear_datos_personales:
     path:     /personales/crear
     defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosPersonales }
+
+editar_datos_anamnesis:
+    path:     /historia/general/datosanamnesis/editar/
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosAnamnesis }
+
+crear_datos_anamnesis:
+    path:     /historia/general/datosanamnesis/crear/
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosAnamnesis }

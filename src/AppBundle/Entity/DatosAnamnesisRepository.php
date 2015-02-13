@@ -24,7 +24,13 @@ class DatosAnamnesisRepository extends EntityRepository{
 
             $dad = $q->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)->getArrayResult(); // no se porque array_merge no va ..
             foreach($dad as $d){
-                $d["imagenDolor"]=stream_get_contents($d["imagenDolor"]);
+                foreach($d as $indice=>$campo){
+                    //echo $campo.".".$indice;
+                    //echo "tipo".gettype($campo);
+                    if(gettype($campo)=="resource") $d[$indice] =stream_get_contents($campo);
+                }
+                //$d["imagenDolor"]=stream_get_contents($d["imagenDolor"]);
+                //$d["imagenDolor2"]=stream_get_contents($d["imagenDolor2"]);
                 array_push($resultado,$d);
             }
 

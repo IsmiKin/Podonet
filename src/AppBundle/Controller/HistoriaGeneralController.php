@@ -119,6 +119,32 @@ class HistoriaGeneralController extends Controller
         }
     }
 
+    public function editarDatosAnamnesisAction(Request $request){
+
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoDA = $this->getDoctrine()->getRepository('AppBundle:DatosAnamnesis');
+            $da = $repoDA->find(intval($params['idda']));
+
+            $this->handleRequestManualDA($da,$params);
+            $em->flush();
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
+            return new JsonResponse($respuesta);
+        }
+        return null;
+    }
+
+    public function crearDatosAnamnesisAction(){
+        return null;
+    }
+
     public function crearAnamnesisAction()
     {
         return $this->render('HistoriaGeneral/crearAnamnesis.html.twig', array(
@@ -202,6 +228,16 @@ class HistoriaGeneralController extends Controller
         $dsp->setIntervencionQuirurgica($params['intervencion_quirurgica']);
         $dsp->setHta($params['hta']);
         $dsp->setDiabetico($params['diabetico']);
+    }
+
+    private function handleRequestManualDA(&$da,$params){
+        $da->setEstado("Visible");
+        $da->setImagenDolor($params['imagenDolor']);
+        $da->setImagenDolor2($params['imagenDolor2']);
+        $da->setIntensidad(intval($params['intensidad']));
+        $da->setTipoDolor($params['tipodolor']);
+        $da->setFormulaMetatarsal($params['formulaMetatarsal']);
+        $da->setFormulaDigital($params['formulaDigital']);
     }
 
 }

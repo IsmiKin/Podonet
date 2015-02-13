@@ -50,6 +50,13 @@ class DatosAnamnesis
     private $imagenDolor;
 
     /**
+     * @var blob
+     *
+     * @ORM\Column(name="ImagenDolor2", type="blob", nullable=true)
+     */
+    private $imagenDolor2;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="Intensidad", type="integer", nullable=true)
@@ -194,6 +201,22 @@ class DatosAnamnesis
     }
 
     /**
+     * @return blob
+     */
+    public function getImagenDolor2()
+    {
+        return $this->imagenDolor2;
+    }
+
+    /**
+     * @param blob $imagenDolor2
+     */
+    public function setImagenDolor2($imagenDolor2)
+    {
+        $this->imagenDolor2 = $imagenDolor2;
+    }
+
+    /**
      * Set intensidad
      *
      * @param integer $intensidad
@@ -329,6 +352,11 @@ class DatosAnamnesis
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    public function __construct()
+    {
+        $this->setFechaUltimaModificacion(new \DateTime('now'));
     }
 
 }

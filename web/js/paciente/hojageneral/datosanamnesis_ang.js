@@ -69,8 +69,8 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
         dialog.find('.cargando').show();
         dialog.modal('show');
         var ruta = null;
-        if ($scope.editando)    ruta = Routing.generate('editar_datos_semipermanentes')
-        else                    ruta = Routing.generate('crear_datos_semipermanentes');
+        if ($scope.editando)    ruta = Routing.generate('editar_datos_anamnesis')
+        else                    ruta = Routing.generate('crear_datos_anamnesis');
 
         var dataPreEnviar = form.serializeObject();
         console.log(dataPreEnviar);
@@ -78,11 +78,6 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
         form.find('input[type=checkbox],input[type=radio]').each(
             function(index,element) {
                 dataPreEnviar[element.name] = element.checked;
-            });
-
-        form.find('canvas').each(
-            function(index,element) {
-               // dataPreEnviar[element.data("namedata")] = element.json();
             });
 
         var dataEnviar = JSON.stringify(dataPreEnviar);
@@ -95,8 +90,8 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
                     dialog.find('.completadook').show();
                     $scope.setEditando(false);
                     $scope.setCreando(false);
-                    $scope.dspall.push(JSON.parse(data.nuevodsp));
-                    $scope.dsp = $scope.dspall[$scope.dspall.length-1];
+                    if($scope.creando)  $scope.anamnesisAll.push(JSON.parse(data.nuevoda));
+                    $scope.datosAnamnesis = $scope.anamnesisAll[$scope.anamnesisAll.length-1];
                 }else {
                     dialog.find('.cargando').hide();
                     dialog.find('.completadook').hide();
@@ -145,7 +140,12 @@ app.directive('mypaint', function($compile) {
             element.find(".botonRedo").click(function(){ canvas.redo();  });
             element.find(".botonUndo").click(function(){ canvas.undo(); });
             element.find(".botonClear").click(function(){ canvas.clear(); });
-            $(".selectFechaDA").change(function(){ canvas.jsonLoad(scope.$parent.datosAnamnesis[scope.namedata]); });
+            canvas.mouseup(function(){ element.find(".hidden_"+scope.namedata).val(canvas.json()); });
+            $(".selectFechaDA").change(function(){
+                element.find(".botonClear").click();
+                if(scope.$parent.datosAnamnesis[scope.namedata]!=undefined)
+                    canvas.jsonLoad(scope.$parent.datosAnamnesis[scope.namedata]);
+            });
             
         }
     }
