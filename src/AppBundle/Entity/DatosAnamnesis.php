@@ -43,9 +43,9 @@ class DatosAnamnesis
     private $dolor;
 
     /**
-     * @var string
+     * @var blob
      *
-     * @ORM\Column(name="ImagenDolor", type="string", nullable=true)
+     * @ORM\Column(name="ImagenDolor", type="blob", nullable=true)
      */
     private $imagenDolor;
 

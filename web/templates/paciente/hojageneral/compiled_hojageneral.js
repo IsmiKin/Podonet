@@ -21,9 +21,11 @@ templates['imagenpaint'] = template({"1":function(depth0,helpers,partials,data) 
     + alias3(((helper = (helper = helpers.ancho || (depth0 != null ? depth0.ancho : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"ancho","hash":{},"data":data}) : helper)))
     + "\" height=\""
     + alias3(((helper = (helper = helpers.alto || (depth0 != null ? depth0.alto : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"alto","hash":{},"data":data}) : helper)))
+    + "\" data-namedata=\""
+    + alias3(((helper = (helper = helpers.namedata || (depth0 != null ? depth0.namedata : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"namedata","hash":{},"data":data}) : helper)))
     + "\" style=\"cursor: crosshair; background:url('/img/hojageneral/"
-    + alias3(((helper = (helper = helpers.imagen || (depth0 != null ? depth0.imagen : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"imagen","hash":{},"data":data}) : helper)))
-    + ".png')\">Your browser does not support HTML5 Canvas.</canvas>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-md-4\">\n"
+    + alias3(((helper = (helper = helpers.namedata || (depth0 != null ? depth0.namedata : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"namedata","hash":{},"data":data}) : helper)))
+    + ".png') ;  background-repeat: no-repeat;\">Your browser does not support HTML5 Canvas.</canvas>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-md-4\">\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.colores : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-md-4\">\n        <input type=\"range\" class=\"tamanoPuntero\" canvas=\""
     + alias3(((helper = (helper = helpers.ident || (depth0 != null ? depth0.ident : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"ident","hash":{},"data":data}) : helper)))

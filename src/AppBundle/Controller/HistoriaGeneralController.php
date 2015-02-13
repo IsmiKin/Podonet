@@ -60,7 +60,7 @@ class HistoriaGeneralController extends Controller
         $serializer = Serializer::create()->build();
         $pacienteJSON = $serializer ->serialize($pacienteCompleto, 'json');
 
-        return $this->render('HistoriaGeneral/consultarHistoriaGeneral.html.twig', array(
+       return $this->render('HistoriaGeneral/consultarHistoriaGeneral.html.twig', array(
                 'paciente'=>$paciente, 'pacienteJSON' => $pacienteJSON
             ));
     }

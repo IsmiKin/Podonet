@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-2 pull-right">
                         <i>Hora</i>
-                        <select class="form-control" ng-model="datosAnamnesis"  ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosAnamnesis.fecha|date:'hh:mm' for datosAnamnesis in datosAAll|filter:perteneceAnamnesis track by datosAnamnesis.idAnamnesis "></select>
+                        <select class="form-control selectFechaDA " ng-model="datosAnamnesis"   ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosAnamnesis.fecha|date:'hh:mm' for datosAnamnesis in datosAAll|filter:perteneceAnamnesis track by datosAnamnesis.idAnamnesis "></select>
                     </div>
                     <div class="col-sm-2 pull-right">
                         <b>Fecha</b>
@@ -34,20 +34,20 @@
                 </div>
 
                 <hr/>
-
+                <fieldset ng-disabled="!editando && !creando">
                 <div class="row"><div class="col-md-6"><h3>Dolor</h3></div></div>
                 <div class="row">
                     <div class="col-md-2">
 
                         <label for="tipodolor">Tipo de dolor</label>
-                        <select ng-model="datosAnamnesis.tipoDolor" class="form-control" name="tipodolor">
+                        <select ng-model="datosAnamnesis.tipoDolor" class="form-control" name="tipodolor" required>
                             <option value="punzante">Punzante</option>
                             <option value="intermitente">Intermitente</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="intensidad">Intensidad</label>
-                        <input type="range" min="0" max="10" ng-model="datosAnamnesis.intensidad" name="intensidad"/>
+                        <input type="range" min="0" max="10" ng-model="datosAnamnesis.intensidad" name="intensidad" required/>
                     </div>
                 </div>
                 <br/>
@@ -68,10 +68,11 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-6">
-                        <mypaint ident="1" ancho="100" alto="200"  imagen="dolor1"></mypaint>
+                        <mypaint ident="1" tipo="dolor" ancho="100" alto="200"   namedata="imagenDolor"></mypaint>
                     </div>
                     <div class="col-md-6">
-                        <mypaint ident="1" ancho="100" alto="200"  imagen="dolor2"></mypaint>
+                        <mypaint ident="2" tipo="dolor" ancho="100" alto="200"  namedata="imagenDolor2"></mypaint>
+
                     </div>
                 </div>
                 <br/>
@@ -89,7 +90,16 @@
                         </label>
                     </div>
                 </div>
+                    <br/><hr/>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                            <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        </div>
+                    </div>
 
+
+            </fieldset>
             </form>
         </div>
 
