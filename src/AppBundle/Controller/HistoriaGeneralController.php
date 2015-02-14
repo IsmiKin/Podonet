@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Anamnesis;
 use AppBundle\Entity\DatosAfeccionesDermicas;
 use AppBundle\Entity\DatosAnamnesis;
 use AppBundle\Entity\DatosOnicopatis;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class HistoriaGeneralController extends Controller
 {
@@ -141,8 +143,57 @@ class HistoriaGeneralController extends Controller
         return null;
     }
 
-    public function crearDatosAnamnesisAction(){
-        return null;
+    public function crearDatosAnamnesisAction(Request $request){
+
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoAnamnesis = $this->getDoctrine()->getRepository('AppBundle:Anamnesis');
+
+
+            $anamnesis = $repoAnamnesis->findOneBy(array('fecha'=>new \DateTime('now')));
+
+            $nuevoAnamnesis = false;
+            if(!$anamnesis){
+
+                $nuevoAnamnesis = true;
+                $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+                $paciente = $repoPaciente->find(intval($params["idpaciente"]));
+
+                $anamnesis = new Anamnesis();
+                $anamnesis->setEstado("Visible");
+                $anamnesis->setUsuarioCreador($this->getUser());
+                $anamnesis->setPaciente($paciente);
+            }
+
+            $anamnesis->setUsuarioModificacion($this->getUser());
+
+            $em->persist($anamnesis);
+            $em->flush();
+
+            $nuevoDA = new DatosAnamnesis();
+
+            $this->handleRequestManualDA($nuevoDA,$params);
+
+            $nuevoDA->setUsuario($this->getUser());
+            $nuevoDA->setAnamnesis($anamnesis);
+
+            $em->persist($nuevoDA);
+            $em->flush();
+
+            $serializer = Serializer::create()->build();
+            $daJSON = $serializer ->serialize($nuevoDA, 'json');
+            $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevoda' => $daJSON);
+            if($nuevoAnamnesis) $respuesta['nuevoanamnesis'] = $anamnesisJSON;
+            return new JsonResponse($respuesta);
+        }
     }
 
     public function crearAnamnesisAction()

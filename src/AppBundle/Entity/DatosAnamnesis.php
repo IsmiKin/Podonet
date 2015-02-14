@@ -356,7 +356,7 @@ class DatosAnamnesis
 
     public function __construct()
     {
-        $this->setFechaUltimaModificacion(new \DateTime('now'));
+        $this->setFecha(new \DateTime('now'));
     }
 
 }

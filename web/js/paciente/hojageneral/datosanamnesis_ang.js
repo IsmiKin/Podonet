@@ -7,7 +7,7 @@
 // Declare app level module which depends on views, and components
 var app = angular.module('datosAnamnesisMod',[]);
 
-app.controller('DAController',  function($scope,$rootScope,$http) {
+app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
 
     $scope.editando = false;
     $scope.creando = false;
@@ -20,6 +20,7 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
     $scope.expandido = true;
     $scope.ultimoMostrado = null;
 
+    var filter = $filter('filter');
     var fxNacimiento = $(".datepickerFxNacimiento");
     var form = $("#formularioDatosAnamnesis");
     var dialog = $("#dialogoNotificacion");
@@ -69,16 +70,21 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
         dialog.find('.cargando').show();
         dialog.modal('show');
         var ruta = null;
-        if ($scope.editando)    ruta = Routing.generate('editar_datos_anamnesis')
-        else                    ruta = Routing.generate('crear_datos_anamnesis');
 
         var dataPreEnviar = form.serializeObject();
+
+        if ($scope.editando)    ruta = Routing.generate('editar_datos_anamnesis')
+        else{
+            ruta = Routing.generate('crear_datos_anamnesis');
+            //dataPreEnviar
+        }
         console.log(dataPreEnviar);
 
-        form.find('input[type=checkbox],input[type=radio]').each(
+        form.find('input[type=radio]').each(
             function(index,element) {
-                dataPreEnviar[element.name] = element.checked;
+                dataPreEnviar[element.name] = $(element).val();
             });
+
 
         var dataEnviar = JSON.stringify(dataPreEnviar);
 
@@ -88,10 +94,25 @@ app.controller('DAController',  function($scope,$rootScope,$http) {
                     dialog.find('.cargando').hide();
                     dialog.find('.completadoerror').hide();
                     dialog.find('.completadook').show();
+                    var nuevoDA = JSON.parse(data.nuevoda);
+
+                    if($scope.creando){
+                        if(data.nuevoanamnesis!=undefined){
+                            var nuevoAnamnesis = JSON.parse(data.nuevoanamnesis);
+                            $scope.anamnesisAll.push(nuevoAnamnesis);
+                            $scope.anamnesisActual = $scope.anamnesisAll[$scope.anamnesisAll.length-1];
+                        }else{
+                            //$scope.anamnesisActual = filter($scope.anamnesisAll, {id_anamesis: nuevoDA.Anamnesis_idAnamnesis});
+                            $scope.anamnesisActual = $scope.anamnesisAll[0];
+                        }
+                        //alert($scope.datosAAll);
+                        //alert($scope.datosAAll.length);
+                        $scope.datosAAll.push(nuevoDA);
+                        $scope.datosAnamnesis = $scope.datosAAll[$scope.datosAAll.length-1];
+                    }
                     $scope.setEditando(false);
                     $scope.setCreando(false);
-                    if($scope.creando)  $scope.anamnesisAll.push(JSON.parse(data.nuevoda));
-                    $scope.datosAnamnesis = $scope.anamnesisAll[$scope.anamnesisAll.length-1];
+
                 }else {
                     dialog.find('.cargando').hide();
                     dialog.find('.completadook').hide();
@@ -140,7 +161,10 @@ app.directive('mypaint', function($compile) {
             element.find(".botonRedo").click(function(){ canvas.redo();  });
             element.find(".botonUndo").click(function(){ canvas.undo(); });
             element.find(".botonClear").click(function(){ canvas.clear(); });
-            canvas.mouseup(function(){ element.find(".hidden_"+scope.namedata).val(canvas.json()); });
+            canvas.mouseup(function(){
+                element.find(".hidden_"+scope.namedata).val(canvas.json());
+                scope.$parent.datosAnamnesis[scope.namedata] = canvas.json();
+            });
             $(".selectFechaDA").change(function(){
                 element.find(".botonClear").click();
                 if(scope.$parent.datosAnamnesis[scope.namedata]!=undefined)

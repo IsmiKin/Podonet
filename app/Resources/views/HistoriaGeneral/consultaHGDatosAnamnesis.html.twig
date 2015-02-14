@@ -17,7 +17,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-warning" ng-hide="editando || dspall.length<1 || creando" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-warning" ng-hide="editando || anamnesisAll.length<1 || creando || datosAnamnesis.idAnamnesis==null" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
                         <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
                         <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
                         <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
@@ -35,7 +35,9 @@
 
                 <hr/>
                 <fieldset ng-disabled="!editando && !creando">
+                    <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}" />
                     <input type="hidden" name="idda" ng-model="datosAnamnesis.idAnamnesis" ng-value="datosAnamnesis.idAnamnesis"/>
+                    <input type="hidden" name="ida" ng-model="datosAnamnesis.idAnamnesis" ng-value="datosAnamnesis.Anamnesis_idAnamnesis"/>
                 <div class="row"><div class="col-md-6"><h3>Dolor</h3></div></div>
                 <div class="row">
                     <div class="col-md-2">

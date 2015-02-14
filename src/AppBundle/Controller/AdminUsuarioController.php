@@ -151,8 +151,8 @@ class AdminUsuarioController extends Controller
         $query = $repository->createQueryBuilder('l')
             ->where('l.fecha >= :inicio')
             ->andWhere('l.fecha <= :fin')
-            ->setParameter('inicio', $fechaInicio)
-            ->setParameter('fin', $fechaFin)
+            ->setParameter('inicio', new \DateTime($fechaInicio) )
+            ->setParameter('fin', new \DateTime($fechaFin))
             ->orderBy('l.fecha', 'DESC')
             ->getQuery();
 
