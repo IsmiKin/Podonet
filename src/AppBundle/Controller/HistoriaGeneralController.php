@@ -140,7 +140,7 @@ class HistoriaGeneralController extends Controller
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
             return new JsonResponse($respuesta);
         }
-        return null;
+
     }
 
     public function crearDatosAnamnesisAction(Request $request){
@@ -191,6 +191,80 @@ class HistoriaGeneralController extends Controller
             $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevoda' => $daJSON);
+            if($nuevoAnamnesis) $respuesta['nuevoanamnesis'] = $anamnesisJSON;
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function editarDatosOnicopatisAction(Request $request){
+
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoDO = $this->getDoctrine()->getRepository('AppBundle:DatosOnicopatis');
+            $da = $repoDO->find(intval($params['iddo']));
+
+            $this->handleRequestManualDO($da,$params);
+            $em->flush();
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
+            return new JsonResponse($respuesta);
+        }
+
+    }
+
+    public function crearDatosOnicopatisAction(Request $request){
+
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoAnamnesis = $this->getDoctrine()->getRepository('AppBundle:Anamnesis');
+
+            $anamnesis = $repoAnamnesis->findOneBy(array('fecha'=>new \DateTime('now')));
+
+            $nuevoAnamnesis = false;
+            if(!$anamnesis){
+
+                $nuevoAnamnesis = true;
+                $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+                $paciente = $repoPaciente->find(intval($params["idpaciente"]));
+
+                $anamnesis = new Anamnesis();
+                $anamnesis->setEstado("Visible");
+                $anamnesis->setUsuarioCreador($this->getUser());
+                $anamnesis->setPaciente($paciente);
+            }
+
+            $anamnesis->setUsuarioModificacion($this->getUser());
+
+            $em->persist($anamnesis);
+            $em->flush();
+
+            $nuevoDO = new DatosOnicopatis();
+
+            $this->handleRequestManualDO($nuevoDO,$params);
+
+            $nuevoDO->setUsuario($this->getUser());
+            $nuevoDO->setAnamnesis($anamnesis);
+
+            $em->persist($nuevoDO);
+            $em->flush();
+
+            $serializer = Serializer::create()->build();
+            $doJSON = $serializer ->serialize($nuevoDO, 'json');
+            $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevodo' => $doJSON);
             if($nuevoAnamnesis) $respuesta['nuevoanamnesis'] = $anamnesisJSON;
             return new JsonResponse($respuesta);
         }
@@ -289,6 +363,11 @@ class HistoriaGeneralController extends Controller
         $da->setTipoDolor($params['tipodolor']);
         $da->setFormulaMetatarsal($params['formulaMetatarsal']);
         $da->setFormulaDigital($params['formulaDigital']);
+    }
+
+    private function handleRequestManualDO(&$do,$params){
+        $do->setEstado("Visible");
+        $do->setImagenOnicopatica($params['imagenOnicopatica']);
     }
 
 }

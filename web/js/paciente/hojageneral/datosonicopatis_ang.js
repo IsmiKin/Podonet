@@ -88,7 +88,7 @@ app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
                     dialog.find('.cargando').hide();
                     dialog.find('.completadoerror').hide();
                     dialog.find('.completadook').show();
-                    var nuevoDO = JSON.parse(data.nuevoDO);
+                    var nuevoDO = JSON.parse(data.nuevodo);
 
                     if($scope.creando){
                         if(data.nuevoanamnesis!=undefined){
@@ -101,7 +101,7 @@ app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
                         }
                         //alert($scope.datosAAll);
                         //alert($scope.datosAAll.length);
-                        $scope.datosOAll.push(nuevoDA);
+                        $scope.datosOAll.push(nuevoDO);
                         $scope.datosOnicopatis = $scope.datosOAll[$scope.datosOAll.length-1];
                     }
                     $scope.setEditando(false);

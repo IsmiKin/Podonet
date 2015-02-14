@@ -36,8 +36,8 @@ crear_datos_anamnesis:
 
 editar_datos_onicopatis:
     path:     /historia/general/datosonicopatis/editar/
-    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosAnamnesis }
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosOnicopatis }
 
 crear_datos_onicopatis:
     path:     /historia/general/datosonicopatis/crear/
-    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosAnamnesis }
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosOnicopatis }
