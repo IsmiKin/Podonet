@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_pgsql
+    database_host: ec2-50-17-202-29.compute-1.amazonaws.com
+    database_port: 5432
+    database_name: d4n77ki56efc00
+    database_user: dmzuzjdhivuodl
+    database_password: s0fMRsxhkMihryb4PqPAT29MYq
+    mailer_transport: gmail
+    mailer_host: null
+    mailer_user: podonet.uma@gmail.com
+    mailer_password: lospiesmolan
+    locale: es
+    secret: ThisTokenIsNotSoSecretChangeIt
