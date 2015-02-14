@@ -36,9 +36,9 @@ class DatosOnicopatis
     private $estado;
 
     /**
-     * @var binary
+     * @var blob
      *
-     * @ORM\Column(name="ImagenOnicopatica", type="binary",nullable=true)
+     * @ORM\Column(name="ImagenOnicopatica", type="blob",nullable=true)
      */
     private $imagenOnicopatica;
 

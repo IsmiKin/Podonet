@@ -58,7 +58,7 @@ app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
         $scope.expandido = valor;
     };
 
-    $scope.perteneceAnamnesis = function(datosAnamnesis){
+    $scope.perteneceAnamnesis = function(datosOnicopatis){
         return (datosOnicopatis.Anamnesis_idAnamnesis == $scope.anamnesisActual.id_anamnesis);
     };
 
@@ -80,12 +80,6 @@ app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
         }
         console.log(dataPreEnviar);
 
-        form.find('input[type=radio]').each(
-            function(index,element) {
-                dataPreEnviar[element.name] = $(element).val();
-            });
-
-
         var dataEnviar = JSON.stringify(dataPreEnviar);
 
         $http.post(ruta,dataEnviar )
@@ -94,7 +88,7 @@ app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
                     dialog.find('.cargando').hide();
                     dialog.find('.completadoerror').hide();
                     dialog.find('.completadook').show();
-                    var nuevoDA = JSON.parse(data.nuevoda);
+                    var nuevoDO = JSON.parse(data.nuevoDO);
 
                     if($scope.creando){
                         if(data.nuevoanamnesis!=undefined){
@@ -129,19 +123,22 @@ app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
 });
 
 
-
-app.directive('mypaintOnicopatis', function($compile) {
+app.directive('mypainto', function($compile) {
 
     var getTemplate = function(content) {
-        return Handlebars.templates.imagenpaint(content);
-    }
+        return Handlebars.templates.imagenpaintonico(content);
+    };
+
     return {
         restrict: 'E',
         scope: { ident : '@', ancho:'@', alto:'@', tipo:'@', namedata:'@'},
         transclude:true,
         link : function(scope,element,attributes){
             var opciones = {
-                dolor: [{color:'#f00', title:"Fuerte"},{color:'yellow', title:"Normal"},{color:'#0f0', title:"Leve"}]
+                onicopatis: [{color:'#DB0700', title:"Astroficas"},{color:'#50B01C', title:"Distrofica"},
+                    {color:'#FFBF00', title:"Hipertrofica"},{color:'#276ACB', title:"Onicogrifosis"}, {color:'#000000', title:"Onicocriptosis"},
+                    {color:'#FAD9E5', title:"U.Psoriasica"},{color:'#E0D4E6', title:"U.Discromica"}
+                ]
             };
             var colores = opciones[scope.tipo];
             scope["colores"]= colores;
@@ -170,29 +167,6 @@ app.directive('mypaintOnicopatis', function($compile) {
                 if(scope.$parent.datosOnicopatis[scope.namedata]!=undefined)
                     canvas.jsonLoad(scope.$parent.datosOnicopatis[scope.namedata]);
             });
-
-        }
-    }
-
-});
-
-app.directive('mycolor', function() {
-    return {
-        restrict: 'E',
-        scope: { canvas:'@' },
-        transclude:true,
-        template: '',
-        link : function(scope,element,attributes){
-            var canvas = $("#canvas_"+scope.canvas)[0];
-            console.log(canvas[0]);
-            element.click(function(){
-                console.log(canvas);
-                canvas.setLineColor(element.data('color'));
-            });
-
-        },
-        controller: function($scope,$element,$attrs, $transclude) {
-
 
         }
     }

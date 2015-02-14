@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-4 pull-left">
+        <button type="button" class="btn btn-default toolimage botonUndo" data-toggle="tooltip" data-placement="top" title="Deshacer"><i class="fa fa-undo"></i></button>
+        <button type="button" class="btn btn-default toolimage botonRedo" data-toggle="tooltip" data-placement="top" title="Rehacer"><i class="fa fa-repeat"></i></button>
+        <button type="button" class="btn btn-default toolimage botonClear" data-toggle="tooltip" data-placement="top" title="Limpiar"><i class="fa fa-eraser"></i></button>
+    </div>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-md-4">
+        <canvas id="canvas_{{ident}}" border="5" width="{{ancho}}" height="{{alto}}" data-namedata="{{namedata}}" style="width:{{ancho}}px; height:{{alto}}px;cursor: crosshair; background:url('/img/hojageneral/{{namedata}}.png') ;  background-repeat: no-repeat;">Your browser does not support HTML5 Canvas.</canvas>
+        <input type="hidden" class="hidden_{{namedata}}" name="{{namedata}}"/>
+        <input type="range" class="tamanoPuntero" canvas="{{ident}}" max="10" min="1"/>
+    </div>
+    <div class="col-md-6">
+        {{#each colores }}
+            <div class="row">
+                    <div class="col-sm-2">
+                        <button  type="button" canvas="{{ident}}" class="btn botoncolor"  href=".colors_sketch" height="20" width="20" style="background:{{color}} ;" data-color="{{color}}" data-toggle="tooltip" data-placement="bottom" title="{{title}}"><i class="fa fa-eyedropper"></i></button>
+                    </div>
+                    <div class="col-sm-2">
+                        <b>{{title}}</b>
+                    </div>
+
+            </div>
+        {{/each}}
+    </div>
+
+
+</div>

@@ -173,26 +173,3 @@ app.directive('mypaint', function($compile) {
     }
 
 });
-
-app.directive('mycolor', function() {
-    return {
-        restrict: 'E',
-        scope: { canvas:'@' },
-        transclude:true,
-        template: '',
-        link : function(scope,element,attributes){
-            var canvas = $("#canvas_"+scope.canvas)[0];
-            console.log(canvas[0]);
-            element.click(function(){
-                console.log(canvas);
-                canvas.setLineColor(element.data('color'));
-            });
-
-        },
-        controller: function($scope,$element,$attrs, $transclude) {
-
-
-        }
-    }
-
-});

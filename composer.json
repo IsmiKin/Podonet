@@ -1,14 +1,14 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "Podonet",
+    "license": "Apache GPLv2",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Podonet",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.6.1",
+        "symfony/symfony": ">=2.6.1",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "doctrine/dbal": "2.5.0",

@@ -17,7 +17,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-warning" ng-hide="editando || anamnesisAll.length<1 || creando || datosAnamnesis.idAnamnesis==null" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-warning" ng-hide="editando || anamnesisAll.length<1 || creando || datosOnicopatis.idDatosOnicopatis==null" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
                         <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
                         <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
                         <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-2 pull-right">
                         <i>Hora</i>
-                        <select class="form-control selectFechaDO " ng-model="datosAnamnesis"   ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosAnamnesis.fecha|date:'hh:mm' for datosAnamnesis in datosAAll|filter:perteneceAnamnesis track by datosAnamnesis.idAnamnesis "></select>
+                        <select class="form-control selectFechaDO " ng-model="datosOnicopatis"   ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosOnicopatis.fecha|date:'hh:mm' for datosOnicopatis in datosOAll|filter:perteneceAnamnesis track by datosOnicopatis.idDatosOnicopatis "></select>
                     </div>
                     <div class="col-sm-2 pull-right">
                         <b>Fecha</b>
@@ -36,14 +36,14 @@
                 <hr/>
                 <fieldset ng-disabled="!editando && !creando">
                     <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}" />
-                    <input type="hidden" name="idda" ng-model="datosAnamnesis.idAnamnesis" ng-value="datosAnamnesis.idAnamnesis"/>
-                    <input type="hidden" name="ida" ng-model="datosAnamnesis.idAnamnesis" ng-value="datosAnamnesis.Anamnesis_idAnamnesis"/>
+                    <input type="hidden" name="idda" ng-model="datosOnicopatis.idAnamnesis" ng-value="datosOnicopatis.idDatosOnicopatis"/>
+                    <input type="hidden" name="ida" ng-model="datosOnicopatis.idAnamnesis" ng-value="datosOnicopatis.Anamnesis_idAnamnesis"/>
 
 
                     <br/>
                     <div class="row">
-                        <div class="col-md-6">
-                            <mypaintOnicopatis ident="3" tipo="dolor" ancho="100" alto="200"   namedata="imagenDolor"></mypaintOnicopatis>
+                        <div class="col-lg-12">
+                            <mypainto ident="4" tipo="onicopatis" ancho="600" alto="180"   namedata="imagenOnicopatica"></mypainto>
                         </div>
 
                     </div>
