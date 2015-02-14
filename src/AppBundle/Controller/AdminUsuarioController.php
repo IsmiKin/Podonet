@@ -60,6 +60,9 @@ class AdminUsuarioController extends Controller
                 $mensaje = "Ha ocurrido un error al validar el formulario del usuario"." errores:".$formCrear->getErrorsAsString();
             }
 
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogAdminUsuarios($mensaje,null,$this->getUser());
+
             return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
