@@ -63,11 +63,6 @@ class Diagnostico
      **/
     private $paciente;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
-     * @ORM\JoinColumn(name="Usuario_idUsuario", referencedColumnName="id",nullable=false)
-     **/
-    private $usuario;
 
 
 
