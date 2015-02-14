@@ -33,3 +33,11 @@ editar_datos_anamnesis:
 crear_datos_anamnesis:
     path:     /historia/general/datosanamnesis/crear/
     defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosAnamnesis }
+
+editar_datos_onicopatis:
+    path:     /historia/general/datosonicopatis/editar/
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosAnamnesis }
+
+crear_datos_onicopatis:
+    path:     /historia/general/datosonicopatis/crear/
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosAnamnesis }

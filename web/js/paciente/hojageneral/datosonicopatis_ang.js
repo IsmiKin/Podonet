@@ -1,26 +1,29 @@
 /**
+ * Created by ismikin on 14/02/15.
+ */
+/**
  * Created by ismikin on 8/02/15.
  */
 
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('datosAnamnesisMod',[]);
+var app = angular.module('datosOnicopatisMod',[]);
 
-app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
+app.controller('DOController',  function($scope,$rootScope,$http,$filter) {
 
     $scope.editando = false;
     $scope.creando = false;
     $scope.dpaciente = paciente.Paciente;
     $scope.anamnesisAll = paciente.Anamnesis;
     $scope.anamnesisActual = paciente.Anamnesis[0];
-    $scope.datosAnamnesis = null;
-    $scope.datosAAll = paciente.DatosA;
+    $scope.datosOnicopatis = null;
+    $scope.datosOAll = paciente.DatosO;
     $scope.expandido = true;
     $scope.ultimoMostrado = null;
 
     var filter = $filter('filter');
-    var form = $("#formularioDatosAnamnesis");
+    var form = $("#formularioDatosOnicopatis");
     var dialog = $("#dialogoNotificacion");
 
     $scope.init = function(){
@@ -36,18 +39,18 @@ app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
         $scope.creando = valor;
         if(valor){
             console.log("creando");
-            $scope.ultimoMostrado=$scope.datosAnamnesis;
+            $scope.ultimoMostrado=$scope.datosOnicopatis;
             if(!plantilla){
-                $scope.datosAnamnesis = {};
+                $scope.datosOnicopatis = {};
                 form.find(".botonClear").click();
             }
             else{
-                $scope.ultimoMostrado = angular.copy($scope.datosAnamnesis);
+                $scope.ultimoMostrado = angular.copy($scope.datosOnicopatis);
             }
         }else{
 
-            $scope.datosAnamnesis = $scope.ultimoMostrado;
-            $(".selectFechaDA").trigger("change");
+            $scope.datosOnicopatis = $scope.ultimoMostrado;
+            $(".selectFechaDO").trigger("change");
         }
     };
 
@@ -56,7 +59,7 @@ app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
     };
 
     $scope.perteneceAnamnesis = function(datosAnamnesis){
-        return (datosAnamnesis.Anamnesis_idAnamnesis == $scope.anamnesisActual.id_anamnesis);
+        return (datosOnicopatis.Anamnesis_idAnamnesis == $scope.anamnesisActual.id_anamnesis);
     };
 
     $scope.cancelarAction = function(){
@@ -71,10 +74,9 @@ app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
 
         var dataPreEnviar = form.serializeObject();
 
-        if ($scope.editando)    ruta = Routing.generate('editar_datos_anamnesis')
+        if ($scope.editando)    ruta = Routing.generate('editar_datos_onicopatis')
         else{
-            ruta = Routing.generate('crear_datos_anamnesis');
-            //dataPreEnviar
+            ruta = Routing.generate('crear_datos_onicopatis');
         }
         console.log(dataPreEnviar);
 
@@ -105,8 +107,8 @@ app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
                         }
                         //alert($scope.datosAAll);
                         //alert($scope.datosAAll.length);
-                        $scope.datosAAll.push(nuevoDA);
-                        $scope.datosAnamnesis = $scope.datosAAll[$scope.datosAAll.length-1];
+                        $scope.datosOAll.push(nuevoDA);
+                        $scope.datosOnicopatis = $scope.datosOAll[$scope.datosOAll.length-1];
                     }
                     $scope.setEditando(false);
                     $scope.setCreando(false);
@@ -128,7 +130,7 @@ app.controller('DAController',  function($scope,$rootScope,$http,$filter) {
 
 
 
-app.directive('mypaint', function($compile) {
+app.directive('mypaintOnicopatis', function($compile) {
 
     var getTemplate = function(content) {
         return Handlebars.templates.imagenpaint(content);
@@ -161,14 +163,14 @@ app.directive('mypaint', function($compile) {
             element.find(".botonClear").click(function(){ canvas.clear(); });
             canvas.mouseup(function(){
                 element.find(".hidden_"+scope.namedata).val(canvas.json());
-                scope.$parent.datosAnamnesis[scope.namedata] = canvas.json();
+                scope.$parent.datosOnicopatis[scope.namedata] = canvas.json();
             });
-            $(".selectFechaDA").change(function(){
+            $(".selectFechaDO").change(function(){
                 element.find(".botonClear").click();
-                if(scope.$parent.datosAnamnesis[scope.namedata]!=undefined)
-                    canvas.jsonLoad(scope.$parent.datosAnamnesis[scope.namedata]);
+                if(scope.$parent.datosOnicopatis[scope.namedata]!=undefined)
+                    canvas.jsonLoad(scope.$parent.datosOnicopatis[scope.namedata]);
             });
-            
+
         }
     }
 
