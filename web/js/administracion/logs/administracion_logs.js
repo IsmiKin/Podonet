@@ -11,7 +11,9 @@ var subcategorias = {
         Paciente: [{nombre: "DatosPersonales", logo: ""}, {
             nombre: "HistoriaGeneral",
             logo: ""
-        }, {nombre: "DatosSemipermanentes", logo: ""}]
+        }, {nombre: "DatosSemipermanentes", logo: ""},
+            {nombre: "Diagnóstico", logo: ""},
+            {nombre: "HistoriaComplementaria", logo: ""}]
     }
 };
 
