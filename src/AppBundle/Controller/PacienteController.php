@@ -42,14 +42,19 @@ class PacienteController extends Controller
     {
         $nombre = $request->get("nombre");
         $apellidos = $request->get("apellidos");
-        $codigo = $nombre[0].$this->generateRandomString().$apellidos[strlen($apellidos)-1];
+
+        $em = $this->getDoctrine()->getManager();
+
+        $maximo = $em->createQuery("SELECT MAX(p.Codigo) as Codigo FROM Paciente p ")->getSingleResult();
+
+        $codigo = intval($maximo[0]["Codigo"])+1;
 
         if( $nombre!=null && $apellidos!=null && $codigo!=null){
             $paciente = new Paciente();
             $paciente->setNombre($nombre);
             $paciente->setApellidos($apellidos);
             $paciente->setCodigo($codigo);
-            $em = $this->getDoctrine()->getManager();
+
             $em->persist($paciente);
             $em->flush();
 

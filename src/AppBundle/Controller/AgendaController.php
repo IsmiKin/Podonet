@@ -271,9 +271,12 @@ class AgendaController extends Controller
 
     public function getCitaTodayAction(Request $request){
 
-        $start = new \DateTime('yesterday');
+        $start =  new \DateTime('yesterday');
         $end = new \DateTime('tomorrow');
-
+        $start = $start->format('Y-m-d H:i:s');
+        $end = $end->format('Y-m-d H:i:s');
+        //ld($start);
+        //ld($end);
         $repository = $this->getDoctrine()->getRepository('AppBundle:Cita');
         $query = $repository->createQueryBuilder('c')
             ->where('c.fecha >= :inicio')
@@ -287,13 +290,14 @@ class AgendaController extends Controller
 
         //$citas= $query->getResult();
         $citasItera = $query->iterate();
-
+        //$citasItera = $query->getResult();
         $citas = array();
         foreach( $citasItera as $citita ) {
             array_push($citas,
                 array('idCita'=>$citita[0]->getIdCita(), 'motivoconsulta'=>$citita[0]->getMotivoConsulta(),
                     'start'=>$citita[0]->getHoraInicio(),'end'=>$citita[0]->getHoraFin(),
-                    'Paciente'=>$citita[0]->getPaciente()
+                    'Paciente'=>$citita[0]->getPaciente(),
+                    'Gabinete'=>$citita[0]->getGabinete()
                 )
             );
         }
