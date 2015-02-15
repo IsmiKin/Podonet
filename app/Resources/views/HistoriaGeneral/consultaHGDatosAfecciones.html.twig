@@ -17,7 +17,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-warning" ng-hide="editando || anamnesisAll.length<1 || creando || datosOnicopatis.idDatosOnicopatis==null" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-warning" ng-hide="editando || anamnesisAll.length<1 || creando || datosDermicas.idDatosAfeccionesDermicas==null" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
                         <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
                         <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
                         <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-2 pull-right">
                         <i>Hora</i>
-                        <select class="form-control selectFechaDO " ng-model="datosOnicopatis"   ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosOnicopatis.fecha|date:'hh:mm' for datosOnicopatis in datosOAll|filter:perteneceAnamnesis track by datosOnicopatis.idDatosOnicopatis "></select>
+                        <select class="form-control selectFechaDAD " ng-model="datosDermicas"   ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosDermicas.fecha|date:'hh:mm' for datosDermicas in datosADAll|filter:perteneceAnamnesis track by datosDermicas.idDatosAfeccionesDermicas "></select>
                     </div>
                     <div class="col-sm-2 pull-right">
                         <b>Fecha</b>
@@ -36,17 +36,168 @@
                 <hr/>
                 <fieldset ng-disabled="!editando && !creando">
                     <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}" />
-                    <input type="hidden" name="iddo" ng-model="datosOnicopatis.idAnamnesis" ng-value="datosOnicopatis.idDatosOnicopatis"/>
-                    <input type="hidden" name="ida" ng-model="datosOnicopatis.idAnamnesis" ng-value="datosOnicopatis.Anamnesis_idAnamnesis"/>
-
+                    <input type="hidden" name="iddad" ng-model="datosDermicas.idDatosAfeccionesDermicas" ng-value="datosDermicas.idDatosAfeccionesDermicas"/>
+                    <input type="hidden" name="ida" ng-model="datosDermicas.Anamnesis_idAnamnesis" ng-value="datosDermicas.Anamnesis_idAnamnesis"/>
 
                     <br/>
                     <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Cicatriz</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.cicatriz"  name="cicatriz" ng-model="datosDermicas.cicatriz">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-4">
+                                    <b>Tumoracion</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.tumoracion"  name="tumoracion" ng-model="datosDermicas.tumoracion">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>IPK</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.iPK"  name="ipk" ng-model="datosDermicas.iPK">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Psoriasis</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.psoriasis"  name="psoriasis" ng-model="datosDermicas.psoriasis">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Vesicula</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.vesicula"  name="vesicula" ng-model="datosDermicas.vesicula">
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="col-sm-2">
+                                <b>Ampolla</b>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="checkbox" class="form-control" ng-init="datosDermicas.ampolla"  name="ampolla" ng-model="datosDermicas.ampolla" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-4">
+                                <b>Hiperqueratosis</b>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="checkbox" class="form-control" ng-init="datosDermicas.hiperqueratosis"  name="hiperqueratosis" ng-model="datosDermicas.hiperqueratosis" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-2">
+                                <b>Papiloma</b>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="checkbox" class="form-control" ng-init="datosDermicas.papiloma"  name="papiloma" ng-model="datosDermicas.papiloma" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-2">
+                                <b>Otros</b>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="checkbox" class="form-control" ng-init="datosDermicas.otros"  name="otros" ng-model="datosDermicas.otros" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-2">
+                                <b>Heloma</b>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="checkbox" class="form-control" ng-init="datosDermicas.heloma"  name="heloma" ng-model="datosDermicas.heloma" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Erosion</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.erosion"  name="erosion" ng-model="datosDermicas.erosion" />
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Ulcera</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.ulcera"  name="ulcera" ng-model="datosDermicas.ulcera" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Nevus</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.nevus"  name="nevus" ng-model="datosDermicas.nevus" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-sm-2">
+                                    <b>Heloma Vascular</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" class="form-control" ng-init="datosDermicas.helomaVascular"  name="helomaVascular" ng-model="datosDermicas.helomaVascular" />
+                                </div>
+                            </div>
+
+                    </div>
+                    <br/><br/>
+                    <div class="row ">
+                        <div class="col-lg-4"></div>
                         <div class="col-lg-12">
-                            <mypainto ident="4" tipo="onicopatis" ancho="600" alto="180"   namedata="imagenOnicopatica"></mypainto>
+                            <mypaintad ident="6" tipo="dermicas" ancho="600" alto="180"   namedata="imagenDermicas"></mypaintad>
                         </div>
 
                     </div>
+                    <br/><br/>
+                    <div class="row">
+                        <div class="col-md-2"><b>Coloracion</b></div>
+                        <div class="col-md-4">
+                            <input type="range" min="0" max="10" ng-model="datosDermicas.coloracionIzquierdo" name="coloracionIzquierdo" required/>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="range" min="0" max="10" ng-model="datosDermicas.coloracionDerecho" name="coloracionDerecho" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"><b>Pulso Medio</b></div>
+                        <div class="col-md-4">
+                            <input type="range" min="0" max="10" ng-model="datosDermicas.pulsoMedioIzquierdo" name="pulsoMedioIzquierdo" required/>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="range" min="0" max="10" ng-model="datosDermicas.pulsoMedioDerecho" name="pulsoMedioDerecho" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"><b>Temperatura Piel</b></div>
+                        <div class="col-md-4">
+                            <input type="range" min="0" max="10" ng-model="datosDermicas.temperaturaPielIzquierdo" name="temperaturaPielIzquierdo" required/>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="range" min="0" max="10" ng-model="datosDermicas.temperaturaPielDerecho" name="temperaturaPielDerecho" required/>
+                        </div>
+                    </div>
+
                     <br/>
 
                     <br/><hr/>

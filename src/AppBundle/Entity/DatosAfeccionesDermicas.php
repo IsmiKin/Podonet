@@ -108,9 +108,9 @@ class DatosAfeccionesDermicas
     /**
      * @var boolean
      *
-     * @ORM\Column(name="Erupcion", type="boolean",nullable=true)
+     * @ORM\Column(name="Erosion", type="boolean",nullable=true)
      */
-    private $erupcion;
+    private $erosion;
 
     /**
      * @var boolean
@@ -180,6 +180,22 @@ class DatosAfeccionesDermicas
      * @ORM\Column(name="TemperaturaPielDerecho", type="integer", nullable=true)
      */
     private $temperaturaPielDerecho;
+
+    /**
+     * @var blob
+     *
+     * @ORM\Column(name="ImagenDermicas", type="blob", nullable=true)
+     */
+    private $imagenDermicas;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="Usuario_idUsuario", referencedColumnName="id",nullable=false)
+     **/
+    private $usuario;
+
+
 
     /**
      * Get id
@@ -468,26 +484,26 @@ class DatosAfeccionesDermicas
     }
 
     /**
-     * Set erupcion
+     * Set erosion
      *
      * @param boolean $erupcion
      * @return DatosAfeccionesDermicas
      */
-    public function setErupcion($erupcion)
+    public function setErosion($erosion)
     {
-        $this->erupcion = $erupcion;
+        $this->erupcion = $erosion;
 
         return $this;
     }
 
     /**
-     * Get erupcion
+     * Get erosion
      *
      * @return boolean 
      */
-    public function getErupcion()
+    public function getErosion()
     {
-        return $this->erupcion;
+        return $this->erosion;
     }
 
     /**
@@ -580,5 +596,145 @@ class DatosAfeccionesDermicas
     public function getAnamnesis()
     {
         return $this->anamnesis;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColoracionIzquierdo()
+    {
+        return $this->coloracionIzquierdo;
+    }
+
+    /**
+     * @param int $coloracionIzquierdo
+     */
+    public function setColoracionIzquierdo($coloracionIzquierdo)
+    {
+        $this->coloracionIzquierdo = $coloracionIzquierdo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColoracionDerecho()
+    {
+        return $this->coloracionDerecho;
+    }
+
+    /**
+     * @param int $coloracionDerecho
+     */
+    public function setColoracionDerecho($coloracionDerecho)
+    {
+        $this->coloracionDerecho = $coloracionDerecho;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPulsoMedioIzquierdo()
+    {
+        return $this->pulsoMedioIzquierdo;
+    }
+
+    /**
+     * @param int $pulsoMedioIzquierdo
+     */
+    public function setPulsoMedioIzquierdo($pulsoMedioIzquierdo)
+    {
+        $this->pulsoMedioIzquierdo = $pulsoMedioIzquierdo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPulsoMedioDerecho()
+    {
+        return $this->pulsoMedioDerecho;
+    }
+
+    /**
+     * @param int $pulsoMedioDerecho
+     */
+    public function setPulsoMedioDerecho($pulsoMedioDerecho)
+    {
+        $this->pulsoMedioDerecho = $pulsoMedioDerecho;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTemperaturaPielIzquierdo()
+    {
+        return $this->temperaturaPielIzquierdo;
+    }
+
+    /**
+     * @param int $temperaturaPielIzquierdo
+     */
+    public function setTemperaturaPielIzquierdo($temperaturaPielIzquierdo)
+    {
+        $this->temperaturaPielIzquierdo = $temperaturaPielIzquierdo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTemperaturaPielDerecho()
+    {
+        return $this->temperaturaPielDerecho;
+    }
+
+    /**
+     * @param int $temperaturaPielDerecho
+     */
+    public function setTemperaturaPielDerecho($temperaturaPielDerecho)
+    {
+        $this->temperaturaPielDerecho = $temperaturaPielDerecho;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     * @return Log
+     */
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \AppBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @return blob
+     */
+    public function getImagenDermicas()
+    {
+        return $this->imagenDermicas;
+    }
+
+    /**
+     * @param blob $imagenDermicas
+     */
+    public function setImagenDermicas($imagenDermicas)
+    {
+        $this->imagenDermicas = $imagenDermicas;
+    }
+
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime('now'));
     }
 }

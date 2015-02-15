@@ -284,6 +284,80 @@ class HistoriaGeneralController extends Controller
         }
     }
 
+    public function editarDatosDermicasAction(Request $request){
+
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoDAD = $this->getDoctrine()->getRepository('AppBundle:DatosAfeccionesDermicas');
+            $da = $repoDAD->find(intval($params['iddad']));
+
+            $this->handleRequestManualDAD($da,$params);
+            $em->flush();
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
+            return new JsonResponse($respuesta);
+        }
+
+    }
+
+    public function crearDatosDermicasAction(Request $request){
+
+        if($request->isMethod("POST")){
+
+            $params = array();
+            $content = $this->get("request")->getContent();
+            if (!empty($content))  $params = json_decode($content, true); // 2nd param to get as array
+
+            $em = $this->getDoctrine()->getManager();
+
+            $repoAnamnesis = $this->getDoctrine()->getRepository('AppBundle:Anamnesis');
+
+            $anamnesis = $repoAnamnesis->findOneBy(array('fecha'=>new \DateTime('now')));
+
+            $nuevoAnamnesis = false;
+            if(!$anamnesis){
+
+                $nuevoAnamnesis = true;
+                $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
+                $paciente = $repoPaciente->find(intval($params["idpaciente"]));
+
+                $anamnesis = new Anamnesis();
+                $anamnesis->setEstado("Visible");
+                $anamnesis->setUsuarioCreador($this->getUser());
+                $anamnesis->setPaciente($paciente);
+            }
+
+            $anamnesis->setUsuarioModificacion($this->getUser());
+
+            $em->persist($anamnesis);
+            $em->flush();
+
+            $nuevoDAD = new DatosAfeccionesDermicas();
+
+            $this->handleRequestManualDAD($nuevoDAD,$params);
+
+            $nuevoDAD->setUsuario($this->getUser());
+            $nuevoDAD->setAnamnesis($anamnesis);
+
+            $em->persist($nuevoDAD);
+            $em->flush();
+
+            $serializer = Serializer::create()->build();
+            $dadJSON = $serializer ->serialize($nuevoDAD, 'json');
+            $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
+
+            $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevodad' => $dadJSON);
+            if($nuevoAnamnesis) $respuesta['nuevoanamnesis'] = $anamnesisJSON;
+            return new JsonResponse($respuesta);
+        }
+    }
+
     public function crearAnamnesisAction()
     {
         return $this->render('HistoriaGeneral/crearAnamnesis.html.twig', array(
@@ -387,6 +461,31 @@ class HistoriaGeneralController extends Controller
     private function handleRequestManualDO(&$do,$params){
         $do->setEstado("Visible");
         $do->setImagenOnicopatica($params['imagenOnicopatica']);
+    }
+
+    private function handleRequestManualDAD(&$dad,$params){
+        $dad->setEstado("Visible");
+        $dad->setImagenDermicas($params['imagenDermicas']);
+        $dad->setAmpolla($params['ampolla']);
+        $dad->setCicatriz($params['cicatriz']);
+        $dad->setColoracionDerecho(intval($params['coloracionDerecho']));
+        $dad->setColoracionIzquierdo(intval($params['coloracionIzquierdo']));
+        $dad->setErosion($params['erosion']);
+        $dad->setHeloma($params['heloma']);
+        $dad->setHelomaVascular($params['helomaVascular']);
+        $dad->setHiperqueratosis($params['hiperqueratosis']);
+        $dad->setIPK($params['ipk']);
+        $dad->setNevus($params['nevus']);
+        $dad->setOtros($params['otros']);
+        $dad->setPapiloma($params['papiloma']);
+        $dad->setPsoriasis($params['psoriasis']);
+        $dad->setPulsoMedioDerecho(intval($params['pulsoMedioDerecho']));
+        $dad->setPulsoMedioIzquierdo(intval($params['pulsoMedioIzquierdo']));
+        $dad->setTemperaturaPielDerecho(intval($params['temperaturaPielDerecho']));
+        $dad->setTemperaturaPielIzquierdo(intval($params['temperaturaPielIzquierdo']));
+        $dad->setTumoracion($params['tumoracion']);
+        $dad->setUlcera($params['ulcera']);
+        $dad->setVesicula($params['vesicula']);
     }
 
 }
