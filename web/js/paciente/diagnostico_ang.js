@@ -8,7 +8,7 @@
 var app = angular.module('myDiagnostico',[]).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
-;
+
 
 app.controller('MainController',  function($scope,$rootScope) {
     $scope.diagnosticos = diagnosticos;
