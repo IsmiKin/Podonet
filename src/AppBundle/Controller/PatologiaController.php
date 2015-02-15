@@ -39,6 +39,11 @@ class PatologiaController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $mensaje = "Se ha creado una Patología: ".$entity->getNombre();
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogPatologia($mensaje,null,$this->getUser());
+
+
             return $this->redirect($this->generateUrl('consultar_patologia', array('id' => $entity->getIdPatologia())));
         }
 
@@ -147,6 +152,10 @@ class PatologiaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
+            $mensaje = "Se ha actualizado una Patología: ".$entity->getNombre();
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogPatologia($mensaje,null,$this->getUser());
+
             return $this->redirect($this->generateUrl('edit_patologia', array('id' => $id)));
         }
 
@@ -172,6 +181,11 @@ class PatologiaController extends Controller
 
             $em->remove($entity);
             $em->flush();
+
+            $mensaje = "Se ha eliminado una Patología: ".$entity->getNombre();
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogPatologia($mensaje,null,$this->getUser());
+
         }
 
         return $this->redirect($this->generateUrl('admin_patologia'));

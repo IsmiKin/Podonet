@@ -38,6 +38,10 @@ class LogRepository extends EntityRepository
         $this->procesarLog("Paciente",$Subcategoria,$Descripcion, $Paciente,$Usuario);
     }
 
+    public function procesarLogPatologia($Descripcion, $Paciente,$Usuario){
+        $this->procesarLog("Patologia","Mantenimiento",$Descripcion, $Paciente,$Usuario);
+    }
+
     private function procesarLog( $Categoria, $Subcategoria, $Descripcion, $Paciente,$Usuario){
         $log = new Log();
 

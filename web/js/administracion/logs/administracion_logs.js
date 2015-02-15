@@ -3,7 +3,7 @@
  */
 
 // Habria que hacerlo automatico
-var categorias = { categorias: [ {nombre:"Administracion", logo:"cog"},{nombre:"Agenda", logo:"calendar"},{ nombre:"Paciente",logo:"stethoscope"} ]};
+var categorias = { categorias: [ {nombre:"Administracion", logo:"cog"},{nombre:"Agenda", logo:"calendar"},{ nombre:"Paciente",logo:"stethoscope"},{nombre:"Patologia", logo:"bug"} ]};
 var subcategorias = {
     subcategorias: {
         Administracion: [{nombre: "Usuario", logo: "users"}, {nombre: "Log", logo: "book"}],
@@ -13,7 +13,8 @@ var subcategorias = {
             logo: ""
         }, {nombre: "DatosSemipermanentes", logo: ""},
             {nombre: "Diagnostico", logo: ""},
-            {nombre: "HistoriaComplementaria", logo: ""}]
+            {nombre: "HistoriaComplementaria", logo: ""}],
+        Patologia: [{nombre: "Mantenimiento", logo: "bug"}]
     }
 };
 
