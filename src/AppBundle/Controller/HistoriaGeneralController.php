@@ -204,9 +204,10 @@ class HistoriaGeneralController extends Controller
             $daJSON = $serializer ->serialize($nuevoDA, 'json');
             $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
 
-            $mensaje = "Se han creado Datos Anamnesis con el id: ".$nuevoDA->getIdDatosSemipermanentes()." para el paciente ".$da->getAnamnesis()->getPaciente()->getIdPaciente();
+            $mensaje = "Se han creado Datos Anamnesis con el id: ".$nuevoDA->getIdAnamnesis().
+                " para el paciente ".$nuevoDA->getAnamnesis()->getPaciente()->getIdPaciente();
             // Creamos el log
-            $em->getRepository('AppBundle:Log')->procesarLogPaciente("DatosAnamnesis",$mensaje,$da->getAnamnesis()->getPaciente(),$this->getUser());
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("DatosAnamnesis",$mensaje,$nuevoDA->getAnamnesis()->getPaciente(),$this->getUser());
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevoda' => $daJSON);
             if($nuevoAnamnesis) $respuesta['nuevoanamnesis'] = $anamnesisJSON;
