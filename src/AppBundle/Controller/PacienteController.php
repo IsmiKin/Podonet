@@ -55,11 +55,13 @@ class PacienteController extends Controller
 
             $mensaje ="TODO OK";
             $codigo_error = 0;
+            // Creamos el log
+            $mensaje = "Se ha creado el paciente".$paciente->getNombre();
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Diagnostico",$mensaje,null,$this->getUser());
         }else{
-            $mensaje = "ERROR CON LOS DATOS";
+            $mensaje = "Se ha creado un paciente nuevo ";
             $codigo_error = 1;
         }
-
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, 'nuevoid'=>$paciente->getIdPaciente(), 'nombre' => $paciente->getNombre()." ".$paciente->getApellidos()) ;
         return new JsonResponse($datosRespuesta);
@@ -89,7 +91,10 @@ class PacienteController extends Controller
             $em->persist($datosPersonales);
             $em->flush();
 
+            // Creamos el log
             $mensaje = "Se ha creado el paciente".$paciente->getNombre();
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Diagnostico",$mensaje,null,$this->getUser());
+
             return $this->redirect($this->generateUrl('dashboard_paciente',array('id'=>$paciente->getIdPaciente())));
 
         }
@@ -129,7 +134,10 @@ class PacienteController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($document);
             $em->flush();
-            $codigo = "TODO OK";
+
+            // Creamos el log
+            $mensaje = "Se ha subido el fichero".$document->getName();
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$paciente->getIdPaciente(),$this->getUser());
         }else{
             $codigo = "ERROR EN EL FORM!";
         }
@@ -165,6 +173,10 @@ class PacienteController extends Controller
             $em->persist($document);
             $em->flush();
             $codigo = "TODO OK";
+
+            // Creamos el log
+            $mensaje = "Se ha subido el fichero".$document->getNombre();
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$paciente->getIdPaciente(),$this->getUser());
         }else{
             $codigo = "ERROR EN EL FORM!";
         }
@@ -202,8 +214,13 @@ class PacienteController extends Controller
             $em->remove($hc);
             $em->flush();
         } catch (IOExceptionInterface $e) {
-            echo "An error occurred while creating your directory at ".$e->getPath();
+            echo "An error occurred while deleting your directory at ".$e->getPath();
         }
+
+
+        // Creamos el log
+        $mensaje = "Se ha subido el fichero ".$rutarchivo;
+        $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$idPaciente ,$this->getUser());
 
         return $this->redirect($this->generateUrl('consultar_historia_complementaria',array('idPaciente'=>$idPaciente)));
     }
@@ -311,7 +328,7 @@ class PacienteController extends Controller
         $codigo_error = 0;
 
         // Creamos el log
-        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Diagnostico",$mensaje,null,$this->getUser());
+        $em->getRepository('AppBundle:Log')->procesarLogPaciente("Diagnostico",$mensaje,null,$this->getUser());
 
         $serializer = Serializer::create()->build();
         $data = $serializer ->serialize($diagnostico, 'json');
@@ -380,7 +397,7 @@ class PacienteController extends Controller
         $codigo_error = 0;
 
         // Creamos el log
-        $em->getRepository('AppBundle:Log')->procesarLogAgenda("Diagnostico",$mensaje,null,$this->getUser());
+        $em->getRepository('AppBundle:Log')->procesarLogPaciente("Diagnostico",$mensaje,null,$this->getUser());
 
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "diagnostico"=>$diagnostico) ;
 

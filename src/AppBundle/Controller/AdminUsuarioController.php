@@ -60,6 +60,9 @@ class AdminUsuarioController extends Controller
                 $mensaje = "Ha ocurrido un error al validar el formulario del usuario"." errores:".$formCrear->getErrorsAsString();
             }
 
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogAdminUsuarios($mensaje,null,$this->getUser());
+
             return $this->redirect($this->generateUrl('administrar_usuarios'));
         }
         return $this->render('AdminUsuario/crearUsuario.html.twig', array(
@@ -90,7 +93,7 @@ class AdminUsuarioController extends Controller
                 $mensaje = "Se ha actualizado el perfil del usuario con id ".$idUsuario." correctamente";
 
                 // Creamos el log
-                $this->procesarLog("Usuario",$mensaje,null);
+                $em->getRepository('AppBundle:Log')->procesarLogAdminUsuarios($mensaje,null,$this->getUser());
 
                 return $this->redirect($this->generateUrl('administrar_usuarios'));
             }
@@ -127,7 +130,7 @@ class AdminUsuarioController extends Controller
         $mensaje = "Se ha $mensajeaccion el usuario $idUsuario correctamente";
 
         // Creamos el log
-        $this->procesarLog("Usuario",$mensaje,null);
+        $em->getRepository('AppBundle:Log')->procesarLogAdminUsuarios($mensaje,null,$this->getUser());
 
         $codigo_error = "0";
         $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error, "nuevoestado"=> $nuevoEstado);
@@ -145,6 +148,23 @@ class AdminUsuarioController extends Controller
         $request = $this->get("request");
         $fechaInicio = $request->get("fechaInicio");
         $fechaFin = $request->get("fechaFin");
+        //Testing
+//        $queryPrint = "select * from podonet.Log where Fecha BETWEEN $fechaInicio AND $fechaFin"; //Devuelve 0 rows
+//        //Testing
+//        //Devuelve todas las rows
+//        $queryPrint2 = "select * from podonet.Log
+//                            where Fecha
+//                            BETWEEN STR_TO_DATE('09-02-2015', '%Y-%m-%d %H:%i:%s')
+//                            AND STR_TO_DATE('26-02-2015', '%Y-%m-%d %H:%i:%s')";
+//        ld($queryPrint);
+
+        //Testing
+//        $fechaInicio = \DateTime::createFromFormat( "Y-m-d H:i:s", $fechaInicio  );
+//        $fechaFin = \DateTime::createFromFormat( "Y-m-d H:i:s", $fechaFin );
+        //Testing
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $logs3= $em->createQuery($queryPrint2 )->getResult();
+
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Log');
 
@@ -155,8 +175,17 @@ class AdminUsuarioController extends Controller
             ->setParameter('fin', new \DateTime($fechaFin))
             ->orderBy('l.fecha', 'DESC')
             ->getQuery();
-
         $logs= $query->getResult();
+
+        //Testing
+        $query = $repository->createQueryBuilder('l');
+        $q = $query->select('l')
+            ->Where($query->expr()->between('l.fecha', ':inicio', ':fin'))
+            ->setParameter('inicio', $fechaInicio)
+            ->setParameter('fin', $fechaFin)
+            ->orderBy('l.fecha', 'DESC')
+            ->getQuery();
+        $logs2= $q->getResult();
 
         return $this->render('AdminUsuario/administrarLogs.html.twig', array(
                 'logs' => $logs
@@ -180,24 +209,5 @@ class AdminUsuarioController extends Controller
         ));
 
     }
-
-    private function procesarLog( $Subcategoria, $Descripcion, $Paciente){
-        $log = new Log();
-
-        $log->setCategoria("Administracion")
-            ->setSubcategoria($Subcategoria)
-            ->setDescripcion($Descripcion)
-            ->setUsuario($this->getUser())
-            ->setFecha(new \DateTime('now'));
-        if($Paciente!=null){
-            $log->setPaciente($Paciente);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($log);
-        $em->flush();
-
-    }
-
 
 }

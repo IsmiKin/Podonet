@@ -83,6 +83,11 @@ class HistoriaGeneralController extends Controller
             $this->handleRequestManualDSP($dsp,$params);
             $em->flush();
 
+            $mensaje = "Se han modificado los Datos Semipermanentes con el id: ".$dsp->getIdDatosSemipermanentes()." para el paciente ".$dsp->getPaciente()->getIdPaciente;
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Semipermanentes",$mensaje,$dsp->getPaciente(),$this->getUser());
+
+
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
             return new JsonResponse($respuesta);
         }
@@ -113,6 +118,11 @@ class HistoriaGeneralController extends Controller
             $em->persist($nuevoDSP);
             $em->flush();
 
+            $mensaje = "Se han creado Datos Semipermanentes con el id: ".$nuevoDSP->getIdDatosSemipermanentes()." para el paciente ".$idpaciente;
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Semipermanentes",$mensaje,$paciente,$this->getUser());
+
+
             $serializer = Serializer::create()->build();
             $dspJSON = $serializer ->serialize($nuevoDSP, 'json');
 
@@ -136,6 +146,10 @@ class HistoriaGeneralController extends Controller
 
             $this->handleRequestManualDA($da,$params);
             $em->flush();
+
+            $mensaje = "Se han creado Datos Anamnesis con el id: ".$da->getIdDatosSemipermanentes()." para el paciente ".$da->getAnamnesis()->getPaciente()->getIdPaciente();
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Anamnesis",$mensaje,$da->getAnamnesis()->getPaciente(),$this->getUser());
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
             return new JsonResponse($respuesta);
@@ -312,6 +326,11 @@ class HistoriaGeneralController extends Controller
                 if($nuevo) $em->persist($dp);
 
                 $em->flush();
+
+                $mensaje = "Se han creado Datos Personales con el id: ".$dp->getIdDatosPersonales()." para el paciente ".$idpaciente;
+                // Creamos el log
+                $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Personales",$mensaje,$dp->getPaciente(),$this->getUser());
+
 
                 $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
                 return new JsonResponse($respuesta);

@@ -55,7 +55,13 @@
                 <strong>Nombre Completo :</strong> {{ log.Usuario.Nombre }} {{ log.Usuario.Apellidos }}
             </a>
             <a href="#" class="list-group-item"  >
-                <strong>Rol :</strong> <em>¡Por implementar!</em>
+                <strong>Rol :</strong>
+                {% if     "ROLE_SUPER_ADMIN" in app.user.roles %} Administrador
+                {% elseif "ROLE_ADMIN" in app.user.roles %}  Administrador
+                {% elseif "ROLE_SECRETARIO" in app.user.roles %}  Secretario
+                {% elseif "ROLE_PODOLOGO" in app.user.roles %}  Pod&oacute;logo
+                {% elseif "ROLE_PIR" in app.user.roles %}  PIR
+                {% endif %}
             </a>
 
             <a href="#" class="list-group-item"  >
