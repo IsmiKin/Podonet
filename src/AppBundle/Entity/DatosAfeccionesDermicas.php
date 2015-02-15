@@ -139,6 +139,47 @@ class DatosAfeccionesDermicas
      **/
     private $anamnesis;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ColoracionIzquierdo", type="integer", nullable=true)
+     */
+    private $coloracionIzquierdo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ColoracionDerecho", type="integer", nullable=true)
+     */
+    private $coloracionDerecho;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="PulsoMedioIzquierdo", type="integer", nullable=true)
+     */
+    private $pulsoMedioIzquierdo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="PulsoMedioDerecho", type="integer", nullable=true)
+     */
+    private $pulsoMedioDerecho;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="TemperaturaPielIzquierdo", type="integer", nullable=true)
+     */
+    private $temperaturaPielIzquierdo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="TemperaturaPielDerecho", type="integer", nullable=true)
+     */
+    private $temperaturaPielDerecho;
 
     /**
      * Get id

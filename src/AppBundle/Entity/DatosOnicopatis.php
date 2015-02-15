@@ -42,19 +42,6 @@ class DatosOnicopatis
      */
     private $imagenOnicopatica;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="PulsoMedioDerechoIzquierdo", type="integer",nullable=true)
-     */
-    private $pulsoMedioDerechoIzquierdo;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="TemperaturaPieDerechoIzquierdo", type="integer",nullable=true)
-     */
-    private $temperaturaPieDerechoIzquierdo;
 
     /**
      * @ORM\ManyToOne(targetEntity="Anamnesis")
@@ -147,51 +134,7 @@ class DatosOnicopatis
         return $this->imagenOnicopatica;
     }
 
-    /**
-     * Set pulsoMedioDerechoIzquierdo
-     *
-     * @param integer $pulsoMedioDerechoIzquierdo
-     * @return DatosOnicopatis
-     */
-    public function setPulsoMedioDerechoIzquierdo($pulsoMedioDerechoIzquierdo)
-    {
-        $this->pulsoMedioDerechoIzquierdo = $pulsoMedioDerechoIzquierdo;
 
-        return $this;
-    }
-
-    /**
-     * Get pulsoMedioDerechoIzquierdo
-     *
-     * @return integer 
-     */
-    public function getPulsoMedioDerechoIzquierdo()
-    {
-        return $this->pulsoMedioDerechoIzquierdo;
-    }
-
-    /**
-     * Set temperaturaPieDerechoIzquierdo
-     *
-     * @param integer $temperaturaPieDerechoIzquierdo
-     * @return DatosOnicopatis
-     */
-    public function setTemperaturaPieDerechoIzquierdo($temperaturaPieDerechoIzquierdo)
-    {
-        $this->temperaturaPieDerechoIzquierdo = $temperaturaPieDerechoIzquierdo;
-
-        return $this;
-    }
-
-    /**
-     * Get temperaturaPieDerechoIzquierdo
-     *
-     * @return integer 
-     */
-    public function getTemperaturaPieDerechoIzquierdo()
-    {
-        return $this->temperaturaPieDerechoIzquierdo;
-    }
 
     /**
      * Set anamnesis

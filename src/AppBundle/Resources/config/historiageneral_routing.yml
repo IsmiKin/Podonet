@@ -41,3 +41,11 @@ editar_datos_onicopatis:
 crear_datos_onicopatis:
     path:     /historia/general/datosonicopatis/crear/
     defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosOnicopatis }
+
+editar_datos_dermicas:
+    path:     /historia/general/datosdermicas/editar/
+    defaults: { _controller: AppBundle:HistoriaGeneral:editarDatosDermicas }
+
+crear_datos_dermicas:
+    path:     /historia/general/datosdermicas/crear/
+    defaults: { _controller: AppBundle:HistoriaGeneral:crearDatosDermicas }

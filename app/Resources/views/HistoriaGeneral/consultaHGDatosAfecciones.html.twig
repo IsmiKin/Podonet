@@ -1,0 +1,67 @@
+<div class="row"   ng-controller="DADController as DADCtrl" ng-init="this.init()">
+    <div class="list-group bloqueDatosAfeccionesDermicas">
+        <a class="list-group-item active  ">
+            <i class="fa fa-stethoscope fa-2x" ></i>  <span class="tituloPanel">&nbsp; Afecciones Dermicas</span>
+            <span class="pull-right">
+                <button type="button" class="btn btn-default" ng-show="expandido" ng-click="setExpandido(false)">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button type="button" class="btn btn-default" ng-hide="expandido" ng-click="setExpandido(true)">
+                    <i class="fa fa-expand"></i>
+                </button>
+            </span>
+        </a>
+
+        <div class="well containerFormularioDatosAfeccionesDermicas" ng-show="expandido">
+            <form id="formularioAfeccionesDermicas" name="formularioAfeccionesDermicas" ng-submit="submitFormulario()">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-warning" ng-hide="editando || anamnesisAll.length<1 || creando || datosOnicopatis.idDatosOnicopatis==null" ng-click="setEditando(true)"><i class="fa fa-edit"></i> &nbsp; Editar</button>
+                        <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-file-o"></i> &nbsp; Nuevo</button>
+                        <button type="button" class="btn btn-primary" ng-hide="editando || creando" ng-click="setCreando(true,true)" ><i class="fa fa-plus-circle"></i>&nbsp;<i class="fa fa-files-o"></i> &nbsp; Nuevo</button>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <i>Hora</i>
+                        <select class="form-control selectFechaDO " ng-model="datosOnicopatis"   ng-hide="editando || anamnesisAll.length<1 || creando"  ng-options="datosOnicopatis.fecha|date:'hh:mm' for datosOnicopatis in datosOAll|filter:perteneceAnamnesis track by datosOnicopatis.idDatosOnicopatis "></select>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <b>Fecha</b>
+                        <select class="form-control" ng-model="anamnesisActual"  ng-hide="editando || anamnesisAll.length<1 || creando" ng-init="anamnesisAll[0]" ng-options="anamnesis.fecha|date for anamnesis in anamnesisAll track by anamnesis.id_anamnesis "></select>
+                    </div>
+                </div>
+
+                <hr/>
+                <fieldset ng-disabled="!editando && !creando">
+                    <input type="hidden" name="idpaciente" value="{{ paciente.idPaciente }}" />
+                    <input type="hidden" name="iddo" ng-model="datosOnicopatis.idAnamnesis" ng-value="datosOnicopatis.idDatosOnicopatis"/>
+                    <input type="hidden" name="ida" ng-model="datosOnicopatis.idAnamnesis" ng-value="datosOnicopatis.Anamnesis_idAnamnesis"/>
+
+
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <mypainto ident="4" tipo="onicopatis" ancho="600" alto="180"   namedata="imagenOnicopatica"></mypainto>
+                        </div>
+
+                    </div>
+                    <br/>
+
+                    <br/><hr/>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger" ng-show="editando || creando" ng-click="cancelarAction()"><i class="fa fa-minus-circle"></i> &nbsp; Cancelar</button>
+                            <button type="submit" class="btn btn-success" ng-show="editando || creando"><i class="fa fa-check"> &nbsp; Confirmar</i></button>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+
+</div>

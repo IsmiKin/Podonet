@@ -35,12 +35,6 @@ class DatosAnamnesis
      */
     private $estado;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="Dolor", type="boolean", nullable=true)
-     */
-    private $dolor;
 
     /**
      * @var blob
@@ -154,28 +148,6 @@ class DatosAnamnesis
         return $this->estado;
     }
 
-    /**
-     * Set dolor
-     *
-     * @param boolean $dolor
-     * @return DatosAnamnesis
-     */
-    public function setDolor($dolor)
-    {
-        $this->dolor = $dolor;
-
-        return $this;
-    }
-
-    /**
-     * Get dolor
-     *
-     * @return boolean 
-     */
-    public function getDolor()
-    {
-        return $this->dolor;
-    }
 
     /**
      * Set imagenDolor
