@@ -144,7 +144,7 @@ class HistoriaComplementaria
     /**
      * Get formato
      *
-     * @return string 
+     * @return string
      */
     public function getFormato()
     {
@@ -203,7 +203,7 @@ class HistoriaComplementaria
     /**
      * Get descripcion
      *
-     * @return string 
+     * @return string
      */
     public function getDescripcion()
     {
@@ -226,7 +226,7 @@ class HistoriaComplementaria
     /**
      * Get fecha
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFecha()
     {
@@ -249,7 +249,7 @@ class HistoriaComplementaria
     /**
      * Get paciente
      *
-     * @return \AppBundle\Entity\Paciente 
+     * @return \AppBundle\Entity\Paciente
      */
     public function getPaciente()
     {
@@ -272,7 +272,7 @@ class HistoriaComplementaria
     /**
      * Get usuario
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return \AppBundle\Entity\Usuario
      */
     public function getUsuario()
     {

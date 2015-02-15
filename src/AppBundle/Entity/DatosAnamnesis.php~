@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DatosAnamnesis
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\DatosAnamnesisRepository")
  */
 class DatosAnamnesis
 {
@@ -43,11 +43,18 @@ class DatosAnamnesis
     private $dolor;
 
     /**
-     * @var binary
+     * @var blob
      *
-     * @ORM\Column(name="ImagenDolor", type="binary", nullable=true)
+     * @ORM\Column(name="ImagenDolor", type="blob", nullable=true)
      */
     private $imagenDolor;
+
+    /**
+     * @var blob
+     *
+     * @ORM\Column(name="ImagenDolor2", type="blob", nullable=true)
+     */
+    private $imagenDolor2;
 
     /**
      * @var integer
@@ -77,11 +84,18 @@ class DatosAnamnesis
      */
     private $formulaDigital;
 
+
     /**
      * @ORM\ManyToOne(targetEntity="Anamnesis")
      * @ORM\JoinColumn(name="Anamnesis_idAnamnesis", referencedColumnName="idAnamnesis",nullable=false)
      **/
     private $anamnesis;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="Usuario_idUsuario", referencedColumnName="id",nullable=false)
+     **/
+    private $usuario;
 
 
     /**
@@ -184,6 +198,22 @@ class DatosAnamnesis
     public function getImagenDolor()
     {
         return $this->imagenDolor;
+    }
+
+    /**
+     * @return blob
+     */
+    public function getImagenDolor2()
+    {
+        return $this->imagenDolor2;
+    }
+
+    /**
+     * @param blob $imagenDolor2
+     */
+    public function setImagenDolor2($imagenDolor2)
+    {
+        $this->imagenDolor2 = $imagenDolor2;
     }
 
     /**
@@ -300,4 +330,33 @@ class DatosAnamnesis
     {
         return $this->anamnesis;
     }
+
+    /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     * @return Log
+     */
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \AppBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime('now'));
+    }
+
 }

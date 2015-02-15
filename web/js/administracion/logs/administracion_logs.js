@@ -12,7 +12,7 @@ var subcategorias = {
             nombre: "HistoriaGeneral",
             logo: ""
         }, {nombre: "DatosSemipermanentes", logo: ""},
-            {nombre: "Diagnóstico", logo: ""},
+            {nombre: "Diagnostico", logo: ""},
             {nombre: "HistoriaComplementaria", logo: ""}]
     }
 };
