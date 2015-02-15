@@ -141,8 +141,8 @@ class PacienteController extends Controller
             $em->flush();
 
             // Creamos el log
-            $mensaje = "Se ha subido el fichero".$document->getName();
-            $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$paciente->getIdPaciente(),$this->getUser());
+            $mensaje = "Se ha subido el fichero".$document->getNombre();
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$paciente,$this->getUser());
         }else{
             $codigo = "ERROR EN EL FORM!";
         }
@@ -181,7 +181,7 @@ class PacienteController extends Controller
 
             // Creamos el log
             $mensaje = "Se ha subido el fichero".$document->getNombre();
-            $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$paciente->getIdPaciente(),$this->getUser());
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,null,$this->getUser());
         }else{
             $codigo = "ERROR EN EL FORM!";
         }
@@ -198,6 +198,7 @@ class PacienteController extends Controller
     public function eliminarHistoriaComplementariaAction(Request $request)
     {
         $repoHC = $this->getDoctrine()->getRepository('AppBundle:HistoriaComplementaria');
+        $repoPaciente = $this->getDoctrine()->getRepository('AppBundle:Paciente');
         $em = $this->getDoctrine()->getManager();
 
         $idhc = $request->get("idhc");
@@ -224,8 +225,8 @@ class PacienteController extends Controller
 
 
         // Creamos el log
-        $mensaje = "Se ha subido el fichero ".$rutarchivo;
-        $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$idPaciente ,$this->getUser());
+        $mensaje = "Se ha eliminado el fichero ".$rutarchivo;
+        $em->getRepository('AppBundle:Log')->procesarLogHistoriaComplementaria($mensaje,$repoPaciente->find($idPaciente) ,$this->getUser());
 
         return $this->redirect($this->generateUrl('consultar_historia_complementaria',array('idPaciente'=>$idPaciente)));
     }

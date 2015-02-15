@@ -443,4 +443,64 @@ class DatosSemipermanentes
         $this->setFecha(new \DateTime('now'));
     }
 
+
+    /**
+     * Get fumador
+     *
+     * @return boolean 
+     */
+    public function getFumador()
+    {
+        return $this->fumador;
+    }
+
+    /**
+     * Get bebedor
+     *
+     * @return boolean 
+     */
+    public function getBebedor()
+    {
+        return $this->bebedor;
+    }
+
+    /**
+     * Get anestesiadoAnteriormente
+     *
+     * @return boolean 
+     */
+    public function getAnestesiadoAnteriormente()
+    {
+        return $this->anestesiadoAnteriormente;
+    }
+
+    /**
+     * Get intervencionQuirurgica
+     *
+     * @return boolean 
+     */
+    public function getIntervencionQuirurgica()
+    {
+        return $this->intervencionQuirurgica;
+    }
+
+    /**
+     * Get hta
+     *
+     * @return boolean 
+     */
+    public function getHta()
+    {
+        return $this->hta;
+    }
+
+    /**
+     * Get diabetico
+     *
+     * @return boolean 
+     */
+    public function getDiabetico()
+    {
+        return $this->diabetico;
+    }
 }

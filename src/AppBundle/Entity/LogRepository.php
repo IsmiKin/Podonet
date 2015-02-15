@@ -23,11 +23,11 @@ class LogRepository extends EntityRepository
     }
 
     public function procesarLogHistoriaGeneral( $Descripcion, $Paciente,$Usuario){
-        $this->procesarLog("Historia","General",$Descripcion, $Paciente,$Usuario);
+        $this->procesarLog("Paciente","HistoriaGeneral",$Descripcion, $Paciente,$Usuario);
     }
 
     public function procesarLogHistoriaComplementaria( $Descripcion, $Paciente,$Usuario){
-        $this->procesarLog("Historia","Complementaria",$Descripcion, $Paciente,$Usuario);
+        $this->procesarLog("Paciente","HistoriaComplementaria",$Descripcion, $Paciente,$Usuario);
     }
 
     public function procesarLogUsuario($Subcategoria, $Descripcion, $Paciente,$Usuario){
@@ -36,6 +36,10 @@ class LogRepository extends EntityRepository
 
     public function procesarLogPaciente($Subcategoria, $Descripcion, $Paciente,$Usuario){
         $this->procesarLog("Paciente",$Subcategoria,$Descripcion, $Paciente,$Usuario);
+    }
+
+    public function procesarLogPatologia($Descripcion, $Paciente,$Usuario){
+        $this->procesarLog("Patologia","Mantenimiento",$Descripcion, $Paciente,$Usuario);
     }
 
     private function procesarLog( $Categoria, $Subcategoria, $Descripcion, $Paciente,$Usuario){

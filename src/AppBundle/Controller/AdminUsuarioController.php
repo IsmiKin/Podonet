@@ -148,44 +148,18 @@ class AdminUsuarioController extends Controller
         $request = $this->get("request");
         $fechaInicio = $request->get("fechaInicio");
         $fechaFin = $request->get("fechaFin");
-        //Testing
-//        $queryPrint = "select * from podonet.Log where Fecha BETWEEN $fechaInicio AND $fechaFin"; //Devuelve 0 rows
-//        //Testing
-//        //Devuelve todas las rows
-//        $queryPrint2 = "select * from podonet.Log
-//                            where Fecha
-//                            BETWEEN STR_TO_DATE('09-02-2015', '%Y-%m-%d %H:%i:%s')
-//                            AND STR_TO_DATE('26-02-2015', '%Y-%m-%d %H:%i:%s')";
-//        ld($queryPrint);
-
-        //Testing
-//        $fechaInicio = \DateTime::createFromFormat( "Y-m-d H:i:s", $fechaInicio  );
-//        $fechaFin = \DateTime::createFromFormat( "Y-m-d H:i:s", $fechaFin );
-        //Testing
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $logs3= $em->createQuery($queryPrint2 )->getResult();
 
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Log');
 
-        $query = $repository->createQueryBuilder('l')
-            ->where('l.fecha >= :inicio')
-            ->andWhere('l.fecha <= :fin')
-            ->setParameter('inicio', new \DateTime($fechaInicio) )
-            ->setParameter('fin', new \DateTime($fechaFin))
-            ->orderBy('l.fecha', 'DESC')
-            ->getQuery();
-        $logs= $query->getResult();
-
-        //Testing
         $query = $repository->createQueryBuilder('l');
         $q = $query->select('l')
             ->Where($query->expr()->between('l.fecha', ':inicio', ':fin'))
-            ->setParameter('inicio', $fechaInicio)
-            ->setParameter('fin', $fechaFin)
+            ->setParameter('inicio', new \DateTime($fechaInicio))
+            ->setParameter('fin', new \DateTime($fechaFin))
             ->orderBy('l.fecha', 'DESC')
             ->getQuery();
-        $logs2= $q->getResult();
+        $logs= $q->getResult();
 
         return $this->render('AdminUsuario/administrarLogs.html.twig', array(
                 'logs' => $logs

@@ -357,4 +357,11 @@ class Cita
     {
         return $this->gabinete;
     }
+
+    public function __construct()
+    {
+        $this->setFechaCreacion(new \DateTime('now'));
+        $this->setFechaUltimaModificacion(new \DateTime('now'));
+    }
+
 }

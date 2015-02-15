@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DatosAfeccionesDermicas
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\DatosADRepository")
  */
 class DatosAfeccionesDermicas
 {

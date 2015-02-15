@@ -22,9 +22,9 @@ class Anamnesis
     private $idAnamnesis;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="Fecha", type="datetime")
+     * @ORM\Column(name="Fecha", type="date")
      */
     private $fecha;
 
@@ -80,7 +80,7 @@ class Anamnesis
     /**
      * Set fecha
      *
-     * @param \DateTime $fecha
+     * @param \Date $fecha
      * @return Anamnesis
      */
     public function setFecha($fecha)
@@ -93,7 +93,7 @@ class Anamnesis
     /**
      * Get fecha
      *
-     * @return \DateTime 
+     * @return \Date
      */
     public function getFecha()
     {
@@ -237,4 +237,11 @@ class Anamnesis
     {
         return $this->usuarioModificacion;
     }
+
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime('now'));
+        $this->setFechaModificacion(new \DateTime('now'));
+    }
+
 }

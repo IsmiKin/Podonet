@@ -85,7 +85,7 @@ class HistoriaGeneralController extends Controller
 
             $mensaje = "Se han modificado los Datos Semipermanentes con el id: ".$dsp->getIdDatosSemipermanentes()." para el paciente ".$dsp->getPaciente()->getIdPaciente;
             // Creamos el log
-            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Semipermanentes",$mensaje,$dsp->getPaciente(),$this->getUser());
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("DatosSemipermanentes",$mensaje,$dsp->getPaciente(),$this->getUser());
 
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
@@ -120,7 +120,7 @@ class HistoriaGeneralController extends Controller
 
             $mensaje = "Se han creado Datos Semipermanentes con el id: ".$nuevoDSP->getIdDatosSemipermanentes()." para el paciente ".$idpaciente;
             // Creamos el log
-            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Semipermanentes",$mensaje,$paciente,$this->getUser());
+            $em->getRepository('AppBundle:Log')->procesarLogPaciente("DatosSemipermanentes",$mensaje,$paciente,$this->getUser());
 
 
             $serializer = Serializer::create()->build();
@@ -147,9 +147,9 @@ class HistoriaGeneralController extends Controller
             $this->handleRequestManualDA($da,$params);
             $em->flush();
 
-            $mensaje = "Se han creado Datos Anamnesis con el id: ".$da->getIdDatosSemipermanentes()." para el paciente ".$da->getAnamnesis()->getPaciente()->getIdPaciente();
+            $mensaje = "Se han editado Datos Anamnesis con el id: ".$da->getIdDatosSemipermanentes()." para el paciente ".$da->getAnamnesis()->getPaciente()->getIdPaciente();
             // Creamos el log
-            $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Anamnesis",$mensaje,$da->getAnamnesis()->getPaciente(),$this->getUser());
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaGeneral($mensaje,$da->getAnamnesis()->getPaciente(),$this->getUser());
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
             return new JsonResponse($respuesta);
@@ -204,6 +204,12 @@ class HistoriaGeneralController extends Controller
             $daJSON = $serializer ->serialize($nuevoDA, 'json');
             $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
 
+            $mensaje = "Se han creado Datos Anamnesis con el id: ".$nuevoDA->getIdAnamnesis().
+                " para el paciente ".$nuevoDA->getAnamnesis()->getPaciente()->getIdPaciente();
+
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaGeneral($mensaje,$nuevoDA->getAnamnesis()->getPaciente(),$this->getUser());
+
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0, 'nuevoda' => $daJSON);
             if($nuevoAnamnesis) $respuesta['nuevoanamnesis'] = $anamnesisJSON;
             return new JsonResponse($respuesta);
@@ -225,6 +231,13 @@ class HistoriaGeneralController extends Controller
 
             $this->handleRequestManualDO($da,$params);
             $em->flush();
+
+            $mensaje = "Se han editado Datos Onicpatis con el id: ".$da->getAnamnesis()->getIdAnamnesis().
+                " para el paciente ".$da->getAnamnesis()->getPaciente()->getIdPaciente();
+
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaGeneral($mensaje,$da->getAnamnesis()->getPaciente(),$this->getUser());
+
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
             return new JsonResponse($respuesta);
@@ -274,6 +287,15 @@ class HistoriaGeneralController extends Controller
             $em->persist($nuevoDO);
             $em->flush();
 
+
+            $mensaje = "Se han creado Datos Onicopatis con el id: ".$nuevoDO->getIdDatosOnicopatis().
+                " para el paciente ".$anamnesis->getPaciente()->getIdPaciente();
+
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaGeneral($mensaje,$anamnesis->getPaciente(),$this->getUser());
+
+
+
             $serializer = Serializer::create()->build();
             $doJSON = $serializer ->serialize($nuevoDO, 'json');
             $anamnesisJSON = $serializer ->serialize($anamnesis, 'json');
@@ -299,6 +321,12 @@ class HistoriaGeneralController extends Controller
 
             $this->handleRequestManualDAD($da,$params);
             $em->flush();
+
+            $mensaje = "Se han creado Datos Afecciones Dérmicas con el id: ".$da->getIdDatosAfeccionesDermicas().
+                " para el paciente ".$da->getAnamnesis()->getPaciente()->getIdPaciente();
+
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaGeneral($mensaje,$da->getAnamnesis()->getPaciente(),$this->getUser());
 
             $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);
             return new JsonResponse($respuesta);
@@ -347,6 +375,13 @@ class HistoriaGeneralController extends Controller
 
             $em->persist($nuevoDAD);
             $em->flush();
+
+            $mensaje = "Se han creado Datos Afecciones Dérmicas con el id: ".$nuevoDAD->getIdDatosAfeccionesDermicas().
+                " para el paciente ".$nuevoDAD->getAnamnesis()->getPaciente()->getIdPaciente();
+
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogHistoriaGeneral($mensaje,$nuevoDAD->getAnamnesis()->getPaciente(),$this->getUser());
+
 
             $serializer = Serializer::create()->build();
             $dadJSON = $serializer ->serialize($nuevoDAD, 'json');
@@ -403,7 +438,7 @@ class HistoriaGeneralController extends Controller
 
                 $mensaje = "Se han creado Datos Personales con el id: ".$dp->getIdDatosPersonales()." para el paciente ".$idpaciente;
                 // Creamos el log
-                $em->getRepository('AppBundle:Log')->procesarLogPaciente("Datos Personales",$mensaje,$dp->getPaciente(),$this->getUser());
+                $em->getRepository('AppBundle:Log')->procesarLogPaciente("DatosPersonales",$mensaje,$dp->getPaciente(),$this->getUser());
 
 
                 $respuesta = array('mensaje' => 'Todo OK', 'codigo_error'=>0);

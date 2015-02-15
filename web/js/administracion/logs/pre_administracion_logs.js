@@ -4,6 +4,7 @@
 
 $(document).ready(function(){
     $('#datepicker').datepicker({
-        language:"es"
+        language:"en",
+        format: 'yyyy-mm-dd'
     });
 });

@@ -94,6 +94,11 @@ class UsuarioController extends Controller
             ;
             $this->get('mailer')->send($message);
 
+            $em = $this->getDoctrine()->getManager();
+            $mensaje = "Se ha enviado un email al administrador por el usuario ".$this->getUser();
+            // Creamos el log
+            $em->getRepository('AppBundle:Log')->procesarLogAdminUsuarios($mensaje,null,$this->getUser());
+
             $mensaje = "Todo ha ido correcto!";
             $datosRespuesta = array("mensaje" =>$mensaje, "codigo_error" =>$codigo_error);
             return new JsonResponse($datosRespuesta);

@@ -57,9 +57,9 @@ class DatosPersonales
     private $codigoPostal;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="FechaNacimiento", type="date",nullable=true)
+     * @ORM\Column(name="FechaNacimiento", type="datetime",nullable=true)
      */
     private $fechaNacimiento;
 
@@ -390,5 +390,10 @@ class DatosPersonales
         $this->paciente = $paciente;
 
         return $this;
+    }
+
+    public function __construct()
+    {
+        $this->setFechaAlta(new \DateTime('now'));
     }
 }
